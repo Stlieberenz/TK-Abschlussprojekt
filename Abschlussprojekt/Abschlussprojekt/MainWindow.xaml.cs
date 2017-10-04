@@ -23,6 +23,7 @@ namespace Abschlussprojekt
         public MainWindow()
         {
             InitializeComponent();
+            
         }
     }
 }

@@ -62,6 +62,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Klassen\Feld.cs" />
+    <Compile Include="Klassen\Figur.cs" />
+    <Compile Include="Klassen\Spieler.cs" />
+    <Compile Include="Klassen\Statische_Methoden.cs" />
+    <Compile Include="Klassen\Statische_Variablen.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -92,6 +97,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Seiten\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Bilder\Feld_gruen.bmp" />
+    <Resource Include="Bilder\Feld_rot.bmp" />
+    <Resource Include="Bilder\Feld_gelb.bmp" />
+    <Resource Include="Bilder\Feld_blau.bmp" />
+    <Resource Include="Bilder\Feld_pink.bmp" />
+    <Resource Include="Bilder\Feld_schwarz.bmp" />
+    <Resource Include="Bilder\Figur_blau.bmp" />
+    <Resource Include="Bilder\Figur_gruen.bmp" />
+    <Resource Include="Bilder\Figur_rot.bmp" />
+    <Resource Include="Bilder\Figur_gelb.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
