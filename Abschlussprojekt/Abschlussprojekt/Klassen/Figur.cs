@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using System.Windows.Controls;
+using static Abschlussprojekt.Klassen.Statische_Variablen;
 
 // Namenskonvention: --------------------------------------+
 //                                                         |
@@ -23,12 +24,23 @@ namespace Abschlussprojekt.Klassen
         Feld startposition;
         Feld aktuelle_Position;
         Feld mögliche_Position;
+        FARBE farbe { get; set; }
 
-
-
-        public Figur()
+        public Figur(FARBE farbe)
         {
+            this.farbe = farbe;
 
+            //
+            // Hier werden die Jeweiligen Felder, die zur Laufzeit erstellt werden,
+            // den jeweiligen statischen Listen hinzugefügt.
+            //
+            switch (farbe)
+            {
+                case FARBE.ROT: spieler_rot.Add(this); break;
+                case FARBE.GELB: spieler_gelb.Add(this); break;
+                case FARBE.GRUEN: spieler_gruen.Add(this); break;
+                case FARBE.BLAU: spieler_blau.Add(this); break;
+            }
         }
     }
 }

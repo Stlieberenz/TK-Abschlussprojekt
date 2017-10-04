@@ -13,18 +13,24 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Abschlussprojekt
+namespace Abschlussprojekt.Seiten
 {
     /// <summary>
-    /// Interaktionslogik für MainWindow.xaml
+    /// Interaktionslogik für Spiel_suchen.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Spiel_suchen : UserControl
     {
-        public MainWindow()
+        Frame root_Frame;
+        public Spiel_suchen(Frame root_Frame)
         {
+            this.root_Frame = root_Frame;
             InitializeComponent();
-            rootFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;
-            rootFrame.Content = new Seiten.Startseite(rootFrame);
+        }
+
+        private void btn_beitreten_Click(object sender, RoutedEventArgs e)
+        {
+            // #### Muss später durch richtigen Code ersetzt werden ####
+            root_Frame.Content = new Spiel_beitreten(root_Frame);
         }
     }
 }

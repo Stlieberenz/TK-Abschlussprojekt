@@ -12,19 +12,20 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static Abschlussprojekt.Klassen.Statische_Methoden;
 
-namespace Abschlussprojekt
+namespace Abschlussprojekt.Seiten
 {
     /// <summary>
-    /// Interaktionslogik für MainWindow.xaml
+    /// Interaktionslogik für Spielwiese.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Spielwiese : UserControl
     {
-        public MainWindow()
+        public Spielwiese()
         {
             InitializeComponent();
-            rootFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;
-            rootFrame.Content = new Seiten.Startseite(rootFrame);
+            Initialisiere_Statische_Variablen();
+            Initialisiere_Spiel("","","","");
         }
     }
 }

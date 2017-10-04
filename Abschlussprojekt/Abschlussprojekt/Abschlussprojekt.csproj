@@ -54,6 +54,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Seiten\Spielwiese.xaml.cs">
+      <DependentUpon>Spielwiese.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Seiten\Spiel_beitreten.xaml.cs">
+      <DependentUpon>Spiel_beitreten.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Seiten\Spiel_erstellen.xaml.cs">
+      <DependentUpon>Spiel_erstellen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Seiten\Spiel_suchen.xaml.cs">
+      <DependentUpon>Spiel_suchen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Seiten\Startseite.xaml.cs">
+      <DependentUpon>Startseite.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -71,6 +86,26 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Seiten\Spielwiese.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Seiten\Spiel_beitreten.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Seiten\Spiel_erstellen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Seiten\Spiel_suchen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Seiten\Startseite.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -98,9 +133,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Seiten\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Bilder\Feld_gruen.bmp" />
     <Resource Include="Bilder\Feld_rot.bmp" />

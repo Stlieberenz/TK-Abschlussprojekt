@@ -17,6 +17,35 @@ namespace Abschlussprojekt.Klassen
 {
     static class Statische_Variablen
     {
+        public enum FARBE
+        {
+            ROT,
+            GELB,
+            BLAU,
+            GRUEN
+        }
+        public enum FELD_EIGENSCHAFT
+        {
+            STARTPOSITION,
+            SPIELFELD,
+            ZIEL
+        }
+        public enum NETZWERK_NACHRICHT
+        {
+            TEXTNACHRICHT,
+            SPIELFIGURENPOSITIONEN,
+            GEWÜRFELTE_ZAHL
+        }
 
+        public static List<Feld> start_felder = new List<Feld>();
+        public static List<Feld> spiel_felder = new List<Feld>();
+        public static List<Feld> ziel_felder = new List<Feld>();
+
+        public static List<Figur> spieler_rot = new List<Figur>();
+        public static List<Figur> spieler_gelb = new List<Figur>();
+        public static List<Figur> spieler_gruen = new List<Figur>();
+        public static List<Figur> spieler_blau = new List<Figur>();
+
+        public static List<Spieler> alle_Spieler = new List<Spieler>();
     }
 }

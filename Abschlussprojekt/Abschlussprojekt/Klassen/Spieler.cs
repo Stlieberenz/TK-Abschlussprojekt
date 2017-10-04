@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Abschlussprojekt.Klassen.Statische_Variablen;
+using static Abschlussprojekt.Klassen.Statische_Methoden;
 
 // Namenskonvention: --------------------------------------+
 //                                                         |
@@ -17,5 +19,14 @@ namespace Abschlussprojekt.Klassen
 {
     class Spieler
     {
+        FARBE farbe;
+        string name;
+        public Spieler(FARBE farbe,string name)
+        {
+            this.name = name;
+            this.farbe = farbe;
+            alle_Spieler.Add(this);
+            Initialisiere_Figuren(farbe);
+        }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Abschlussprojekt.Klassen.Statische_Variablen;
 
 // Namenskonvention: --------------------------------------+
 //                                                         |
@@ -20,6 +21,22 @@ namespace Abschlussprojekt.Klassen
         public static void Initialisiere_Statische_Variablen()
         {
 
+        }
+
+        public static void Initialisiere_Spiel(string name_rot, string name_gelb, string name_gruen, string name_blau )
+        {
+            Spieler rot = new Spieler(FARBE.ROT,name_rot);
+            Spieler gelb = new Spieler(FARBE.GELB, name_gelb);
+            Spieler gruen = new Spieler(FARBE.GRUEN, name_gruen);
+            Spieler blau = new Spieler(FARBE.BLAU, name_blau);
+        }
+
+        public static void Initialisiere_Figuren(FARBE farbe)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                Figur figur = new Figur(farbe);
+            }
         }
     }
 }
