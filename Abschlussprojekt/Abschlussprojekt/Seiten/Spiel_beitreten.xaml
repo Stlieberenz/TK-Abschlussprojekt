@@ -16,12 +16,14 @@
         <Label x:Name="L_Name_Spieler_gruen" Content="Spieler1" HorizontalAlignment="Left" Margin="105,104,0,0" VerticalAlignment="Top"/>
         <Label x:Name="L_Name_Spieler_blau" Content="Spieler1" HorizontalAlignment="Left" Margin="105,131,0,0" VerticalAlignment="Top"/>
         <Label Content="Spiel beitreten" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top" FontSize="20"/>
-        <Button x:Name="btn_Bestätigen" Content="Bestätigen" HorizontalAlignment="Left" Margin="25,175,0,0" VerticalAlignment="Top" Width="114" Height="37" Click="btn_Bestätigen_Click"/>
+        <Button x:Name="btn_Bestätigen" Content="Bestätigen" HorizontalAlignment="Left" Margin="25,202,0,0" VerticalAlignment="Top" Width="114" Height="37" Click="btn_Bestätigen_Click"/>
         <RadioButton x:Name="RB_rot" Content="" HorizontalAlignment="Left" Margin="163,56,0,0" VerticalAlignment="Top"/>
         <RadioButton x:Name="RB_gelb" Content="" HorizontalAlignment="Left" Margin="163,83,0,0" VerticalAlignment="Top"/>
         <RadioButton x:Name="RB_gruen" Content="" HorizontalAlignment="Left" Margin="163,110,0,0" VerticalAlignment="Top"/>
         <RadioButton x:Name="RB_blau" Content="" HorizontalAlignment="Left" Margin="163,137,0,0" VerticalAlignment="Top"/>
         <Button x:Name="DV_button" Content="Develop Button" HorizontalAlignment="Left" Margin="25,244,0,0" VerticalAlignment="Top" Width="147" Click="DV_button_Click"/>
+        <TextBox x:Name="Spieler_name" HorizontalAlignment="Left" Height="23" Margin="25,174,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="218"/>
+        <Label Content="max 20 Zeichen" HorizontalAlignment="Left" Margin="248,170,0,0" VerticalAlignment="Top" Width="102"/>
 
     </Grid>
 </UserControl>

@@ -15,6 +15,15 @@ using System.Windows.Shapes;
 using static Abschlussprojekt.Klassen.Statische_Methoden;
 using static Abschlussprojekt.Klassen.Spieler;
 
+// Namenskonvention: --------------------------------------+
+//                                                         |
+// Alle Wörter eines Namens werden mit einem "_" getrennt. |
+// Klassen     = Klasse_Bsp    => erster Buchstabe groß    |
+// Methoden    = Methode_Bsp   => erster Buchstabe groß    |
+// Variable    = variable_Bsp  => erster Buchstabe klein   |
+// ENUM        = ENUM_BSP      => alle Buchstaben groß     |
+//---------------------------------------------------------+
+
 namespace Abschlussprojekt.Seiten
 {
     /// <summary>
@@ -26,17 +35,26 @@ namespace Abschlussprojekt.Seiten
         Klassen.Spieler lokaler_spieler;
         public Spielwiese()
         {
-            this.lokaler_spieler = Klassen.globale_temporäre_Variablen.lokaler_spieler;
+           
             InitializeComponent();
+            this.lokaler_spieler = Klassen.globale_temporäre_Variablen.lokaler_spieler;
             Initialisiere_Statische_Variablen();
             this.active_chat = new TextBox();
             Initialisiere_Spiel("","","","");
+
+            switch (lokaler_spieler.farbe)
+            {
+                case Klassen.Statische_Variablen.FARBE.ROT: L_Spielername_rot.Content = lokaler_spieler.name; break;
+                case Klassen.Statische_Variablen.FARBE.GELB: L_Spielername_gelb.Content = lokaler_spieler.name; break;
+                case Klassen.Statische_Variablen.FARBE.GRUEN: L_Spielername_gruen.Content = lokaler_spieler.name; break;
+                case Klassen.Statische_Variablen.FARBE.BLAU: L_Spielername_blau.Content = lokaler_spieler.name; break;
+            }
             // ToDo: Foreach CHildren in grid -> finde die Images heraus und füge event hinzu
         }
 
         private void Btn_senden_Click(object sender, RoutedEventArgs e)
         {
-            Text_in_Chat_senden(lokaler_spieler.name);
+            if (Chat_eingabe.Text != "Schreibe eine Nachricht") Text_in_Chat_senden(lokaler_spieler.name);
         }
 
         private void Chat_eingabe_KeyDown(object sender, KeyEventArgs e)

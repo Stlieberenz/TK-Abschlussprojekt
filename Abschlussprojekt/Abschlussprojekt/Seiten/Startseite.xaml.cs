@@ -14,6 +14,15 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Abschlussprojekt.Seiten;
 
+// Namenskonvention: --------------------------------------+
+//                                                         |
+// Alle Wörter eines Namens werden mit einem "_" getrennt. |
+// Klassen     = Klasse_Bsp    => erster Buchstabe groß    |
+// Methoden    = Methode_Bsp   => erster Buchstabe groß    |
+// Variable    = variable_Bsp  => erster Buchstabe klein   |
+// ENUM        = ENUM_BSP      => alle Buchstaben groß     |
+//---------------------------------------------------------+
+
 namespace Abschlussprojekt.Seiten
 {
     /// <summary>

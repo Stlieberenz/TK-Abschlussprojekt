@@ -13,6 +13,15 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+// Namenskonvention: --------------------------------------+
+//                                                         |
+// Alle Wörter eines Namens werden mit einem "_" getrennt. |
+// Klassen     = Klasse_Bsp    => erster Buchstabe groß    |
+// Methoden    = Methode_Bsp   => erster Buchstabe groß    |
+// Variable    = variable_Bsp  => erster Buchstabe klein   |
+// ENUM        = ENUM_BSP      => alle Buchstaben groß     |
+//---------------------------------------------------------+
+
 namespace Abschlussprojekt.Seiten
 {
     /// <summary>
@@ -79,9 +88,9 @@ namespace Abschlussprojekt.Seiten
                 MessageBox.Show("Es müssen mindestens 2 Spieler gegeneinander antreten", "Fehler", MessageBoxButton.OK);
                 return;
             }
-            if (Spielername_eingabe.Text == "" || Spielername_eingabe.Text == "Hier Namen eingeben")
+            if (Spielername_eingabe.Text == "" || Spielername_eingabe.Text == "Hier Namen eingeben" || Spielername_eingabe.Text.Length >=20)
             {
-                MessageBox.Show("Es muss ein Name eingegeben werden!", "Fehler", MessageBoxButton.OK);
+                MessageBox.Show("Es muss ein gültiger Name eingegeben werden!", "Fehler", MessageBoxButton.OK);
                 return;
             }
             if (temp >=2 && result == true)

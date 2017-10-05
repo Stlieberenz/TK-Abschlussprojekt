@@ -41,8 +41,8 @@
         </ComboBox>
         <Label Content="Spiel erstellen" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top" FontSize="20"/>
         <Button x:Name="btn_spiel_starten" Content="Los geht's amk" HorizontalAlignment="Left" Margin="20,205,0,0" VerticalAlignment="Top" Width="114" Height="37" Click="btn_spiel_starten_Click"/>
-        <TextBox x:Name="Spielername_eingabe" HorizontalAlignment="Left" Height="23" Margin="20,177,0,0" TextWrapping="Wrap" Text="Hier Namen eingeben" VerticalAlignment="Top" Width="120" LostFocus="Spielername_eingabe_LostFocus" GotFocus="Spielername_eingabe_GotFocus"/>
-        <Label Content="max 20 Zeichen" HorizontalAlignment="Left" Margin="145,173,0,0" VerticalAlignment="Top" Width="102"/>
+        <TextBox x:Name="Spielername_eingabe" HorizontalAlignment="Left" Height="23" Margin="20,177,0,0" TextWrapping="Wrap" Text="Hier Namen eingeben" VerticalAlignment="Top" Width="200" LostFocus="Spielername_eingabe_LostFocus" GotFocus="Spielername_eingabe_GotFocus"/>
+        <Label Content="max 20 Zeichen" HorizontalAlignment="Left" Margin="225,173,0,0" VerticalAlignment="Top" Width="102"/>
 
     </Grid>
 </UserControl>

@@ -13,6 +13,15 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+// Namenskonvention: --------------------------------------+
+//                                                         |
+// Alle Wörter eines Namens werden mit einem "_" getrennt. |
+// Klassen     = Klasse_Bsp    => erster Buchstabe groß    |
+// Methoden    = Methode_Bsp   => erster Buchstabe groß    |
+// Variable    = variable_Bsp  => erster Buchstabe klein   |
+// ENUM        = ENUM_BSP      => alle Buchstaben groß     |
+//---------------------------------------------------------+
+
 namespace Abschlussprojekt.Seiten
 {
     /// <summary>
@@ -56,6 +65,11 @@ namespace Abschlussprojekt.Seiten
 
         private void btn_Bestätigen_Click(object sender, RoutedEventArgs e)
         {
+            if (Spieler_name.Text == "" || Spieler_name.Text == "" || Spieler_name.Text.Length > 20)
+            {
+                MessageBox.Show("Gegen sie einen gültigen Namen ein!", "Fehler", MessageBoxButton.OK);
+                return;
+            }
             if (Convert.ToBoolean(RB_rot.IsChecked) || Convert.ToBoolean(RB_gelb.IsChecked) || Convert.ToBoolean(RB_gruen.IsChecked) || Convert.ToBoolean(RB_blau.IsChecked))
             {
                 status = false;

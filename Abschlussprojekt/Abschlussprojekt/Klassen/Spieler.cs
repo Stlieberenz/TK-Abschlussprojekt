@@ -19,7 +19,7 @@ namespace Abschlussprojekt.Klassen
 {
     class Spieler
     {
-        FARBE farbe { get; }
+        public FARBE farbe { get; }
         public string name { get; }
         public Spieler(FARBE farbe,string name)
         {
