@@ -54,6 +54,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Klassen\globale_temporäre_Variablen.cs" />
     <Compile Include="Seiten\Spielwiese.xaml.cs">
       <DependentUpon>Spielwiese.xaml</DependentUpon>
     </Compile>
@@ -139,7 +140,7 @@
     <Resource Include="Bilder\Feld_rot.bmp" />
     <Resource Include="Bilder\Feld_gelb.bmp" />
     <Resource Include="Bilder\Feld_blau.bmp" />
-    <Resource Include="Bilder\Feld_pink.bmp" />
+    <Resource Include="Bilder\Feld_grau.bmp" />
     <Resource Include="Bilder\Feld_schwarz.bmp" />
     <Resource Include="Bilder\Figur_blau.bmp" />
     <Resource Include="Bilder\Figur_gruen.bmp" />

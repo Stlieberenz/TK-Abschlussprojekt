@@ -21,16 +21,20 @@ namespace Abschlussprojekt.Seiten
     public partial class Spiel_erstellen : UserControl
     {
         Frame root_Frame;
+        Klassen.Statische_Variablen.FARBE ausgewählte_farbe;
         public Spiel_erstellen(Frame root_Frame)
         {
+            this.ausgewählte_farbe = Klassen.Statische_Variablen.FARBE.LEER;
             this.root_Frame = root_Frame;
             InitializeComponent();
+            this.comboBox_rot.SelectedIndex = 1;
+            this.comboBox_gelb.SelectedIndex = 2;
         }
 
         private void btn_spiel_starten_Click(object sender, RoutedEventArgs e)
         {
             //
-            //In den If Abfragen wird geprüft ob min 2 gültige spieler da sind und kein slot mehr offen ist.
+            //In den If Abfragen wird geprüft ob min 2 gültige spieler da sind und kein slot mehr offen ist und ein Name angegeben wurde.
             //
             int temp = 0;
             bool result = true;
@@ -75,20 +79,33 @@ namespace Abschlussprojekt.Seiten
                 MessageBox.Show("Es müssen mindestens 2 Spieler gegeneinander antreten", "Fehler", MessageBoxButton.OK);
                 return;
             }
+            if (Spielername_eingabe.Text == "" || Spielername_eingabe.Text == "Hier Namen eingeben")
+            {
+                MessageBox.Show("Es muss ein Name eingegeben werden!", "Fehler", MessageBoxButton.OK);
+                return;
+            }
             if (temp >=2 && result == true)
             {
+                Klassen.globale_temporäre_Variablen.lokaler_spieler = Erstelle_lokalen_Spieler();
                 root_Frame.Content = new Spielwiese();
             }
         }
 
+        private Klassen.Spieler Erstelle_lokalen_Spieler()
+        {
+            Klassen.Spieler lokaler_Spieler = new Klassen.Spieler(ausgewählte_farbe,Spielername_eingabe.Text);
+            return lokaler_Spieler;
+        }
+
         private void comboBox_rot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (comboBox_rot.SelectedIndex == 1)
+            if (comboBox_rot.SelectedIndex == 1 )
             {
                 if (comboBox_gelb.SelectedIndex == 1) comboBox_gelb.SelectedIndex = 0;
                 if (comboBox_gruen.SelectedIndex == 1) comboBox_gruen.SelectedIndex = 0;
                 if (comboBox_blau.SelectedIndex == 1) comboBox_blau.SelectedIndex = 0;
-            } // Diese IF abfrage sorgt dafür, das nur ein Slot mit Ich ausgefüllt werden kann.
+                this.ausgewählte_farbe = Klassen.Statische_Variablen.FARBE.ROT;
+            } // Diese IF abfrage sorgt dafür, das nur ein Slot mit Ich ausgefüllt werden kann. Zusätzlich wird die Farbe ausgewählt.
         }
 
         private void comboBox_gelb_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -98,6 +115,7 @@ namespace Abschlussprojekt.Seiten
                 if (comboBox_rot.SelectedIndex == 1) comboBox_rot.SelectedIndex = 0;
                 if (comboBox_gruen.SelectedIndex == 1) comboBox_gruen.SelectedIndex = 0;
                 if (comboBox_blau.SelectedIndex == 1) comboBox_blau.SelectedIndex = 0;
+                this.ausgewählte_farbe = Klassen.Statische_Variablen.FARBE.GELB;
             }
         }
 
@@ -108,6 +126,7 @@ namespace Abschlussprojekt.Seiten
                 if (comboBox_gelb.SelectedIndex == 1) comboBox_gelb.SelectedIndex = 0;
                 if (comboBox_rot.SelectedIndex == 1) comboBox_rot.SelectedIndex = 0;
                 if (comboBox_blau.SelectedIndex == 1) comboBox_blau.SelectedIndex = 0;
+                this.ausgewählte_farbe = Klassen.Statische_Variablen.FARBE.GRUEN;
             }
         }
 
@@ -118,7 +137,18 @@ namespace Abschlussprojekt.Seiten
                 if (comboBox_gelb.SelectedIndex == 1) comboBox_gelb.SelectedIndex = 0;
                 if (comboBox_gruen.SelectedIndex == 1) comboBox_gruen.SelectedIndex = 0;
                 if (comboBox_rot.SelectedIndex == 1) comboBox_rot.SelectedIndex = 0;
+                this.ausgewählte_farbe = Klassen.Statische_Variablen.FARBE.BLAU;
             }
+        }
+
+        private void Spielername_eingabe_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (Spielername_eingabe.Text == "") Spielername_eingabe.Text = "Hier Namen eingeben";
+        }
+
+        private void Spielername_eingabe_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (Spielername_eingabe.Text == "Hier Namen eingeben") Spielername_eingabe.Text = "";
         }
     }
 }

@@ -22,7 +22,8 @@ namespace Abschlussprojekt.Klassen
             ROT,
             GELB,
             BLAU,
-            GRUEN
+            GRUEN,
+            LEER
         }
         public enum FELD_EIGENSCHAFT
         {

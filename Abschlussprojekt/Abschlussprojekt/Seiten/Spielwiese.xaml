@@ -4,8 +4,114 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Abschlussprojekt.Seiten"
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             mc:Ignorable="d" Height="{DynamicResource {x:Static SystemParameters.FullPrimaryScreenHeightKey}}" Width="{DynamicResource {x:Static SystemParameters.FullPrimaryScreenWidthKey}}">
 
-    <Grid/>
+    <Grid x:Name="Grid_Spielwiese" Background="White" Width="{DynamicResource {x:Static SystemParameters.MaximizedPrimaryScreenWidthKey}}" Height="{DynamicResource {x:Static SystemParameters.MaximizedPrimaryScreenHeightKey}}">
+        <Image x:Name="Start_rot_3" HorizontalAlignment="Left" Height="62" Margin="566,689,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_rot.bmp"/>
+        <Image x:Name="Start_rot_4" HorizontalAlignment="Left" Height="62" Margin="631,689,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_rot.bmp"/>
+        <Image x:Name="Start_rot_1" HorizontalAlignment="Left" Height="62" Margin="566,624,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_rot.bmp"/>
+        <Image x:Name="Start_rot_2" HorizontalAlignment="Left" Height="62" Margin="631,624,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_rot.bmp"/>
+        <Image x:Name="Start_rot_0" HorizontalAlignment="Left" Height="62" Margin="826,689,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_rot.bmp"/>
+        <Image x:Name="Feld_1" HorizontalAlignment="Left" Height="62" Margin="826,624,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_grau.bmp"/>
+        <Image x:Name="Feld_2" HorizontalAlignment="Left" Height="61" Margin="826,560,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_grau.bmp"/>
+        <Image x:Name="Feld_3" HorizontalAlignment="Left" Height="61" Margin="826,495,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_grau.bmp"/>
+        <Image x:Name="Feld_4" HorizontalAlignment="Left" Height="61" Margin="826,430,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_grau.bmp"/>
+        <Image x:Name="Feld_5" HorizontalAlignment="Left" Height="61" Margin="761,430,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_grau.bmp"/>
+        <Image x:Name="Feld_6" HorizontalAlignment="Left" Height="61" Margin="696,430,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_grau.bmp"/>
+        <Image x:Name="Feld_7" HorizontalAlignment="Left" Height="61" Margin="631,430,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_grau.bmp"/>
+        <Image x:Name="Feld_8" HorizontalAlignment="Left" Height="61" Margin="566,430,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_grau.bmp"/>
+        <Image x:Name="Feld_9" HorizontalAlignment="Left" Height="61" Margin="566,365,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_grau.bmp"/>
+        <Image x:Name="Start_gelb_0" HorizontalAlignment="Left" Height="62" Margin="566,298,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_gelb.bmp"/>
+        <Image x:Name="Feld_11" HorizontalAlignment="Left" Height="62" Margin="631,298,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_grau.bmp"/>
+        <Image x:Name="Feld_12" HorizontalAlignment="Left" Height="62" Margin="696,298,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_grau.bmp"/>
+        <Image x:Name="Feld_13" HorizontalAlignment="Left" Height="62" Margin="761,298,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_grau.bmp"/>
+        <Image x:Name="Feld_14" HorizontalAlignment="Left" Height="62" Margin="826,298,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_grau.bmp"/>
+        <Image x:Name="Feld_23" HorizontalAlignment="Left" Height="62" Margin="956,233,0,0" VerticalAlignment="Top" Width="61" Source="/Abschlussprojekt;component/Bilder/Feld_grau.bmp"/>
+        <Image x:Name="Feld_15" HorizontalAlignment="Left" Height="62" Margin="826,233,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_grau.bmp"/>
+        <Image x:Name="Feld_16" HorizontalAlignment="Left" Height="62" Margin="826,168,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_grau.bmp"/>
+        <Image x:Name="Feld_24" HorizontalAlignment="Left" Height="62" Margin="956,298,0,0" VerticalAlignment="Top" Width="61" Source="/Abschlussprojekt;component/Bilder/Feld_grau.bmp"/>
+        <Image x:Name="Feld_25" HorizontalAlignment="Left" Height="62" Margin="1020,298,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_grau.bmp"/>
+        <Image x:Name="Feld_34" HorizontalAlignment="Left" Height="61" Margin="956,430,0,0" VerticalAlignment="Top" Width="61" Source="/Abschlussprojekt;component/Bilder/Feld_grau.bmp"/>
+        <Image x:Name="Feld_35" HorizontalAlignment="Left" Height="61" Margin="956,495,0,0" VerticalAlignment="Top" Width="61" Source="/Abschlussprojekt;component/Bilder/Feld_grau.bmp"/>
+        <Image x:Name="Feld_36" HorizontalAlignment="Left" Height="61" Margin="956,560,0,0" VerticalAlignment="Top" Width="61" Source="/Abschlussprojekt;component/Bilder/Feld_grau.bmp"/>
+        <Image x:Name="Feld_37" HorizontalAlignment="Left" Height="62" Margin="956,624,0,0" VerticalAlignment="Top" Width="61" Source="/Abschlussprojekt;component/Bilder/Feld_grau.bmp"/>
+        <Image x:Name="Feld_33" HorizontalAlignment="Left" Height="61" Margin="1020,430,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_grau.bmp"/>
+        <Image x:Name="Feld_32" HorizontalAlignment="Left" Height="61" Margin="1085,430,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_grau.bmp"/>
+        <Image x:Name="Feld_31" HorizontalAlignment="Left" Height="61" Margin="1150,430,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_grau.bmp"/>
+        <Image x:Name="Feld_26" HorizontalAlignment="Left" Height="62" Margin="1085,298,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_grau.bmp"/>
+        <Image x:Name="Feld_27" HorizontalAlignment="Left" Height="62" Margin="1150,298,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_grau.bmp"/>
+        <Image x:Name="Feld_28" HorizontalAlignment="Left" Height="62" Margin="1215,298,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_grau.bmp"/>
+        <Image x:Name="Feld_29" HorizontalAlignment="Left" Height="61" Margin="1215,365,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_grau.bmp"/>
+        <Image x:Name="Start_blau_0" HorizontalAlignment="Left" Height="61" Margin="1215,430,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_blau.bmp"/>
+        <Image x:Name="Feld_22" HorizontalAlignment="Left" Height="62" Margin="956,168,0,0" VerticalAlignment="Top" Width="61" Source="/Abschlussprojekt;component/Bilder/Feld_grau.bmp"/>
+        <Image x:Name="Feld_17" HorizontalAlignment="Left" Height="62" Margin="826,103,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_grau.bmp"/>
+        <Image x:Name="Feld_21" HorizontalAlignment="Left" Height="62" Margin="956,103,0,0" VerticalAlignment="Top" Width="61" Source="/Abschlussprojekt;component/Bilder/Feld_grau.bmp"/>
+        <Image x:Name="Feld_18" HorizontalAlignment="Left" Height="62" Margin="826,38,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_grau.bmp"/>
+        <Image x:Name="Start_gruen_0" HorizontalAlignment="Left" Height="62" Margin="956,38,0,0" VerticalAlignment="Top" Width="61" Source="/Abschlussprojekt;component/Bilder/Feld_gruen.bmp"/>
+        <Image x:Name="Feld_19" HorizontalAlignment="Left" Height="62" Margin="891,38,0,0" VerticalAlignment="Top" Width="61" Source="/Abschlussprojekt;component/Bilder/Feld_grau.bmp"/>
+        <Image x:Name="Ziel_gruen_0" HorizontalAlignment="Left" Height="62" Margin="891,103,0,0" VerticalAlignment="Top" Width="61" Source="/Abschlussprojekt;component/Bilder/Feld_schwarz.bmp"/>
+        <Image x:Name="Ziel_gruen_1" HorizontalAlignment="Left" Height="62" Margin="891,168,0,0" VerticalAlignment="Top" Width="61" Source="/Abschlussprojekt;component/Bilder/Feld_schwarz.bmp"/>
+        <Image x:Name="Ziel_gruen_2" HorizontalAlignment="Left" Height="62" Margin="891,233,0,0" VerticalAlignment="Top" Width="61" Source="/Abschlussprojekt;component/Bilder/Feld_schwarz.bmp"/>
+        <Image x:Name="Ziel_gruen_3" HorizontalAlignment="Left" Height="62" Margin="891,298,0,0" VerticalAlignment="Top" Width="61" Source="/Abschlussprojekt;component/Bilder/Feld_schwarz.bmp"/>
+        <Image x:Name="Ziel_blau_3" HorizontalAlignment="Left" Height="61" Margin="956,365,0,0" VerticalAlignment="Top" Width="61" Source="/Abschlussprojekt;component/Bilder/Feld_schwarz.bmp"/>
+        <Image x:Name="Ziel_blau_2" HorizontalAlignment="Left" Height="61" Margin="1020,365,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_schwarz.bmp"/>
+        <Image x:Name="Ziel_blau_1" HorizontalAlignment="Left" Height="61" Margin="1085,365,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_schwarz.bmp"/>
+        <Image x:Name="Ziel_blau_0" HorizontalAlignment="Left" Height="61" Margin="1150,365,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_schwarz.bmp"/>
+        <Image x:Name="Ziel_gelb_0" HorizontalAlignment="Left" Height="61" Margin="631,365,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_schwarz.bmp"/>
+        <Image x:Name="Ziel_gelb_1" HorizontalAlignment="Left" Height="61" Margin="696,365,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_schwarz.bmp"/>
+        <Image x:Name="Ziel_gelb_2" HorizontalAlignment="Left" Height="61" Margin="761,365,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_schwarz.bmp"/>
+        <Image x:Name="Ziel_gelb_3" HorizontalAlignment="Left" Height="61" Margin="826,365,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_schwarz.bmp"/>
+        <Image x:Name="Ziel_rot_3" HorizontalAlignment="Left" Height="61" Margin="891,430,0,0" VerticalAlignment="Top" Width="61" Source="/Abschlussprojekt;component/Bilder/Feld_schwarz.bmp"/>
+        <Image x:Name="Ziel_rot_2" HorizontalAlignment="Left" Height="61" Margin="891,495,0,0" VerticalAlignment="Top" Width="61" Source="/Abschlussprojekt;component/Bilder/Feld_schwarz.bmp"/>
+        <Image x:Name="Ziel_rot_1" HorizontalAlignment="Left" Height="61" Margin="891,560,0,0" VerticalAlignment="Top" Width="61" Source="/Abschlussprojekt;component/Bilder/Feld_schwarz.bmp"/>
+        <Image x:Name="Ziel_rot_0" HorizontalAlignment="Left" Height="62" Margin="891,624,0,0" VerticalAlignment="Top" Width="61" Source="/Abschlussprojekt;component/Bilder/Feld_schwarz.bmp"/>
+        <Image x:Name="Feld_39" HorizontalAlignment="Left" Height="62" Margin="891,689,0,0" VerticalAlignment="Top" Width="61" Source="/Abschlussprojekt;component/Bilder/Feld_grau.bmp"/>
+        <Image x:Name="Feld_38" HorizontalAlignment="Left" Height="62" Margin="956,689,0,0" VerticalAlignment="Top" Width="61" Source="/Abschlussprojekt;component/Bilder/Feld_grau.bmp"/>
+        <Image x:Name="Start_blau_3" HorizontalAlignment="Left" Height="62" Margin="1150,689,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_blau.bmp"/>
+        <Image x:Name="Start_blau_4" HorizontalAlignment="Left" Height="62" Margin="1215,689,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_blau.bmp"/>
+        <Image x:Name="Start_blau_1" HorizontalAlignment="Left" Height="62" Margin="1150,624,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_blau.bmp"/>
+        <Image x:Name="Start_blau_2" HorizontalAlignment="Left" Height="62" Margin="1215,624,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_blau.bmp"/>
+        <Image x:Name="Start_gelb_3" HorizontalAlignment="Left" Height="62" Margin="566,103,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_gelb.bmp"/>
+        <Image x:Name="Start_gelb_4" HorizontalAlignment="Left" Height="62" Margin="631,103,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_gelb.bmp"/>
+        <Image x:Name="Start_gelb_1" HorizontalAlignment="Left" Height="62" Margin="566,38,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_gelb.bmp"/>
+        <Image x:Name="Start_gelb_2" HorizontalAlignment="Left" Height="62" Margin="631,38,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_gelb.bmp"/>
+        <Image x:Name="Start_gruen_3" HorizontalAlignment="Left" Height="62" Margin="1150,103,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_gruen.bmp"/>
+        <Image x:Name="Start_gruen_4" HorizontalAlignment="Left" Height="62" Margin="1215,103,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_gruen.bmp"/>
+        <Image x:Name="Start_gruen_1" HorizontalAlignment="Left" Height="62" Margin="1150,38,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_gruen.bmp"/>
+        <Image x:Name="Start_gruen_2" HorizontalAlignment="Left" Height="62" Margin="1215,38,0,0" VerticalAlignment="Top" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_gruen.bmp"/>
+        <Label x:Name="L_Spielername_gelb" Content="Spieler: " HorizontalAlignment="Left" Margin="405,38,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.732,1.172"/>
+        <Label x:Name="L_Spielername_gruen" Content="Spieler: " HorizontalAlignment="Left" Margin="1282,38,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.732,1.172"/>
+        <Label x:Name="L_Spielername_rot" Content="Spieler: " HorizontalAlignment="Left" Margin="405,624,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.732,1.172"/>
+        <Label x:Name="L_Spielername_blau" Content="Spieler: " HorizontalAlignment="Left" Margin="1282,624,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.732,1.172"/>
+        <Button x:Name="Btn_Wuerfel" Content="Würfel" HorizontalAlignment="Left" Margin="893,365,0,0" VerticalAlignment="Top" Width="59" Height="61"/>
+        <TextBox x:Name="Chat_eingabe" HorizontalAlignment="Left" Height="90" Margin="39,626,0,0" TextWrapping="Wrap" Text="Schreibe eine Nachricht" VerticalAlignment="Top" Width="269" BorderBrush="Red" KeyDown="Chat_eingabe_KeyDown" GotFocus="Chat_eingabe_GotFocus" LostFocus="Chat_eingabe_LostFocus"/>
+        <TabControl x:Name="TabControl_Chat" HorizontalAlignment="Left" Height="177" Margin="39,444,0,0" VerticalAlignment="Top" Width="290">
+            <TabItem x:Name="Spieler_rot" Header="{Binding Content, ElementName=L_Spielername_rot}" GotFocus="Spieler_rot_GotFocus">
+                <Grid Background="#FFE5E5E5">
+                    <TextBox x:Name="Chat_rot" HorizontalAlignment="Left" Height="148" VerticalAlignment="Top" Width="284" IsReadOnly="True" VerticalScrollBarVisibility="Visible" BorderBrush="White" />
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="Spieler_gelb" Header="{Binding Content, ElementName=L_Spielername_gelb}">
+                <Grid Background="#FFE5E5E5">
+                    <TextBox x:Name="Chat_gelb"  HorizontalAlignment="Left" Height="148" VerticalAlignment="Top" Width="284" IsReadOnly="True" VerticalScrollBarVisibility="Visible" BorderBrush="White" />
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="Spieler_gruen" Header="{Binding Content, ElementName=L_Spielername_gruen}">
+                <Grid Background="#FFE5E5E5">
+                    <TextBox x:Name="Chat_gruen"  HorizontalAlignment="Left" Height="148" VerticalAlignment="Top" Width="284" IsReadOnly="True" VerticalScrollBarVisibility="Visible" BorderBrush="White" />
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="Spieler_blau" Header="{Binding Content, ElementName=L_Spielername_blau}">
+                <Grid Background="#FFE5E5E5">
+                    <TextBox x:Name="Chat_blau"  HorizontalAlignment="Left" Height="148" VerticalAlignment="Top" Width="284" IsReadOnly="True" VerticalScrollBarVisibility="Visible" BorderBrush="White" />
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="Gruppenchat" Header="Gruppe">
+                <Grid Background="#FFE5E5E5">
+                    <TextBox x:Name="Chat_gruppe"  HorizontalAlignment="Left" Height="148" VerticalAlignment="Top" Width="284" IsReadOnly="True" VerticalScrollBarVisibility="Visible" BorderBrush="White" />
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <Button x:Name="Btn_senden" Content="Senden" HorizontalAlignment="Left" Margin="39,721,0,0" VerticalAlignment="Top" Width="75" Click="Btn_senden_Click"/>
+    </Grid>
 </UserControl>
