@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 // Namenskonvention: --------------------------------------+
 //                                                         |
@@ -48,5 +49,13 @@ namespace Abschlussprojekt.Klassen
         public static List<Figur> spieler_blau = new List<Figur>();
 
         public static List<Spieler> alle_Spieler = new List<Spieler>();
+
+        public static BitmapImage Figur_rot = new BitmapImage();
+        public static BitmapImage Figur_gelb = new BitmapImage();
+        public static BitmapImage Figur_gruen = new BitmapImage();
+        public static BitmapImage Figur_blau = new BitmapImage();
+
+        public static int figur_höhe = 50;
+        public static int figur_breite = 50;
     }
 }

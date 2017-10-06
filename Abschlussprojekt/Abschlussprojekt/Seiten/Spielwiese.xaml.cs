@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using static Abschlussprojekt.Klassen.Statische_Methoden;
+using static Abschlussprojekt.Klassen.Statische_Variablen;
 using static Abschlussprojekt.Klassen.Spieler;
 
 // Namenskonvention: --------------------------------------+
@@ -37,10 +38,15 @@ namespace Abschlussprojekt.Seiten
         {
            
             InitializeComponent();
+            Initialisiere_Images_für_Figuren();
             this.lokaler_spieler = Klassen.globale_temporäre_Variablen.lokaler_spieler;
-            Initialisiere_Statische_Variablen();
+            Initialisiere_alle_Felder(Grid_Spielwiese);
             this.active_chat = new TextBox();
             Initialisiere_Spiel("","","","");
+            foreach(Klassen.Figur figur in spieler_rot)
+            {
+                Grid_Spielwiese.Children.Add(figur.bild);
+            }
 
             switch (lokaler_spieler.farbe)
             {
@@ -83,6 +89,11 @@ namespace Abschlussprojekt.Seiten
         private void Chat_eingabe_LostFocus(object sender, RoutedEventArgs e)
         {
             if (Chat_eingabe.Text == "") Chat_eingabe.Text = "Schreibe eine Nachricht";
+        }
+
+        public void Add_to_control(Image bild)
+        {
+            this.AddChild(bild);
         }
     }
 }

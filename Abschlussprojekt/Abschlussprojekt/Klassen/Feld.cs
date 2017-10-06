@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using static Abschlussprojekt.Klassen.Statische_Variablen;
 
@@ -20,15 +21,16 @@ namespace Abschlussprojekt.Klassen
 
     class Feld
     {
-        FARBE farbe { get; set; }
+        public FARBE farbe { get; set; }
         FELD_EIGENSCHAFT feld_art { get; set; }
-        Figur figur { get; set; }
-        Image bild;
+        public Figur figur { get; set; }
+        public Point position { get; }
 
-        public Feld(FARBE farbe, FELD_EIGENSCHAFT feld_art)
+        public Feld(FARBE farbe, FELD_EIGENSCHAFT feld_art,Point position)
         {
             this.farbe = farbe;
             this.feld_art = feld_art;
+            this.position = position;
 
             //
             // Hier werden die Jeweiligen Felder, die zur Laufzeit erstellt werden,

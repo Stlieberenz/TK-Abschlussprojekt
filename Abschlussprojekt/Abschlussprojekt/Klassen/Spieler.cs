@@ -21,12 +21,17 @@ namespace Abschlussprojekt.Klassen
     {
         public FARBE farbe { get; }
         public string name { get; }
+
         public Spieler(FARBE farbe,string name)
         {
             this.name = name;
             this.farbe = farbe;
             alle_Spieler.Add(this);
-            Initialisiere_Figuren(farbe);
+        }
+
+        public void Initialisiere_Figuren()
+        {
+            Statische_Methoden.Initialisiere_Figuren(this.farbe);
         }
     }
 }
