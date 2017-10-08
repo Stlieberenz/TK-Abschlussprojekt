@@ -75,7 +75,21 @@ namespace Abschlussprojekt.Klassen
                 }
             }
 
-            bild.Margin = new System.Windows.Thickness(startposition.position.X - 1550/2, startposition.position.X - 838/2, 0, 0);
+            Set_Figure_to_Start();
+            
+        }
+
+        public void Set_Figure_to_Start()
+        {
+            bild.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+            bild.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+            bild.Margin = new System.Windows.Thickness(startposition.position.X, startposition.position.Y, 0, 0);
+            
+        }
+
+        public void Set_Figureposition()
+        {
+
         }
     }
 }

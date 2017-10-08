@@ -38,6 +38,12 @@ namespace Abschlussprojekt.Klassen
             SPIELFIGURENPOSITIONEN,
             GEWÜRFELTE_ZAHL
         }
+        public enum SPIELER_ART
+        {
+            NORMALER_SPIELER,
+            COMPUTERGEGNER,
+            LEER
+        }
 
         public static List<Feld> start_felder = new List<Feld>();
         public static List<Feld> spiel_felder = new List<Feld>();

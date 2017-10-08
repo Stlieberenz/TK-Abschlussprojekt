@@ -20,12 +20,14 @@ namespace Abschlussprojekt.Klassen
     class Spieler
     {
         public FARBE farbe { get; }
+        public SPIELER_ART spieler_art { get; }
         public string name { get; }
 
-        public Spieler(FARBE farbe,string name)
+        public Spieler(FARBE farbe,string name, SPIELER_ART spieler_art)
         {
             this.name = name;
             this.farbe = farbe;
+            this.spieler_art = spieler_art;
             alle_Spieler.Add(this);
         }
 

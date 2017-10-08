@@ -23,55 +23,59 @@ namespace Abschlussprojekt.Klassen
     {
         public static void Initialisiere_alle_Felder(Grid spielwiese_grid)
         {
-            // Für jedes Image das ein Feld ist wird ein Feld Objeckt erzeugt.
-            foreach (UIElement control_element in spielwiese_grid.Children)
+            try
             {
-                if (control_element.Uid.Contains("Start_rot"))
+                // Für jedes Image das ein Feld ist wird ein Feld Objeckt erzeugt.
+                foreach (System.Windows.Controls.Image control_element in spielwiese_grid.Children)
                 {
-                    Feld start_feld = new Feld(FARBE.ROT, FELD_EIGENSCHAFT.STARTPOSITION, control_element.RenderTransformOrigin);
-                }
-                else if (control_element.Uid.Contains("Start_gelb"))
-                {
-                    Feld start_feld = new Feld(FARBE.GELB, FELD_EIGENSCHAFT.STARTPOSITION, control_element.RenderTransformOrigin);
-                }
-                else if (control_element.Uid.Contains("Start_gruen"))
-                {
-                    Feld start_feld = new Feld(FARBE.GRUEN, FELD_EIGENSCHAFT.STARTPOSITION, control_element.RenderTransformOrigin);
-                }
-                else if (control_element.Uid.Contains("Start_blau"))
-                {
-                    Feld start_feld = new Feld(FARBE.BLAU, FELD_EIGENSCHAFT.STARTPOSITION, control_element.RenderTransformOrigin);
-                }
-                else if (control_element.Uid.Contains("Feld_"))
-                {
-                    Feld feld = new Feld(FARBE.LEER, FELD_EIGENSCHAFT.SPIELFELD, control_element.RenderTransformOrigin);
-                }
-                else if (control_element.Uid.Contains("Ziel_rot"))
-                {
-                    Feld ziel_feld = new Feld(FARBE.ROT, FELD_EIGENSCHAFT.ZIEL, control_element.RenderTransformOrigin);
-                }
-                else if (control_element.Uid.Contains("Ziel_gelb"))
-                {
-                    Feld ziel_feld = new Feld(FARBE.GELB, FELD_EIGENSCHAFT.ZIEL, control_element.RenderTransformOrigin);
-                }
-                else if (control_element.Uid.Contains("Ziel_gruen"))
-                {
-                    Feld ziel_feld = new Feld(FARBE.GRUEN, FELD_EIGENSCHAFT.ZIEL, control_element.RenderTransformOrigin);
-                }
-                else if (control_element.Uid.Contains("Ziel_blau"))
-                {
-                    Feld ziel_feld = new Feld(FARBE.BLAU, FELD_EIGENSCHAFT.ZIEL, control_element.RenderTransformOrigin);
+                    Point image_point = new Point(control_element.Margin.Left, control_element.Margin.Top);
+                    if (control_element.Uid.Contains("Start_rot"))
+                    {
+                        Feld start_feld = new Feld(FARBE.ROT, FELD_EIGENSCHAFT.STARTPOSITION, image_point);
+                    }
+                    else if (control_element.Uid.Contains("Start_gelb"))
+                    {
+                        Feld start_feld = new Feld(FARBE.GELB, FELD_EIGENSCHAFT.STARTPOSITION, image_point);
+                    }
+                    else if (control_element.Uid.Contains("Start_gruen"))
+                    {
+                        Feld start_feld = new Feld(FARBE.GRUEN, FELD_EIGENSCHAFT.STARTPOSITION, image_point);
+                    }
+                    else if (control_element.Uid.Contains("Start_blau"))
+                    {
+                        Feld start_feld = new Feld(FARBE.BLAU, FELD_EIGENSCHAFT.STARTPOSITION, image_point);
+                    }
+                    else if (control_element.Uid.Contains("Feld_"))
+                    {
+                        Feld feld = new Feld(FARBE.LEER, FELD_EIGENSCHAFT.SPIELFELD, image_point);
+                    }
+                    else if (control_element.Uid.Contains("Ziel_rot"))
+                    {
+                        Feld ziel_feld = new Feld(FARBE.ROT, FELD_EIGENSCHAFT.ZIEL, image_point);
+                    }
+                    else if (control_element.Uid.Contains("Ziel_gelb"))
+                    {
+                        Feld ziel_feld = new Feld(FARBE.GELB, FELD_EIGENSCHAFT.ZIEL, image_point);
+                    }
+                    else if (control_element.Uid.Contains("Ziel_gruen"))
+                    {
+                        Feld ziel_feld = new Feld(FARBE.GRUEN, FELD_EIGENSCHAFT.ZIEL, image_point);
+                    }
+                    else if (control_element.Uid.Contains("Ziel_blau"))
+                    {
+                        Feld ziel_feld = new Feld(FARBE.BLAU, FELD_EIGENSCHAFT.ZIEL, image_point);
+                    }
                 }
             }
+            catch { }
         }
 
-        public static void Initialisiere_Spiel(string name_rot, string name_gelb, string name_gruen, string name_blau )
+        public static void Initialisiere_Spiel()
         {
-            Spieler rot = new Spieler(FARBE.ROT,name_rot);
-            Spieler gelb = new Spieler(FARBE.GELB, name_gelb);
-            Spieler gruen = new Spieler(FARBE.GRUEN, name_gruen);
-            Spieler blau = new Spieler(FARBE.BLAU, name_blau);
-            globale_temporäre_Variablen.lokaler_spieler.Initialisiere_Figuren();
+            foreach(Spieler spieler in alle_Spieler)
+            {
+                spieler.Initialisiere_Figuren();
+            }
         }
 
         public static void Initialisiere_Figuren(FARBE farbe)
@@ -89,13 +93,13 @@ namespace Abschlussprojekt.Klassen
             Figur_rot.UriSource = new Uri(pfad + "/Bilder/Figur_rot.bmp");
             Figur_rot.EndInit();
             Figur_gelb.BeginInit();
-            Figur_gelb.UriSource = new Uri(pfad + "/Bilder/Figur_rot.bmp");
+            Figur_gelb.UriSource = new Uri(pfad + "/Bilder/Figur_gelb.bmp");
             Figur_gelb.EndInit();
             Figur_gruen.BeginInit();
-            Figur_gruen.UriSource = new Uri(pfad + "/Bilder/Figur_rot.bmp");
+            Figur_gruen.UriSource = new Uri(pfad + "/Bilder/Figur_gruen.bmp");
             Figur_gruen.EndInit();
             Figur_blau.BeginInit();
-            Figur_blau.UriSource = new Uri(pfad + "/Bilder/Figur_rot.bmp");
+            Figur_blau.UriSource = new Uri(pfad + "/Bilder/Figur_blau.bmp");
             Figur_blau.EndInit();
         }
 

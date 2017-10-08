@@ -54,7 +54,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Klassen\Computergegner.cs" />
     <Compile Include="Klassen\globale_temporäre_Variablen.cs" />
     <Compile Include="Seiten\Spielwiese.xaml.cs">
       <DependentUpon>Spielwiese.xaml</DependentUpon>

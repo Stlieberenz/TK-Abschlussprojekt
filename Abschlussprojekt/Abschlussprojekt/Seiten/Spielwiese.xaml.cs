@@ -42,18 +42,33 @@ namespace Abschlussprojekt.Seiten
             this.lokaler_spieler = Klassen.globale_temporäre_Variablen.lokaler_spieler;
             Initialisiere_alle_Felder(Grid_Spielwiese);
             this.active_chat = new TextBox();
-            Initialisiere_Spiel("","","","");
+            active_chat = Chat_rot;
+            Initialisiere_Spiel();
             foreach(Klassen.Figur figur in spieler_rot)
             {
                 Grid_Spielwiese.Children.Add(figur.bild);
             }
-
-            switch (lokaler_spieler.farbe)
+            foreach (Klassen.Figur figur in spieler_gelb)
             {
-                case Klassen.Statische_Variablen.FARBE.ROT: L_Spielername_rot.Content = lokaler_spieler.name; break;
-                case Klassen.Statische_Variablen.FARBE.GELB: L_Spielername_gelb.Content = lokaler_spieler.name; break;
-                case Klassen.Statische_Variablen.FARBE.GRUEN: L_Spielername_gruen.Content = lokaler_spieler.name; break;
-                case Klassen.Statische_Variablen.FARBE.BLAU: L_Spielername_blau.Content = lokaler_spieler.name; break;
+                Grid_Spielwiese.Children.Add(figur.bild);
+            }
+            foreach (Klassen.Figur figur in spieler_gruen)
+            {
+                Grid_Spielwiese.Children.Add(figur.bild);
+            }
+            foreach (Klassen.Figur figur in spieler_blau)
+            {
+                Grid_Spielwiese.Children.Add(figur.bild);
+            }
+            foreach (Klassen.Spieler spieler in alle_Spieler)
+            {
+                switch (spieler.farbe)
+                {
+                    case Klassen.Statische_Variablen.FARBE.ROT: L_Spielername_rot.Content = spieler.name; break;
+                    case Klassen.Statische_Variablen.FARBE.GELB: L_Spielername_gelb.Content = spieler.name; break;
+                    case Klassen.Statische_Variablen.FARBE.GRUEN: L_Spielername_gruen.Content = spieler.name; break;
+                    case Klassen.Statische_Variablen.FARBE.BLAU: L_Spielername_blau.Content = spieler.name; break;
+                }
             }
             // ToDo: Foreach CHildren in grid -> finde die Images heraus und füge event hinzu
         }
@@ -94,6 +109,26 @@ namespace Abschlussprojekt.Seiten
         public void Add_to_control(Image bild)
         {
             this.AddChild(bild);
+        }
+
+        private void Spieler_gelb_GotFocus(object sender, RoutedEventArgs e)
+        {
+            active_chat = Chat_gelb;
+        }
+
+        private void Spieler_gruen_GotFocus(object sender, RoutedEventArgs e)
+        {
+            active_chat = Chat_gruen;
+        }
+
+        private void Spieler_blau_GotFocus(object sender, RoutedEventArgs e)
+        {
+            active_chat = Chat_blau;
+        }
+
+        private void Gruppenchat_GotFocus(object sender, RoutedEventArgs e)
+        {
+            active_chat = Chat_gruppe;
         }
     }
 }

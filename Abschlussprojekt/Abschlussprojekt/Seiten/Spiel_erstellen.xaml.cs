@@ -95,15 +95,37 @@ namespace Abschlussprojekt.Seiten
             }
             if (temp >=2 && result == true)
             {
-                Klassen.globale_temporäre_Variablen.lokaler_spieler = Erstelle_lokalen_Spieler();
+                switch (comboBox_rot.SelectedIndex)
+                {
+                    case 1: Klassen.globale_temporäre_Variablen.lokaler_spieler = new Klassen.Spieler(Klassen.Statische_Variablen.FARBE.ROT, Spielername_eingabe.Text,Klassen.Statische_Variablen.SPIELER_ART.NORMALER_SPIELER); break;
+                    case 2: Klassen.Spieler computergegner0 = new Klassen.Spieler(Klassen.Statische_Variablen.FARBE.ROT,"computergegner0", Klassen.Statische_Variablen.SPIELER_ART.COMPUTERGEGNER);break;
+                    case 3: if (L_Name_Spieler_rot.Content.ToString() != "Offen") { Klassen.Spieler gegner = new Klassen.Spieler(Klassen.Statische_Variablen.FARBE.ROT, L_Name_Spieler_rot.Content.ToString(), Klassen.Statische_Variablen.SPIELER_ART.NORMALER_SPIELER); } break; 
+                    case 0: break;
+                }
+                switch (comboBox_gelb.SelectedIndex)
+                {
+                    case 1: Klassen.globale_temporäre_Variablen.lokaler_spieler = new Klassen.Spieler(Klassen.Statische_Variablen.FARBE.GELB, Spielername_eingabe.Text, Klassen.Statische_Variablen.SPIELER_ART.NORMALER_SPIELER); break;
+                    case 2: Klassen.Spieler computergegner0 = new Klassen.Spieler(Klassen.Statische_Variablen.FARBE.GELB, "computergegner1", Klassen.Statische_Variablen.SPIELER_ART.COMPUTERGEGNER); break;
+                    case 3: if (L_Name_Spieler_gelb.Content.ToString() != "Offen") { Klassen.Spieler gegner = new Klassen.Spieler(Klassen.Statische_Variablen.FARBE.GELB, L_Name_Spieler_rot.Content.ToString(), Klassen.Statische_Variablen.SPIELER_ART.NORMALER_SPIELER); } break; ;
+                    case 0: break;
+                }
+                switch (comboBox_gruen.SelectedIndex)
+                {
+                    case 1: Klassen.globale_temporäre_Variablen.lokaler_spieler = new Klassen.Spieler(Klassen.Statische_Variablen.FARBE.GRUEN, Spielername_eingabe.Text, Klassen.Statische_Variablen.SPIELER_ART.NORMALER_SPIELER); break;
+                    case 2: Klassen.Spieler computergegner0 = new Klassen.Spieler(Klassen.Statische_Variablen.FARBE.GRUEN, "computergegner2", Klassen.Statische_Variablen.SPIELER_ART.COMPUTERGEGNER); break;
+                    case 3: if (L_Name_Spieler_gruen.Content.ToString() != "Offen") { Klassen.Spieler gegner = new Klassen.Spieler(Klassen.Statische_Variablen.FARBE.GRUEN, L_Name_Spieler_rot.Content.ToString(), Klassen.Statische_Variablen.SPIELER_ART.NORMALER_SPIELER); } break; ;
+                    case 0: break;
+                }
+                switch (comboBox_blau.SelectedIndex)
+                {
+                    case 1: Klassen.globale_temporäre_Variablen.lokaler_spieler = new Klassen.Spieler(Klassen.Statische_Variablen.FARBE.BLAU, Spielername_eingabe.Text, Klassen.Statische_Variablen.SPIELER_ART.NORMALER_SPIELER); break;
+                    case 2: Klassen.Spieler computergegner0 = new Klassen.Spieler(Klassen.Statische_Variablen.FARBE.BLAU, "computergegner3", Klassen.Statische_Variablen.SPIELER_ART.COMPUTERGEGNER); break;
+                    case 3: if (L_Name_Spieler_blau.Content.ToString() != "Offen") { Klassen.Spieler gegner = new Klassen.Spieler(Klassen.Statische_Variablen.FARBE.BLAU, L_Name_Spieler_rot.Content.ToString(), Klassen.Statische_Variablen.SPIELER_ART.NORMALER_SPIELER); } break; ;
+                    case 0: break;
+                }
+
                 root_Frame.Content = new Spielwiese();
             }
-        }
-
-        private Klassen.Spieler Erstelle_lokalen_Spieler()
-        {
-            Klassen.Spieler lokaler_Spieler = new Klassen.Spieler(ausgewählte_farbe,Spielername_eingabe.Text);
-            return lokaler_Spieler;
         }
 
         private void comboBox_rot_SelectionChanged(object sender, SelectionChangedEventArgs e)
