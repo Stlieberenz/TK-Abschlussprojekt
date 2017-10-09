@@ -24,7 +24,7 @@ namespace Abschlussprojekt.Klassen
         public Feld startposition { get; }
         public Feld aktuelle_Position { get; set; }
         public Feld mögliche_Position { get; }
-        public FARBE farbe { get;  }
+        public FARBE farbe { get; }
 
         public Figur(FARBE farbe)
         {
@@ -64,8 +64,10 @@ namespace Abschlussprojekt.Klassen
 
             bild.Height = figur_höhe;
             bild.Width = figur_breite;
-            
-            foreach(Feld startfeld in start_felder)
+            bild.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+            bild.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+
+            foreach (Feld startfeld in start_felder)
             {
                 if (startfeld.farbe == this.farbe && startfeld.figur == null) // In diesem IF Block wird einem Freien startfeld für die jeweilige farbe die figur zugewiesen und der Figur das ausgewählte Startfeld.
                 {
@@ -81,15 +83,24 @@ namespace Abschlussprojekt.Klassen
 
         public void Set_Figure_to_Start()
         {
-            bild.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
-            bild.VerticalAlignment = System.Windows.VerticalAlignment.Top;
             bild.Margin = new System.Windows.Thickness(startposition.position.X, startposition.position.Y, 0, 0);
-            
         }
 
-        public void Set_Figureposition()
+        public void Set_Figureposition(Feld feld)
         {
-
+            if (feld.figur != null)
+            {
+                if (feld.figur.farbe != this.farbe)
+                {
+                    feld.Set_figur(this);
+                    aktuelle_Position = feld;
+                    bild.Margin = new System.Windows.Thickness(aktuelle_Position.position.X, aktuelle_Position.position.Y, 0, 0);
+                }
+                else return;
+            }
+            feld.Set_figur(this);
+            aktuelle_Position = feld;
+            bild.Margin = new System.Windows.Thickness(aktuelle_Position.position.X, aktuelle_Position.position.Y, 0, 0);
         }
     }
 }

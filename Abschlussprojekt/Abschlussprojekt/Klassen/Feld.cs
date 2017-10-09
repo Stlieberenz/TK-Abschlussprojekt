@@ -26,7 +26,7 @@ namespace Abschlussprojekt.Klassen
         public Figur figur { get; set; }
         public Point position { get; }
 
-        public Feld(FARBE farbe, FELD_EIGENSCHAFT feld_art,Point position)
+        public Feld(FARBE farbe, FELD_EIGENSCHAFT feld_art, Point position)
         {
             this.farbe = farbe;
             this.feld_art = feld_art;
@@ -36,12 +36,19 @@ namespace Abschlussprojekt.Klassen
             // Hier werden die Jeweiligen Felder, die zur Laufzeit erstellt werden,
             // den jeweiligen statischen Listen hinzugefügt.
             //
-            switch (feld_art) 
+            switch (feld_art)
             {
                 case FELD_EIGENSCHAFT.STARTPOSITION: start_felder.Add(this); break;
                 case FELD_EIGENSCHAFT.SPIELFELD: spiel_felder.Add(this); break;
                 case FELD_EIGENSCHAFT.ZIEL: ziel_felder.Add(this); break;
             }
+
+        }
+
+        public void Set_figur(Figur figur)
+        {
+            if (this.figur != null) this.figur.Set_Figure_to_Start();
+            else this.figur = figur;
         }
     }
 }

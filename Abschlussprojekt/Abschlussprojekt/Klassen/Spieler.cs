@@ -22,6 +22,7 @@ namespace Abschlussprojekt.Klassen
         public FARBE farbe { get; }
         public SPIELER_ART spieler_art { get; }
         public string name { get; }
+        public bool status { get; set; }
 
         public Spieler(FARBE farbe,string name, SPIELER_ART spieler_art)
         {

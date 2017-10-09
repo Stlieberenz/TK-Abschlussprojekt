@@ -23,3 +23,5 @@ D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\A
 D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Abschlussprojekt\obj\Debug\Seiten\Spiel_erstellen.baml
 D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Abschlussprojekt\obj\Debug\Seiten\Spiel_beitreten.g.cs
 D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Abschlussprojekt\obj\Debug\Seiten\Spiel_beitreten.baml
+D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Abschlussprojekt\obj\Debug\Abschlussprojekt_Content.g.cs
+D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Abschlussprojekt\bin\Debug\Datenbank\Datenbank.mdb

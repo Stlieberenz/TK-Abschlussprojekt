@@ -88,7 +88,7 @@ namespace Abschlussprojekt.Klassen
 
         public static void Initialisiere_Images_für_Figuren()
         {
-            string pfad = Erzeuge_Bildpfad();
+            string pfad = Erzeuge_Dateipfad();
             Figur_rot.BeginInit();
             Figur_rot.UriSource = new Uri(pfad + "/Bilder/Figur_rot.bmp");
             Figur_rot.EndInit();
@@ -103,11 +103,13 @@ namespace Abschlussprojekt.Klassen
             Figur_blau.EndInit();
         }
 
-        private static string Erzeuge_Bildpfad()
+        public static string Erzeuge_Dateipfad()
         {
             string temp = Directory.GetCurrentDirectory();
             string result = temp.Replace("bin\\Debug", ""); 
             return result;
         }
+
+        
     }
 }

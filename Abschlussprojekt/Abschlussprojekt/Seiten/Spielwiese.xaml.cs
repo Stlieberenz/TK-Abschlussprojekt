@@ -38,12 +38,16 @@ namespace Abschlussprojekt.Seiten
         {
            
             InitializeComponent();
-            Initialisiere_Images_für_Figuren();
             this.lokaler_spieler = Klassen.globale_temporäre_Variablen.lokaler_spieler;
-            Initialisiere_alle_Felder(Grid_Spielwiese);
-            this.active_chat = new TextBox();
             active_chat = Chat_rot;
-            Initialisiere_Spiel();
+
+            Initialisiere_Images_für_Figuren(); // Hier werden die Bilder für die Figuren geladen.
+            Initialisiere_alle_Felder(Grid_Spielwiese);// Hier werden alle Felder anhand der UIElement Control elemente erzeugt.
+            Initialisiere_Spiel(); // Hier werden die Spielfiguren der Spieler erzeugt.
+
+            //
+            //Hier wird jede figur der oberfläche hinzugefügt
+            //
             foreach(Klassen.Figur figur in spieler_rot)
             {
                 Grid_Spielwiese.Children.Add(figur.bild);
@@ -129,6 +133,11 @@ namespace Abschlussprojekt.Seiten
         private void Gruppenchat_GotFocus(object sender, RoutedEventArgs e)
         {
             active_chat = Chat_gruppe;
+        }
+
+        private void Btn_Wuerfel_Click(object sender, RoutedEventArgs e)
+        {
+           
         }
     }
 }

@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
+using System.Data.SqlClient;
+using Abschlussprojekt.Klassen;
+using System.Windows.Controls;
+using System.Net;
 
 // Namenskonvention: --------------------------------------+
 //                                                         |
@@ -56,6 +60,8 @@ namespace Abschlussprojekt.Klassen
 
         public static List<Spieler> alle_Spieler = new List<Spieler>();
 
+        public static List<TextBox> Beitrittslabel = new List<TextBox>();
+
         public static BitmapImage Figur_rot = new BitmapImage();
         public static BitmapImage Figur_gelb = new BitmapImage();
         public static BitmapImage Figur_gruen = new BitmapImage();
@@ -63,5 +69,9 @@ namespace Abschlussprojekt.Klassen
 
         public static int figur_höhe = 50;
         public static int figur_breite = 50;
+        
+        public static List<Host> alle_Hosts = new List<Host>();
+        public static ListBox hosts = new ListBox();
+        
     }
 }

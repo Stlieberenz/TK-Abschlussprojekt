@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Abschlussprojekt.Klassen;
 
 // Namenskonvention: --------------------------------------+
 //                                                         |
@@ -34,12 +35,21 @@ namespace Abschlussprojekt.Seiten
         {
             this.root_Frame = root_Frame;
             InitializeComponent();
+            Statische_Variablen.hosts = Hosts;
+            Netzwerkkommunikation.Update_Hostinformationen("Hostinformationen,192.168.0.227,Horstgünter");
+            Netzwerkkommunikation.Update_Hostinformationen("Hostinformationen,192.168.0.228,Queen");
+            Netzwerkkommunikation.Update_Hostinformationen("Hostinformationen,192.168.0.229,Rammstein");
         }
 
         private void btn_beitreten_Click(object sender, RoutedEventArgs e)
         {
             // #### Muss später durch richtigen Code ersetzt werden ####
             root_Frame.Content = new Spiel_beitreten(root_Frame);
+        }
+
+        private void btn_aktualisieren_Click(object sender, RoutedEventArgs e)
+        {
+            Hosts.Items.Clear();
         }
     }
 }

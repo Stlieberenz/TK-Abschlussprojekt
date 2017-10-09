@@ -24,6 +24,7 @@ namespace Abschlussprojekt
         {
             InitializeComponent();
             rootFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;
+            Klassen.Datenbankschnittstelle.init();
             rootFrame.Content = new Seiten.Startseite(rootFrame);
         }
     }

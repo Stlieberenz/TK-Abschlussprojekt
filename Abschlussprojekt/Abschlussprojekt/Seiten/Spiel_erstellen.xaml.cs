@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static Abschlussprojekt.Klassen.Statische_Variablen;
 
 // Namenskonvention: --------------------------------------+
 //                                                         |
@@ -106,21 +107,21 @@ namespace Abschlussprojekt.Seiten
                 {
                     case 1: Klassen.globale_temporäre_Variablen.lokaler_spieler = new Klassen.Spieler(Klassen.Statische_Variablen.FARBE.GELB, Spielername_eingabe.Text, Klassen.Statische_Variablen.SPIELER_ART.NORMALER_SPIELER); break;
                     case 2: Klassen.Spieler computergegner0 = new Klassen.Spieler(Klassen.Statische_Variablen.FARBE.GELB, "computergegner1", Klassen.Statische_Variablen.SPIELER_ART.COMPUTERGEGNER); break;
-                    case 3: if (L_Name_Spieler_gelb.Content.ToString() != "Offen") { Klassen.Spieler gegner = new Klassen.Spieler(Klassen.Statische_Variablen.FARBE.GELB, L_Name_Spieler_rot.Content.ToString(), Klassen.Statische_Variablen.SPIELER_ART.NORMALER_SPIELER); } break; ;
+                    case 3: if (L_Name_Spieler_gelb.Content.ToString() != "Offen") { Klassen.Spieler gegner = new Klassen.Spieler(Klassen.Statische_Variablen.FARBE.GELB, L_Name_Spieler_gelb.Content.ToString(), Klassen.Statische_Variablen.SPIELER_ART.NORMALER_SPIELER); } break; ;
                     case 0: break;
                 }
                 switch (comboBox_gruen.SelectedIndex)
                 {
                     case 1: Klassen.globale_temporäre_Variablen.lokaler_spieler = new Klassen.Spieler(Klassen.Statische_Variablen.FARBE.GRUEN, Spielername_eingabe.Text, Klassen.Statische_Variablen.SPIELER_ART.NORMALER_SPIELER); break;
                     case 2: Klassen.Spieler computergegner0 = new Klassen.Spieler(Klassen.Statische_Variablen.FARBE.GRUEN, "computergegner2", Klassen.Statische_Variablen.SPIELER_ART.COMPUTERGEGNER); break;
-                    case 3: if (L_Name_Spieler_gruen.Content.ToString() != "Offen") { Klassen.Spieler gegner = new Klassen.Spieler(Klassen.Statische_Variablen.FARBE.GRUEN, L_Name_Spieler_rot.Content.ToString(), Klassen.Statische_Variablen.SPIELER_ART.NORMALER_SPIELER); } break; ;
+                    case 3: if (L_Name_Spieler_gruen.Content.ToString() != "Offen") { Klassen.Spieler gegner = new Klassen.Spieler(Klassen.Statische_Variablen.FARBE.GRUEN, L_Name_Spieler_gruen.Content.ToString(), Klassen.Statische_Variablen.SPIELER_ART.NORMALER_SPIELER); } break; ;
                     case 0: break;
                 }
                 switch (comboBox_blau.SelectedIndex)
                 {
                     case 1: Klassen.globale_temporäre_Variablen.lokaler_spieler = new Klassen.Spieler(Klassen.Statische_Variablen.FARBE.BLAU, Spielername_eingabe.Text, Klassen.Statische_Variablen.SPIELER_ART.NORMALER_SPIELER); break;
                     case 2: Klassen.Spieler computergegner0 = new Klassen.Spieler(Klassen.Statische_Variablen.FARBE.BLAU, "computergegner3", Klassen.Statische_Variablen.SPIELER_ART.COMPUTERGEGNER); break;
-                    case 3: if (L_Name_Spieler_blau.Content.ToString() != "Offen") { Klassen.Spieler gegner = new Klassen.Spieler(Klassen.Statische_Variablen.FARBE.BLAU, L_Name_Spieler_rot.Content.ToString(), Klassen.Statische_Variablen.SPIELER_ART.NORMALER_SPIELER); } break; ;
+                    case 3: if (L_Name_Spieler_blau.Content.ToString() != "Offen") { Klassen.Spieler gegner = new Klassen.Spieler(Klassen.Statische_Variablen.FARBE.BLAU, L_Name_Spieler_blau.Content.ToString(), Klassen.Statische_Variablen.SPIELER_ART.NORMALER_SPIELER); } break; ;
                     case 0: break;
                 }
 
@@ -180,6 +181,62 @@ namespace Abschlussprojekt.Seiten
         private void Spielername_eingabe_GotFocus(object sender, RoutedEventArgs e)
         {
             if (Spielername_eingabe.Text == "Hier Namen eingeben") Spielername_eingabe.Text = "";
+        }
+
+        public void Setze_externen_Spieler_auf_leeren_slot(string farbe, string name)
+        {
+            switch (farbe)
+            {
+                case "rot":
+                    {
+                        if (comboBox_rot.SelectedIndex == 3 && L_Name_Spieler_rot.Content.ToString() != "Offen")
+                        {
+                            L_Name_Spieler_rot.Content = name;
+                            comboBox_rot.IsEnabled = false;
+                        }
+                        break;
+                    }
+                case "gelb":
+                    {
+                        if (comboBox_gelb.SelectedIndex == 3 && L_Name_Spieler_gelb.Content.ToString() != "Offen")
+                        {
+                            L_Name_Spieler_gelb.Content = name;
+                            comboBox_gelb.IsEnabled = false;
+                        }
+                        break;
+                    }
+                case "gruen":
+                    {
+                        if (comboBox_gruen.SelectedIndex == 3 && L_Name_Spieler_gruen.Content.ToString() != "Offen")
+                        {
+                            L_Name_Spieler_gruen.Content = name;
+                            comboBox_gruen.IsEnabled = false;
+                        }
+                        break;
+                    }
+                case "blau":
+                    {
+                        if (comboBox_blau.SelectedIndex == 3 && L_Name_Spieler_blau.Content.ToString() == "Offen")
+                        {
+                            L_Name_Spieler_blau.Content = name;
+                            comboBox_blau.IsEnabled = false;
+                        }
+                        break;
+                    }
+            }
+        }
+
+        private void dvbtn_Click(object sender, RoutedEventArgs e)
+        {
+            Setze_externen_Spieler_auf_leeren_slot("blau", "Horst");
+        }
+
+        private void btn_abbrechen_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Achtung!", "Wollen sie wirklich abbrechen ?!", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                root_Frame.Content = new Startseite(root_Frame);
+            }
         }
     }
 }
