@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -31,7 +32,9 @@ namespace Abschlussprojekt.Seiten
     public partial class Spiel_erstellen : UserControl
     {
         Frame root_Frame;
-        Klassen.Statische_Variablen.FARBE ausgewählte_farbe;
+        FARBE ausgewählte_farbe;
+        bool broadcast_status = true;
+
         public Spiel_erstellen(Frame root_Frame)
         {
             this.ausgewählte_farbe = Klassen.Statische_Variablen.FARBE.LEER;
@@ -39,6 +42,7 @@ namespace Abschlussprojekt.Seiten
             InitializeComponent();
             this.comboBox_rot.SelectedIndex = 1;
             this.comboBox_gelb.SelectedIndex = 2;
+            Task send_Broadcast = Task.Factory.StartNew(Send_Broadcast);
         }
 
         private void btn_spiel_starten_Click(object sender, RoutedEventArgs e)
@@ -125,8 +129,10 @@ namespace Abschlussprojekt.Seiten
                     case 0: break;
                 }
 
+                broadcast_status = false;
                 root_Frame.Content = new Spielwiese();
             }
+            
         }
 
         private void comboBox_rot_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -235,7 +241,18 @@ namespace Abschlussprojekt.Seiten
         {
             if (MessageBox.Show("Achtung!", "Wollen sie wirklich abbrechen ?!", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
+                broadcast_status = false;
                 root_Frame.Content = new Startseite(root_Frame);
+            }
+        }
+
+        private void Send_Broadcast()
+        {
+            while (broadcast_status)
+            {
+                Klassen.Netzwerkkommunikation.SendBroadcastPacket("Beitrittsinformationen," + eigene_IPAddresse.ToString() +","+ Host_name);
+                Console.WriteLine("BC gesendet");
+                Thread.Sleep(1000);// Ein mal in der Sekunde wird ein Broadcast gesendet;
             }
         }
     }

@@ -25,7 +25,17 @@ namespace Abschlussprojekt
             InitializeComponent();
             rootFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;
             Klassen.Datenbankschnittstelle.init();
+            Klassen.Netzwerkkommunikation.Iinitialisiere_IP_Addresse();
+            Task task1 = Task.Factory.StartNew(TCPListener);
             rootFrame.Content = new Seiten.Startseite(rootFrame);
+        }
+
+        static void TCPListener()
+        {
+            while (true)
+            {
+                Klassen.Netzwerkkommunikation.Start_TCP_Listener();
+            }
         }
     }
 }

@@ -103,6 +103,7 @@ namespace Abschlussprojekt.Klassen
             Figur_blau.EndInit();
         }
 
+
         public static string Erzeuge_Dateipfad()
         {
             string temp = Directory.GetCurrentDirectory();

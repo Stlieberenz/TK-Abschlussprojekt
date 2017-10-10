@@ -8,11 +8,21 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
+// Namenskonvention: --------------------------------------+
+//                                                         |
+// Alle Wörter eines Namens werden mit einem "_" getrennt. |
+// Klassen     = Klasse_Bsp    => erster Buchstabe groß    |
+// Methoden    = Methode_Bsp   => erster Buchstabe groß    |
+// Variable    = variable_Bsp  => erster Buchstabe klein   |
+// ENUM        = ENUM_BSP      => alle Buchstaben groß     |
+//---------------------------------------------------------+
+
 namespace Abschlussprojekt.Klassen
 {
     class Datenbankschnittstelle
     {
         public static OleDbConnection Datenbankverbindung = new OleDbConnection();
+
         public static void init() // Einrichten der Datenbankverbindung
         {
             string[] directoryfiles = Directory.GetFiles(Klassen.Statische_Methoden.Erzeuge_Dateipfad() + "/Datenbank");

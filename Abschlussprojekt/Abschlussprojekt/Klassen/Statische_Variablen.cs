@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using Abschlussprojekt.Klassen;
 using System.Windows.Controls;
 using System.Net;
+using System.Net.Sockets;
 
 // Namenskonvention: --------------------------------------+
 //                                                         |
@@ -49,6 +50,8 @@ namespace Abschlussprojekt.Klassen
             LEER
         }
 
+        public static string Host_name;
+
         public static List<Feld> start_felder = new List<Feld>();
         public static List<Feld> spiel_felder = new List<Feld>();
         public static List<Feld> ziel_felder = new List<Feld>();
@@ -72,6 +75,10 @@ namespace Abschlussprojekt.Klassen
         
         public static List<Host> alle_Hosts = new List<Host>();
         public static ListBox hosts = new ListBox();
-        
+
+        public static IPAddress eigene_IPAddresse = new IPAddress(0);
+        public static int port = 50000;
+        public static UdpClient receivingUdpClient = new UdpClient(port);
+        public static Grid Spiel_Suchen = new Grid();
     }
 }

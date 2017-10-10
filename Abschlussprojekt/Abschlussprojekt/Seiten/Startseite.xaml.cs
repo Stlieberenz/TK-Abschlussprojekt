@@ -39,6 +39,7 @@ namespace Abschlussprojekt.Seiten
 
         private void Btn_Spiel_starten_Click(object sender, RoutedEventArgs e)
         {
+            Klassen.Statische_Variablen.Host_name = Spielername.Text;
             root_Frame.Content = new Spiel_erstellen(root_Frame);
         }
 

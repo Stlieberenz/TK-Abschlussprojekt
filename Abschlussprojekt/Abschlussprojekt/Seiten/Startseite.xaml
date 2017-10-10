@@ -7,8 +7,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <Button x:Name="Btn_Spiel_starten" Content="Spiel starten" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Click="Btn_Spiel_starten_Click"/>
-        <Button x:Name="btn_Spiel_suchen" Content="Spiel suchen" HorizontalAlignment="Left" Margin="10,34,0,0" VerticalAlignment="Top" Width="75" Click="btn_Spiel_suchen_Click"/>
+        <Button x:Name="Btn_Spiel_starten" Content="Spiel starten" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Click="Btn_Spiel_starten_Click" Height="24"/>
+        <Button x:Name="btn_Spiel_suchen" Content="Spiel suchen" HorizontalAlignment="Left" Margin="10,42,0,0" VerticalAlignment="Top" Width="75" Click="btn_Spiel_suchen_Click"/>
+        <TextBox x:Name="Spielername" HorizontalAlignment="Left" Height="23" Margin="90,11,0,0" TextWrapping="Wrap" Text="Host_name" VerticalAlignment="Top" Width="120"/>
 
     </Grid>
 </UserControl>
