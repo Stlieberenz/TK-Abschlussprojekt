@@ -20,11 +20,25 @@ namespace Abschlussprojekt.Klassen
     {
         public string hostname { get; }
         public IPAddress host_ip { get; }
+        public int freie_plätze { get; set; }
+        public int freie_farben { get; set; }
+        public string Spieler_rot { get; set; }
+        public string Spieler_gelb { get; set; }
+        public string Spieler_gruen { get; set; }
+        public string Spieler_blau { get; set; }
 
         public Host(string hostname, IPAddress host_ip)
         {
             this.hostname = hostname;
             this.host_ip = host_ip;
+            this.freie_plätze = 0;
+            Statische_Variablen.alle_Hosts.Add(this);
+        }
+        public Host(string hostname, IPAddress host_ip,int freie_plätze)
+        {
+            this.hostname = hostname;
+            this.host_ip = host_ip;
+            this.freie_plätze = freie_plätze;
             Statische_Variablen.alle_Hosts.Add(this);
         }
     }

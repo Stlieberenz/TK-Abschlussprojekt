@@ -40,12 +40,19 @@ namespace Abschlussprojekt.Seiten
         private void Btn_Spiel_starten_Click(object sender, RoutedEventArgs e)
         {
             Klassen.Statische_Variablen.Host_name = Spielername.Text;
+            Klassen.globale_temporäre_Variablen.eigener_Host = new Klassen.Host(Spielername.Text, Klassen.Statische_Variablen.eigene_IPAddresse);
             root_Frame.Content = new Spiel_erstellen(root_Frame);
         }
 
         private void btn_Spiel_suchen_Click(object sender, RoutedEventArgs e)
         {
             root_Frame.Content = new Spiel_suchen(root_Frame);
+        }
+
+        private void btn_Beenden_Click(object sender, RoutedEventArgs e)
+        {
+            Klassen.Statische_Variablen.mainWindow.Close();
+            Application.Current.Shutdown();
         }
     }
 }

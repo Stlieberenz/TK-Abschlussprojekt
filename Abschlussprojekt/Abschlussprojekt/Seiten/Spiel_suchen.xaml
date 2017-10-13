@@ -5,12 +5,29 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Abschlussprojekt.Seiten"
       mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300">
+      d:DesignHeight="379.832" d:DesignWidth="763.866">
 
     <Grid x:Name="Spiel_suchen_grid" Background="White">
-        <ListBox x:Name="Hosts" HorizontalAlignment="Left" Height="141" Margin="52,73,0,0" VerticalAlignment="Top" Width="168"/>
+        <ListBox x:Name="Hosts" HorizontalAlignment="Left" Height="141" Margin="52,73,0,0" VerticalAlignment="Top" Width="168" SelectionChanged="Hosts_SelectionChanged"/>
         <Button x:Name="btn_aktualisieren" Content="aktualisieren" HorizontalAlignment="Left" Margin="52,219,0,0" VerticalAlignment="Top" Width="75" Click="btn_aktualisieren_Click"/>
-        <Button x:Name="btn_beitreten" Content="Beitreten" HorizontalAlignment="Left" Margin="145,219,0,0" VerticalAlignment="Top" Width="75" Click="btn_beitreten_Click"/>
+        <Button x:Name="btn_beitreten" Content="Beitreten" HorizontalAlignment="Left" Margin="239,272,0,0" VerticalAlignment="Top" Width="75" Click="btn_beitreten_Click"/>
+        <Button x:Name="btn_zurück" Content="zurück" HorizontalAlignment="Left" Margin="145,219,0,0" VerticalAlignment="Top" Width="75" Click="btn_zurueck_Click"/>
+        <Label Content="Spieler rot: " HorizontalAlignment="Left" Margin="234,113,0,0" VerticalAlignment="Top" Width="80"/>
+        <Label Content="Spieler gelb: " HorizontalAlignment="Left" Margin="234,140,0,0" VerticalAlignment="Top" Width="80"/>
+        <Label Content="Spieler grün: " HorizontalAlignment="Left" Margin="234,167,0,0" VerticalAlignment="Top"/>
+        <Label Content="Spieler blau: " HorizontalAlignment="Left" Margin="234,194,0,0" VerticalAlignment="Top" Width="80"/>
+        <TextBox x:Name="L_Name_Spieler_rot" Text="Offen" HorizontalAlignment="Left" Margin="319,113,0,0" VerticalAlignment="Top" Width="218" BorderBrush="Red" BorderThickness="0,0,0,1" IsReadOnlyCaretVisible="True" Focusable="False" TextChanged="L_Name_Spieler_rot_TextChanged"/>
+        <TextBox x:Name="L_Name_Spieler_gelb" Text="Offen" HorizontalAlignment="Left" Margin="319,140,0,0" VerticalAlignment="Top" Width="218" BorderBrush="#FFFFE500" BorderThickness="0,0,0,1" IsReadOnlyCaretVisible="True" Focusable="False" TextChanged="L_Name_Spieler_gelb_TextChanged"/>
+        <TextBox x:Name="L_Name_Spieler_gruen" Text="Offen" HorizontalAlignment="Left" Margin="319,167,0,0" VerticalAlignment="Top" Width="218" BorderThickness="0,0,0,1" BorderBrush="#FF0FFF00" IsReadOnlyCaretVisible="True" Focusable="False" TextChanged="L_Name_Spieler_gruen_TextChanged"/>
+        <TextBox x:Name="L_Name_Spieler_blau" Text="Offen" HorizontalAlignment="Left" Margin="319,194,0,0" VerticalAlignment="Top" Width="218" BorderBrush="#FF002DAD" BorderThickness="0,0,0,1" IsReadOnlyCaretVisible="True" Focusable="False" TextChanged="L_Name_Spieler_blau_TextChanged"/>
+        <Label Content="Spiel beitreten" HorizontalAlignment="Left" Margin="234,73,0,0" VerticalAlignment="Top" FontSize="20"/>
+        <Button x:Name="btn_Abbrechen" Content="abbrechen" HorizontalAlignment="Left" Margin="423,272,0,0" VerticalAlignment="Top" Width="114" Height="22" Click="btn_Abbrechen_Click"/>
+        <RadioButton x:Name="RB_rot" Content="" HorizontalAlignment="Left" Margin="518,113,0,0" VerticalAlignment="Top" Checked="RB_rot_Checked"/>
+        <RadioButton x:Name="RB_gelb" Content="" HorizontalAlignment="Left" Margin="518,140,0,0" VerticalAlignment="Top" Checked="RB_gelb_Checked"/>
+        <RadioButton x:Name="RB_gruen" Content="" HorizontalAlignment="Left" Margin="518,167,0,0" VerticalAlignment="Top" Checked="RB_gruen_Checked"/>
+        <RadioButton x:Name="RB_blau" Content="" HorizontalAlignment="Left" Margin="518,194,0,0" VerticalAlignment="Top" Checked="RB_blau_Checked"/>
+        <TextBox x:Name="Spieler_name" HorizontalAlignment="Left" Height="23" Margin="239,237,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="218" Text="Gib einen Spielernamen ein" GotFocus="Spieler_name_GotFocus" LostFocus="Spieler_name_LostFocus"/>
+        <Label Content="max 20 Zeichen" HorizontalAlignment="Left" Margin="462,233,0,0" VerticalAlignment="Top" Width="102"/>
 
     </Grid>
 </UserControl>

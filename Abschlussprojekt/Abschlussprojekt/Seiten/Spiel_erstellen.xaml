@@ -5,16 +5,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Abschlussprojekt.Seiten"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="400" Background="White">
+             d:DesignHeight="316.807" d:DesignWidth="510.084" Background="White">
     <Grid>
         <Label Content="Spieler rot: " HorizontalAlignment="Left" Margin="20,50,0,0" VerticalAlignment="Top" Width="85" Background="Red" Foreground="Black" FontWeight="Bold"/>
         <Label Content="Spieler gelb: " HorizontalAlignment="Left" Margin="20,77,0,0" VerticalAlignment="Top" Width="85" Foreground="Black" Background="#FFFFF700" FontWeight="Bold"/>
         <Label Content="Spieler grün: " HorizontalAlignment="Left" Margin="20,104,0,0" VerticalAlignment="Top" Background="#FF2BFF00" FontWeight="Bold"/>
         <Label Content="Spieler blau: " HorizontalAlignment="Left" Margin="20,131,0,0" VerticalAlignment="Top" Width="85" Background="#FF2543C2" FontWeight="Bold"/>
-        <Label x:Name="L_Name_Spieler_rot" Content="{Binding SelectedItem.Content, ElementName=comboBox_rot, Mode=OneWay}" HorizontalAlignment="Left" Margin="105,50,0,0" VerticalAlignment="Top" Foreground="Black"/>
-        <Label x:Name="L_Name_Spieler_gelb" Content="{Binding SelectedItem.Content, ElementName=comboBox_gelb, Mode=OneWay}" HorizontalAlignment="Left" Margin="105,77,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="L_Name_Spieler_gruen" Content="{Binding SelectedItem.Content, ElementName=comboBox_gruen, Mode=OneWay}" HorizontalAlignment="Left" Margin="105,104,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="L_Name_Spieler_blau" Content="{Binding SelectedItem.Content, ElementName=comboBox_blau, Mode=OneWay}" HorizontalAlignment="Left" Margin="105,131,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="L_Name_Spieler_rot" Text="{Binding SelectedItem.Content, ElementName=comboBox_rot, Mode=OneWay}" HorizontalAlignment="Left" Margin="105,50,0,0" VerticalAlignment="Top" Foreground="Black" TextChanged="L_Name_Spieler_rot_TextChanged" Focusable="False" IsReadOnly="True"/>
+        <TextBox x:Name="L_Name_Spieler_gelb" Text="{Binding SelectedItem.Content, ElementName=comboBox_gelb, Mode=OneWay}" HorizontalAlignment="Left" Margin="105,77,0,0" VerticalAlignment="Top" TextChanged="L_Name_Spieler_gelb_TextChanged" Focusable="False" IsReadOnly="True"/>
+        <TextBox x:Name="L_Name_Spieler_gruen" Text="{Binding SelectedItem.Content, ElementName=comboBox_gruen, Mode=OneWay}" HorizontalAlignment="Left" Margin="105,104,0,0" VerticalAlignment="Top" TextChanged="L_Name_Spieler_gruen_TextChanged" Focusable="False" IsReadOnly="True"/>
+        <TextBox x:Name="L_Name_Spieler_blau" Text="{Binding SelectedItem.Content, ElementName=comboBox_blau, Mode=OneWay}" HorizontalAlignment="Left" Margin="105,131,0,0" VerticalAlignment="Top" TextChanged="L_Name_Spieler_blau_TextChanged" Focusable="False" IsReadOnly="True"/>
         <ComboBox x:Name="comboBox_rot" HorizontalAlignment="Left" Margin="225,53,-45,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" SelectionChanged="comboBox_rot_SelectionChanged">
             <ComboBoxItem Content="Geschlossen"/>
             <ComboBoxItem Content="Ich"/>
@@ -40,11 +40,11 @@
             <ComboBoxItem Content="Offen"/>
         </ComboBox>
         <Label Content="Spiel erstellen" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top" FontSize="20"/>
-        <Button x:Name="btn_spiel_starten" Content="Los geht's amk" HorizontalAlignment="Left" Margin="20,205,0,0" VerticalAlignment="Top" Width="114" Height="37" Click="btn_spiel_starten_Click"/>
+        <Button x:Name="btn_spiel_starten" Content="Los geht's amk" HorizontalAlignment="Left" Margin="225,205,0,0" VerticalAlignment="Top" Width="114" Height="37" Click="btn_spiel_starten_Click"/>
         <TextBox x:Name="Spielername_eingabe" HorizontalAlignment="Left" Height="23" Margin="20,177,0,0" TextWrapping="Wrap" Text="Hier Namen eingeben" VerticalAlignment="Top" Width="200" LostFocus="Spielername_eingabe_LostFocus" GotFocus="Spielername_eingabe_GotFocus"/>
         <Label Content="max 20 Zeichen" HorizontalAlignment="Left" Margin="225,173,0,0" VerticalAlignment="Top" Width="102"/>
-        <Button x:Name="dvbtn" Content="Developbutton" HorizontalAlignment="Left" Margin="20,247,0,0" VerticalAlignment="Top" Width="101" FontWeight="Bold" FontStyle="Italic" Click="dvbtn_Click"/>
-        <Button x:Name="btn_abbrechen" Content="Abbrechen" HorizontalAlignment="Left" Margin="228,205,0,0" VerticalAlignment="Top" Width="117" Height="37" Click="btn_abbrechen_Click"/>
+        <Button x:Name="btn_abbrechen" Content="Abbrechen" HorizontalAlignment="Left" Margin="346,205,0,0" VerticalAlignment="Top" Width="117" Height="37" Click="btn_abbrechen_Click"/>
+        <Button x:Name="btn_Hosten" Content="Hosten" HorizontalAlignment="Left" Margin="20,205,0,0" VerticalAlignment="Top" Width="114" Height="37" Click="btn_Hosten_Click"/>
 
     </Grid>
 </UserControl>

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static Abschlussprojekt.Klassen.Statische_Variablen;
 using static Abschlussprojekt.Klassen.Statische_Methoden;
+using System.Net;
 
 // Namenskonvention: --------------------------------------+
 //                                                         |
@@ -23,13 +24,15 @@ namespace Abschlussprojekt.Klassen
         public SPIELER_ART spieler_art { get; }
         public string name { get; }
         public bool status { get; set; }
+        public IPAddress ip { get; }
 
-        public Spieler(FARBE farbe,string name, SPIELER_ART spieler_art)
+        public Spieler(FARBE farbe,string name, SPIELER_ART spieler_art,IPAddress ip)
         {
             this.name = name;
             this.farbe = farbe;
             this.spieler_art = spieler_art;
             alle_Spieler.Add(this);
+            this.ip = ip;
         }
 
         public void Initialisiere_Figuren()

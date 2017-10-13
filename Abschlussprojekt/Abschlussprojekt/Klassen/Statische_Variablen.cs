@@ -51,6 +51,7 @@ namespace Abschlussprojekt.Klassen
         }
 
         public static string Host_name;
+        public static MainWindow mainWindow = new MainWindow();
 
         public static List<Feld> start_felder = new List<Feld>();
         public static List<Feld> spiel_felder = new List<Feld>();
@@ -63,8 +64,9 @@ namespace Abschlussprojekt.Klassen
 
         public static List<Spieler> alle_Spieler = new List<Spieler>();
 
-        public static List<TextBox> Beitrittslabel = new List<TextBox>();
-
+        public static List<TextBox> Beitrittslabel = new List<TextBox>();//Für wenn man dem Spiel beitritt
+        public static List<TextBox> Spielerstellenlabel = new List<TextBox>();//Für wenn man ein Spiel Hostet
+        
         public static BitmapImage Figur_rot = new BitmapImage();
         public static BitmapImage Figur_gelb = new BitmapImage();
         public static BitmapImage Figur_gruen = new BitmapImage();
@@ -74,11 +76,17 @@ namespace Abschlussprojekt.Klassen
         public static int figur_breite = 50;
         
         public static List<Host> alle_Hosts = new List<Host>();
+        public static List<string> known_IP_S = new List<string>();
         public static ListBox hosts = new ListBox();
+
+        public static bool anfragen_result;
 
         public static IPAddress eigene_IPAddresse = new IPAddress(0);
         public static int port = 50000;
         public static UdpClient receivingUdpClient = new UdpClient(port);
+        //public static TcpListener myListener = new TcpListener(eigene_IPAddresse, port);
         public static Grid Spiel_Suchen = new Grid();
+
+        public static Button aktualisieren = new Button();
     }
 }
