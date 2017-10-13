@@ -81,6 +81,7 @@ namespace Abschlussprojekt.Seiten
                         RB_gruen.IsEnabled = false;
                         RB_blau.IsEnabled = false;
                         btn_Abbrechen.IsEnabled = true;
+                        Hosts.IsEnabled = false;
                     }
                 }
             }
@@ -88,7 +89,9 @@ namespace Abschlussprojekt.Seiten
 
         private void btn_aktualisieren_Click(object sender, RoutedEventArgs e)
         {
-            Hosts.Dispatcher.Invoke(new Hosts_Update(Updater));
+            Statische_Variablen.alle_Hosts.Clear();
+            Statische_Variablen.known_IP_S.Clear();
+            //Hosts.Dispatcher.Invoke(new Hosts_Update(Updater));
         }
 
         private void btn_Bestätigen_Click(object sender, RoutedEventArgs e)
@@ -179,6 +182,7 @@ namespace Abschlussprojekt.Seiten
             RB_gelb.IsEnabled = true;
             RB_gruen.IsEnabled = true;
             RB_blau.IsEnabled = true;
+            Hosts.IsEnabled = true;
         }
 
         private void invoker()
