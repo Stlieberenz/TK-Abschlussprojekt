@@ -82,7 +82,7 @@ namespace Abschlussprojekt.Klassen
         {
             for (int i = 0; i < 4; i++)
             {
-                Figur figur = new Figur(farbe);
+                Figur figur = new Figur(farbe,i);
             }
         }
 
@@ -111,6 +111,62 @@ namespace Abschlussprojekt.Klassen
             return result;
         }
 
-        
+        public static Spieler Finde_Spieler_nach_Farbe(FARBE farbe)
+        {
+            foreach(Spieler spieler in alle_Spieler)
+            {
+                if (spieler.farbe == farbe) return spieler;
+            }
+            return null;
+        }
+
+        public static FARBE Erkenne_Farbe(string farbe)
+        {
+            switch (farbe)
+            {
+                case "rot": return FARBE.ROT; 
+                case "gelb": return FARBE.GELB;
+                case "gruen": return FARBE.GRUEN;
+                case "blau": return FARBE.BLAU;
+            }
+            return FARBE.LEER;
+        }
+
+        public static string Konvertiere_FARBE_zu_string(FARBE farbe)
+        {
+            switch (farbe)
+            {
+                case FARBE.ROT: return "rot";
+                case FARBE.GELB: return "gelb";
+                case FARBE.GRUEN: return "gruen";
+                case FARBE.BLAU: return "blau";
+            }
+            return null;
+        }
+
+        public static SPIELER_ART Erkenne_Spielerart(string spielername)
+        {
+            if (spielername.Contains("Computergegner")) return SPIELER_ART.COMPUTERGEGNER;
+            else return SPIELER_ART.NORMALER_SPIELER;
+        }
+
+        public static Feld Finde_Feld(int x, int y)
+        {
+            foreach(Feld feld in spiel_felder)
+            {
+                if (feld.position.X == x && feld.position.Y == y)
+                {
+                    return feld;
+                }
+            }
+            foreach(Feld feld in ziel_felder)
+            {
+                if (feld.position.X == x && feld.position.Y == y)
+                {
+                    return feld;
+                }
+            }
+            return null;
+        }
     }
 }

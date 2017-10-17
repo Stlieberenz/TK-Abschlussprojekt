@@ -49,6 +49,7 @@ namespace Abschlussprojekt.Seiten
             Spielerstellenlabel.Add(L_Name_Spieler_gelb);
             Spielerstellenlabel.Add(L_Name_Spieler_gruen);
             Spielerstellenlabel.Add(L_Name_Spieler_blau);
+            aktive_Seite = AKTIVE_SEITE.SPIEL_ERSTELLEN;
             
         }
 
@@ -59,42 +60,12 @@ namespace Abschlussprojekt.Seiten
             //
             int temp = 0;
             bool result = true;
-            if(L_Name_Spieler_rot.Text.ToString() == "Computergegner" || L_Name_Spieler_rot.Text.ToString() == "Ich" )
-            {
-                temp++;
-            }
-            else if( L_Name_Spieler_rot.Text.ToString() == "Offen")
-            {
-                MessageBox.Show("Der Slot darf nicht offen sein. \nEs muss ein Spieler auf den Freien Slot kommen,\noder der Slot muss geschlossen werden", "Fehler", MessageBoxButton.OK);
-                return;
-            }
-            if (L_Name_Spieler_gelb.Text.ToString() == "Computergegner" || L_Name_Spieler_gelb.Text.ToString() == "Ich" )
-            {
-                temp++;
-            }
-            else if (L_Name_Spieler_gelb.Text.ToString() == "Offen")
-            {
-                MessageBox.Show("Der Slot darf nicht offen sein. \nEs muss ein Spieler auf den Freien Slot kommen,\noder der Slot muss geschlossen werden", "Fehler", MessageBoxButton.OK);
-                return;
-            }
-            if (L_Name_Spieler_gruen.Text.ToString() == "Computergegner" || L_Name_Spieler_gruen.Text.ToString() == "Ich" )
-            {
-                temp++;
-            }
-            else if (L_Name_Spieler_gruen.Text.ToString() == "Offen")
-            {
-                MessageBox.Show("Der Slot darf nicht offen sein. \nEs muss ein Spieler auf den Freien Slot kommen,\noder der Slot muss geschlossen werden", "Fehler", MessageBoxButton.OK);
-                return;
-            }
-            if (L_Name_Spieler_blau.Text.ToString() == "Computergegner" || L_Name_Spieler_blau.Text.ToString() == "Ich" )
-            {
-                temp++;
-            }
-            else if (L_Name_Spieler_blau.Text.ToString() == "Offen")
-            {
-                MessageBox.Show("Der Slot darf nicht offen sein. \nEs muss ein Spieler auf den Freien Slot kommen,\noder der Slot muss geschlossen werden", "Fehler", MessageBoxButton.OK);
-                return;
-            }
+            
+            if (Prüfe_Startbedingungen(L_Name_Spieler_rot)) temp++;
+            if (Prüfe_Startbedingungen(L_Name_Spieler_gelb)) temp++;
+            if (Prüfe_Startbedingungen(L_Name_Spieler_gruen)) temp++;
+            if (Prüfe_Startbedingungen(L_Name_Spieler_blau)) temp++;
+            
             if (temp < 2)
             {
                 MessageBox.Show("Es müssen mindestens 2 Spieler gegeneinander antreten", "Fehler", MessageBoxButton.OK);
@@ -107,39 +78,31 @@ namespace Abschlussprojekt.Seiten
             }
             if (temp >=2 && result == true)
             {
-                switch (comboBox_rot.SelectedIndex)
-                {
-                    case 1: Klassen.globale_temporäre_Variablen.lokaler_spieler =   new Klassen.Spieler(FARBE.ROT, Spielername_eingabe.Text,SPIELER_ART.NORMALER_SPIELER, eigene_IPAddresse); break;
-                    case 2: Klassen.Spieler computergegner0 =                       new Klassen.Spieler(FARBE.ROT,"computergegner0", SPIELER_ART.COMPUTERGEGNER,new System.Net.IPAddress(0));break;
-                    case 3: if (L_Name_Spieler_rot.Text.ToString() != "Offen") ; break; 
-                    case 0: break;
-                }
-                switch (comboBox_gelb.SelectedIndex)
-                {
-                    case 1: Klassen.globale_temporäre_Variablen.lokaler_spieler =   new Klassen.Spieler(FARBE.GELB, Spielername_eingabe.Text, SPIELER_ART.NORMALER_SPIELER, eigene_IPAddresse); break;
-                    case 2: Klassen.Spieler computergegner0 =                       new Klassen.Spieler(FARBE.GELB, "computergegner1", SPIELER_ART.COMPUTERGEGNER, new System.Net.IPAddress(0)); break;
-                    case 3: if (L_Name_Spieler_gelb.Text.ToString() != "Offen") ; break;
-                    case 0: break;
-                }
-                switch (comboBox_gruen.SelectedIndex)
-                {
-                    case 1: Klassen.globale_temporäre_Variablen.lokaler_spieler =   new Klassen.Spieler(FARBE.GRUEN, Spielername_eingabe.Text, SPIELER_ART.NORMALER_SPIELER, eigene_IPAddresse); break;
-                    case 2: Klassen.Spieler computergegner0 =                       new Klassen.Spieler(FARBE.GRUEN, "computergegner2", SPIELER_ART.COMPUTERGEGNER, new System.Net.IPAddress(0)); break;
-                    case 3: if (L_Name_Spieler_gruen.Text.ToString() != "Offen") ; break; 
-                    case 0: break;
-                }
-                switch (comboBox_blau.SelectedIndex)
-                {
-                    case 1: Klassen.globale_temporäre_Variablen.lokaler_spieler = new Klassen.Spieler(FARBE.BLAU, Spielername_eingabe.Text, SPIELER_ART.NORMALER_SPIELER,eigene_IPAddresse); break;
-                    case 2: Klassen.Spieler computergegner0 = new Klassen.Spieler(FARBE.BLAU, "computergegner3", SPIELER_ART.COMPUTERGEGNER, new System.Net.IPAddress(0)); break;
-                    case 3: if (L_Name_Spieler_blau.Text.ToString() != "Offen") ;  break; 
-                    case 0: break;
-                }
-
                 broadcast_status = false;
-                root_Frame.Content = new Spielwiese();
+                string client_startmessage = Erstelle_message_für_clients();
+                foreach (Spieler spieler in alle_Spieler)
+                {
+                    if (spieler.spieler_art == SPIELER_ART.NORMALER_SPIELER)Netzwerkkommunikation.Send_TCP_Packet(client_startmessage,spieler.ip);
+                }
+                
+                root_Frame.Content = new Spielwiese(root_Frame);
             }
-            
+        }
+
+        private string Erstelle_message_für_clients()
+        {
+            string message = "Spielstart";
+            int rest = alle_Spieler.Count;
+            foreach(Spieler spieler in alle_Spieler)
+            {
+                message += ","+ spieler.name + "," + spieler.ip.ToString() + "," + Statische_Methoden.Konvertiere_FARBE_zu_string(spieler.farbe);
+            }
+            switch (rest)
+            {
+                case 2: message += ",Geschlossen,_,_,Geschlossen,_,_"; break;
+                case 3: message += ",Geschlossen,_,_"; break;
+            }
+            return message;
         }
 
         private void btn_abbrechen_Click(object sender, RoutedEventArgs e)
@@ -148,10 +111,12 @@ namespace Abschlussprojekt.Seiten
             {
                 broadcast_status = false;
                 Spielerstellenlabel.Clear();
-                //ToDo: absage an Clients senden
+                alle_Spieler.Clear();
+                known_IP_S.Clear();
+
                 for (int i = 0; i < 10; i++)
                 {
-                    Netzwerkkommunikation.SendBroadcastPacket("Hostinformationen," + eigene_IPAddresse.ToString() + ",absage,,,,,,");
+                    Netzwerkkommunikation.Send_UDP_BC_Packet("Hostinformationen," + eigene_IPAddresse.ToString() + ",absage,,,,,,");
                 }
                 root_Frame.Content = new Startseite(root_Frame);
             }
@@ -160,25 +125,41 @@ namespace Abschlussprojekt.Seiten
         private void btn_Hosten_Click(object sender, RoutedEventArgs e)
         {
             int temp = 0;
-            bool result = true;
+            
             if (L_Name_Spieler_rot.Text.ToString() == "Computergegner" || L_Name_Spieler_rot.Text.ToString() == "Ich" || L_Name_Spieler_rot.Text.ToString() == "Offen")
             {
                 temp++;
+                if (L_Name_Spieler_rot.Text.ToString() == "Computergegner")
+                {
+                    Spieler CP_Gegner1 = new Spieler(FARBE.ROT, "Computergegner 1", SPIELER_ART.COMPUTERGEGNER, new System.Net.IPAddress(0));
+                }
             }
 
             if (L_Name_Spieler_gelb.Text.ToString() == "Computergegner" || L_Name_Spieler_gelb.Text.ToString() == "Ich" || L_Name_Spieler_gelb.Text.ToString() == "Offen")
             {
                 temp++;
+                if (L_Name_Spieler_gelb.Text.ToString() == "Computergegner")
+                {
+                    Spieler CP_Gegner2 = new Spieler(FARBE.GELB, "Computergegner 2", SPIELER_ART.COMPUTERGEGNER, new System.Net.IPAddress(0));
+                }
             }
 
             if (L_Name_Spieler_gruen.Text.ToString() == "Computergegner" || L_Name_Spieler_gruen.Text.ToString() == "Ich" || L_Name_Spieler_gruen.Text.ToString() == "Offen")
             {
                 temp++;
+                if (L_Name_Spieler_gruen.Text.ToString() == "Computergegner")
+                {
+                    Spieler CP_Gegner3 = new Spieler(FARBE.GRUEN, "Computergegner 3", SPIELER_ART.COMPUTERGEGNER, new System.Net.IPAddress(0));
+                }
             }
 
             if (L_Name_Spieler_blau.Text.ToString() == "Computergegner" || L_Name_Spieler_blau.Text.ToString() == "Ich" || L_Name_Spieler_blau.Text.ToString() == "Offen")
             {
                 temp++;
+                if (L_Name_Spieler_blau.Text.ToString() == "Computergegner")
+                {
+                    Spieler CP_Gegner4 = new Spieler(FARBE.BLAU, "Computergegner 4", SPIELER_ART.COMPUTERGEGNER, new System.Net.IPAddress(0));
+                }
             }
 
             if (temp < 2)
@@ -186,7 +167,7 @@ namespace Abschlussprojekt.Seiten
                 MessageBox.Show("Es müssen mindestens 2 Spieler gegeneinander antreten", "Fehler", MessageBoxButton.OK);
                 return;
             }
-            if (Spielername_eingabe.Text == "" || Spielername_eingabe.Text == "Hier Namen eingeben" || Spielername_eingabe.Text.Length >= 20)
+            if (Spielername_eingabe.Text == "Ich" || Spielername_eingabe.Text == "" || Spielername_eingabe.Text == "Hier Namen eingeben" || Spielername_eingabe.Text.Length >= 20)
             {
                 MessageBox.Show("Es muss ein gültiger Name eingegeben werden!", "Fehler", MessageBoxButton.OK);
                 return;
@@ -206,40 +187,14 @@ namespace Abschlussprojekt.Seiten
                 case FARBE.GRUEN: L_Name_Spieler_gruen.Text = Spielername_eingabe.Text; break;
                 case FARBE.BLAU: L_Name_Spieler_blau.Text = Spielername_eingabe.Text; break;
             }
+
+            Spieler host_spieler = new Spieler(ausgewählte_farbe, Spielername_eingabe.Text, SPIELER_ART.NORMALER_SPIELER, eigene_IPAddresse);
             Create_BC_message();
             Task send_Broadcast = Task.Factory.StartNew(Send_Broadcast);
             Task TCPListener = Task.Factory.StartNew(Listen_for_TCP_Pakete);
         }
 
-        private int Update_offene_Plätze()
-        {
-            int result = 0;
-            if (L_Name_Spieler_rot.Text.ToString() == "Offen") result += 1 ;
-            if (L_Name_Spieler_gelb.Text.ToString() == "Offen") result += 1;
-            if (L_Name_Spieler_gruen.Text.ToString() == "Offen") result += 1;
-            if (L_Name_Spieler_blau.Text.ToString() == "Offen") result += 1;
-            return result;
-        }
-
-        private void Berechne_Freieplätze()
-        {
-            int result = 0;
-            if (L_Name_Spieler_rot.Text.ToString() == "Offen") result += 1;
-            if (L_Name_Spieler_gelb.Text.ToString() == "Offen") result += 2;
-            if (L_Name_Spieler_gruen.Text.ToString() == "Offen") result += 4;
-            if (L_Name_Spieler_blau.Text.ToString() == "Offen") result += 8;
-            Freieplätze = result;
-        }
-
-        private string Spieler_name(FARBE farbe)
-        {
-            foreach (Spieler spieler in alle_Spieler)
-            {
-                if (farbe == spieler.farbe) return spieler.name;
-            }
-            return null;
-        }
-
+        // Bei den Folgenden 3 Funktionen passiert genau das gleiche wie in dieser
         private void comboBox_rot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (comboBox_rot.SelectedIndex == 1)
@@ -254,6 +209,7 @@ namespace Abschlussprojekt.Seiten
                 if (comboBox_gelb.SelectedIndex != 1 && comboBox_gruen.SelectedIndex != 1 && comboBox_blau.SelectedIndex != 1 && comboBox_rot.SelectedIndex != 1) comboBox_rot.SelectedIndex = 1; // Sorgt dafür das man sich nicht selbst aus dem Spiel ausschließen kann.
             }
         }
+        //     \/       \/       \/       \/       \/       \/
 
         private void comboBox_gelb_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -300,6 +256,41 @@ namespace Abschlussprojekt.Seiten
             }
         }
 
+        // Bei den Folgenden 3 Funktionen passiert genau das gleiche wie in dieser
+        private void L_Name_Spieler_rot_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (comboBox_rot.SelectedIndex == 3 && L_Name_Spieler_rot.Text != "Offen") comboBox_rot.IsEnabled = false; // Wenn sich ein spieler erfolgreich einwählt wird die Combobox deaktiviert.
+            globale_temporäre_Variablen.eigener_Host.freie_plätze = Ermittle_freie_Plätze();
+            Create_BC_message();
+        }
+        //      \/       \/       \/       \/       \/       \/
+
+        private void L_Name_Spieler_gelb_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (comboBox_gelb.SelectedIndex == 3 && L_Name_Spieler_gelb.Text != "Offen") comboBox_gelb.IsEnabled = false; // Wenn sich ein spieler erfolgreich einwählt wird die Combobox deaktiviert.
+            globale_temporäre_Variablen.eigener_Host.freie_plätze = Ermittle_freie_Plätze();
+            Create_BC_message();
+        }
+
+        private void L_Name_Spieler_gruen_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (comboBox_gruen.SelectedIndex == 3 && L_Name_Spieler_gruen.Text != "Offen") comboBox_gruen.IsEnabled = false; // Wenn sich ein spieler erfolgreich einwählt wird die Combobox deaktiviert.
+            globale_temporäre_Variablen.eigener_Host.freie_plätze = Ermittle_freie_Plätze();
+            Create_BC_message();
+        }
+
+        private void L_Name_Spieler_blau_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (comboBox_blau.SelectedIndex == 3 && L_Name_Spieler_blau.Text != "Offen") comboBox_blau.IsEnabled = false; // Wenn sich ein spieler erfolgreich einwählt wird die Combobox deaktiviert.
+            globale_temporäre_Variablen.eigener_Host.freie_plätze = Ermittle_freie_Plätze();
+            Create_BC_message();
+        }
+
+
+        //      Relativ trivialer Kram
+        //       ||               ||
+        //       \/               \/  
+
         private void Spielername_eingabe_LostFocus(object sender, RoutedEventArgs e)
         {
             if (Spielername_eingabe.Text == "") Spielername_eingabe.Text = "Hier Namen eingeben";
@@ -310,12 +301,32 @@ namespace Abschlussprojekt.Seiten
             if (Spielername_eingabe.Text == "Hier Namen eingeben") Spielername_eingabe.Text = "";
         }
 
+        private bool Prüfe_Startbedingungen(TextBox Label)
+        {
+            switch (Label.Text.ToString())
+            {
+                case "Ich": MessageBox.Show("Fehler", "Ihr Spielername dar nicht \"Ich\" lauten!", MessageBoxButton.OK); return false;
+                case "Offen": MessageBox.Show("Fehler", "Es darf kein Slott mehr offen sein!", MessageBoxButton.OK); return false;
+                case "Geschlossen": return false;
+            }
+            return true;
+        }
+
+        private int Ermittle_freie_Plätze() //Wird dazu verwendet um die BC-Informationen aktuell zu halten.
+        {
+            int result = 0;
+            if (L_Name_Spieler_rot.Text.ToString() == "Offen") result += 1;
+            if (L_Name_Spieler_gelb.Text.ToString() == "Offen") result += 1;
+            if (L_Name_Spieler_gruen.Text.ToString() == "Offen") result += 1;
+            if (L_Name_Spieler_blau.Text.ToString() == "Offen") result += 1;
+            return result;
+        }
+        
         private void Send_Broadcast()
         {
             while (broadcast_status)
             {
-                Netzwerkkommunikation.SendBroadcastPacket(broadcast_string);
-                Console.WriteLine("BC gesendet");
+                Netzwerkkommunikation.Send_UDP_BC_Packet(broadcast_string);
                 Thread.Sleep(1000);// Ein mal in der Sekunde wird ein Broadcast gesendet;
             }
         }
@@ -327,42 +338,19 @@ namespace Abschlussprojekt.Seiten
                 Netzwerkkommunikation.Start_TCP_Listener();
             }
         }
-        
-        private void L_Name_Spieler_rot_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (comboBox_rot.SelectedIndex == 3 && L_Name_Spieler_rot.Text != "Offen") comboBox_rot.IsEnabled = false; // Wenn sich ein spieler erfolgreich einwählt wird die Combobox deaktiviert.
-            globale_temporäre_Variablen.eigener_Host.freie_plätze = Update_offene_Plätze();
-            Berechne_Freieplätze();
-            Create_BC_message();
-        }
-
-        private void L_Name_Spieler_gelb_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (comboBox_gelb.SelectedIndex == 3 && L_Name_Spieler_gelb.Text != "Offen") comboBox_gelb.IsEnabled = false; // Wenn sich ein spieler erfolgreich einwählt wird die Combobox deaktiviert.
-            globale_temporäre_Variablen.eigener_Host.freie_plätze = Update_offene_Plätze();
-            Berechne_Freieplätze();
-            Create_BC_message();
-        }
-
-        private void L_Name_Spieler_gruen_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (comboBox_gruen.SelectedIndex == 3 && L_Name_Spieler_gruen.Text != "Offen") comboBox_gruen.IsEnabled = false; // Wenn sich ein spieler erfolgreich einwählt wird die Combobox deaktiviert.
-            globale_temporäre_Variablen.eigener_Host.freie_plätze = Update_offene_Plätze();
-            Berechne_Freieplätze();
-            Create_BC_message();
-        }
-
-        private void L_Name_Spieler_blau_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (comboBox_blau.SelectedIndex == 3 && L_Name_Spieler_blau.Text != "Offen") comboBox_blau.IsEnabled = false; // Wenn sich ein spieler erfolgreich einwählt wird die Combobox deaktiviert.
-            globale_temporäre_Variablen.eigener_Host.freie_plätze = Update_offene_Plätze();
-            Berechne_Freieplätze();
-            Create_BC_message();
-        }
 
         private void Create_BC_message()
         {
-            broadcast_string = "Hostinformationen," + eigene_IPAddresse.ToString() + "," + Host_name + "," + Klassen.globale_temporäre_Variablen.eigener_Host.freie_plätze.ToString() + "," + Freieplätze.ToString() + "," + L_Name_Spieler_rot.Text + "," + L_Name_Spieler_gelb.Text + "," + L_Name_Spieler_gruen.Text + "," + L_Name_Spieler_blau.Text;
+            broadcast_string = "Hostinformationen," +
+                                eigene_IPAddresse.ToString() + "," +
+                                Host_name + "," +
+                                globale_temporäre_Variablen.eigener_Host.freie_plätze.ToString() + "," +
+                                Freieplätze.ToString() + "," +
+                                L_Name_Spieler_rot.Text + "," +
+                                L_Name_Spieler_gelb.Text + "," +
+                                L_Name_Spieler_gruen.Text + "," +
+                                L_Name_Spieler_blau.Text;
         }
+
     }
 }

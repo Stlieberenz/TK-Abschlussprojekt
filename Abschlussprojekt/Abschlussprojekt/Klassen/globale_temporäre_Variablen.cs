@@ -19,5 +19,7 @@ namespace Abschlussprojekt.Klassen
     {
         public static Spieler lokaler_spieler;
         public static Host eigener_Host;
+        public static int x = 0;
+        public static int y = 0;
     }
 }

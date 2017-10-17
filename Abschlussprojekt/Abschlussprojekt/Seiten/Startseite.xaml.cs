@@ -31,14 +31,23 @@ namespace Abschlussprojekt.Seiten
     public partial class Startseite : UserControl
     {
         Frame root_Frame;
+        private bool initialized = false;
         public Startseite(Frame root_Frame)
         {
             this.root_Frame = root_Frame;
+            Klassen.Statische_Variablen.aktive_Seite = Klassen.Statische_Variablen.AKTIVE_SEITE.STARTSEITE;
             InitializeComponent();
         }
 
         private void Btn_Spiel_starten_Click(object sender, RoutedEventArgs e)
         {
+            if (!initialized)
+            {
+                Klassen.Netzwerkkommunikation.Iinitialisiere_IP_Addressen();
+                Klassen.Netzwerkkommunikation.Iinitialisiere_BC_IP_Addressen();
+                initialized = true;
+            }
+            
             Klassen.Statische_Variablen.Host_name = Spielername.Text;
             Klassen.globale_temporäre_Variablen.eigener_Host = new Klassen.Host(Spielername.Text, Klassen.Statische_Variablen.eigene_IPAddresse);
             root_Frame.Content = new Spiel_erstellen(root_Frame);
@@ -46,6 +55,12 @@ namespace Abschlussprojekt.Seiten
 
         private void btn_Spiel_suchen_Click(object sender, RoutedEventArgs e)
         {
+            if (!initialized)
+            {
+                Klassen.Netzwerkkommunikation.Iinitialisiere_IP_Addressen();
+                Klassen.Netzwerkkommunikation.Iinitialisiere_BC_IP_Addressen();
+                initialized = true;
+            }
             root_Frame.Content = new Spiel_suchen(root_Frame);
         }
 

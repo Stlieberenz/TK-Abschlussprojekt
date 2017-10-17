@@ -20,12 +20,14 @@ namespace Abschlussprojekt
     /// </summary>
     public partial class MainWindow : Window
     {
+
         public MainWindow()
         {
             InitializeComponent();
             rootFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;
             Klassen.Datenbankschnittstelle.init();
-            Klassen.Netzwerkkommunikation.Iinitialisiere_IP_Addresse();
+            //Klassen.Netzwerkkommunikation.Iinitialisiere_IP_Addressen();
+            //Klassen.Netzwerkkommunikation.Iinitialisiere_BC_IP_Addressen();
             Klassen.Statische_Variablen.mainWindow = this;
             rootFrame.Content = new Seiten.Startseite(rootFrame);
         }

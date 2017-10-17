@@ -20,14 +20,17 @@ namespace Abschlussprojekt.Klassen
 {
     class Figur
     {
+        public delegate void Bild_Update();
         public Image bild { get; }
         public Feld startposition { get; }
         public Feld aktuelle_Position { get; set; }
         public Feld mögliche_Position { get; }
         public FARBE farbe { get; }
+        public int id { get; }
 
-        public Figur(FARBE farbe)
+        public Figur(FARBE farbe,int id)
         {
+            this.id = id;
             this.farbe = farbe;
             this.bild = new Image();
             //
@@ -83,7 +86,7 @@ namespace Abschlussprojekt.Klassen
 
         public void Set_Figure_to_Start()
         {
-            bild.Margin = new System.Windows.Thickness(startposition.position.X, startposition.position.Y, 0, 0);
+            bild.Dispatcher.Invoke(new Bild_Update(Set_Bild_Startposition));
         }
 
         public void Set_Figureposition(Feld feld)
@@ -94,13 +97,24 @@ namespace Abschlussprojekt.Klassen
                 {
                     feld.Set_figur(this);
                     aktuelle_Position = feld;
-                    bild.Margin = new System.Windows.Thickness(aktuelle_Position.position.X, aktuelle_Position.position.Y, 0, 0);
+                    bild.Dispatcher.Invoke(new Bild_Update(Set_Bild_Position));
                 }
                 else return;
             }
             feld.Set_figur(this);
             aktuelle_Position = feld;
+            bild.Dispatcher.Invoke(new Bild_Update(Set_Bild_Position));
+            
+        }
+
+        public void Set_Bild_Position()
+        {
             bild.Margin = new System.Windows.Thickness(aktuelle_Position.position.X, aktuelle_Position.position.Y, 0, 0);
+        }
+
+        public void Set_Bild_Startposition()
+        {
+            bild.Margin = new System.Windows.Thickness(startposition.position.X, startposition.position.Y, 0, 0);
         }
     }
 }

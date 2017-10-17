@@ -42,10 +42,11 @@ namespace Abschlussprojekt.Seiten
             this.root_Frame = root_Frame;
             InitializeComponent();
             Statische_Variablen.hosts = Hosts;
-            Statische_Variablen.Spiel_Suchen = Spiel_suchen_grid;
-            Statische_Variablen.aktualisieren = btn_aktualisieren;
+            
             btn_Abbrechen.IsEnabled = false;
             Task UDP_Listener = Task.Factory.StartNew(Start_UDP_Listener);
+            Statische_Variablen.aktive_Seite = Statische_Variablen.AKTIVE_SEITE.SPIEL_SUCHEN;
+            Statische_Variablen.Spiel_suchen_Grid = Spiel_suchen_grid;
         }
 
         private void btn_beitreten_Click(object sender, RoutedEventArgs e)
@@ -74,6 +75,7 @@ namespace Abschlussprojekt.Seiten
                     Netzwerkkommunikation.Start_TCP_Listener();
                     if (Statische_Variablen.anfragen_result == true)
                     {
+                        Task tcp_listener = Task.Factory.StartNew(Sart_TCP_Listener);
                         btn_beitreten.IsEnabled = false;
                         Spieler_name.IsEnabled = false;
                         RB_blau.IsEnabled = false;
@@ -146,19 +148,19 @@ namespace Abschlussprojekt.Seiten
 
         private void L_Name_Spieler_gelb_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (L_Name_Spieler_gelb.Text != "Offen") RB_gelb.IsEnabled = false;
+            if (L_Name_Spieler_gelb.Text != "Offen" && RB_gelb != null) RB_gelb.IsEnabled = false;
             else if (L_Name_Spieler_gelb.Text == "Offen" && RB_gelb != null) RB_gelb.IsEnabled = true;
         }
 
         private void L_Name_Spieler_gruen_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (L_Name_Spieler_gruen.Text != "Offen") RB_gruen.IsEnabled = false;
+            if (L_Name_Spieler_gruen.Text != "Offen" && RB_gruen != null) RB_gruen.IsEnabled = false;
             else if (L_Name_Spieler_gruen.Text == "Offen" && RB_gruen != null) RB_gruen.IsEnabled = true;
         }
 
         private void L_Name_Spieler_blau_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (L_Name_Spieler_blau.Text != "Offen") RB_blau.IsEnabled = false;
+            if (L_Name_Spieler_blau.Text != "Offen" && RB_blau != null) RB_blau.IsEnabled = false;
             else if (L_Name_Spieler_blau.Text == "Offen" && RB_blau != null) RB_blau.IsEnabled = true;
         }
 
@@ -202,6 +204,14 @@ namespace Abschlussprojekt.Seiten
             }
         }
 
+        private void Sart_TCP_Listener()
+        {
+            while (UDP_thread_status)
+            {
+                Netzwerkkommunikation.Start_TCP_Listener();
+            }
+        }
+
         public void Updater()// Macht nix weiter als die Liste mit Hosts zu aktualisieren.
         {
             Hosts.Items.Clear();
@@ -218,6 +228,15 @@ namespace Abschlussprojekt.Seiten
             Statische_Variablen.alle_Hosts.Clear();
             Statische_Variablen.known_IP_S.Clear();
             root_Frame.Content = new Startseite(root_Frame);
+        }
+
+        private void Spiel_suchen_grid_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (Statische_Variablen.alle_Spieler.Count > 0)
+            {
+                UDP_thread_status = false;
+                root_Frame.Content = new Spielwiese(root_Frame);
+            }
         }
     }
 }

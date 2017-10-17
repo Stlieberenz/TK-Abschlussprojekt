@@ -77,9 +77,6 @@
     <Compile Include="Seiten\Spielwiese.xaml.cs">
       <DependentUpon>Spielwiese.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Seiten\Spiel_beitreten.xaml.cs">
-      <DependentUpon>Spiel_beitreten.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Seiten\Spiel_erstellen.xaml.cs">
       <DependentUpon>Spiel_erstellen.xaml</DependentUpon>
     </Compile>
@@ -107,10 +104,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Seiten\Spielwiese.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Seiten\Spiel_beitreten.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

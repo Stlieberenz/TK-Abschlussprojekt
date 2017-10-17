@@ -49,9 +49,19 @@ namespace Abschlussprojekt.Klassen
             COMPUTERGEGNER,
             LEER
         }
+        public enum AKTIVE_SEITE
+        {
+            SPIEL_SUCHEN,
+            SPIEL_ERSTELLEN,
+            SPIELWIESE,
+            STARTSEITE
+        }
 
+        public static bool initstatus = false;
         public static string Host_name;
         public static MainWindow mainWindow = new MainWindow();
+        public static AKTIVE_SEITE aktive_Seite;
+        public static Random zufallszahl = new Random();
 
         public static List<Feld> start_felder = new List<Feld>();
         public static List<Feld> spiel_felder = new List<Feld>();
@@ -63,6 +73,7 @@ namespace Abschlussprojekt.Klassen
         public static List<Figur> spieler_blau = new List<Figur>();
 
         public static List<Spieler> alle_Spieler = new List<Spieler>();
+        public static Spieler lokaler_spieler;
 
         public static List<TextBox> Beitrittslabel = new List<TextBox>();//Für wenn man dem Spiel beitritt
         public static List<TextBox> Spielerstellenlabel = new List<TextBox>();//Für wenn man ein Spiel Hostet
@@ -81,12 +92,12 @@ namespace Abschlussprojekt.Klassen
 
         public static bool anfragen_result;
 
-        public static IPAddress eigene_IPAddresse = new IPAddress(0);
+        public static IPAddress eigene_IPAddresse = null;
+        public static List<IPAddress> broadcast_IPAdresse = new List<IPAddress>(0);
         public static int port = 50000;
         public static UdpClient receivingUdpClient = new UdpClient(port);
-        //public static TcpListener myListener = new TcpListener(eigene_IPAddresse, port);
-        public static Grid Spiel_Suchen = new Grid();
 
-        public static Button aktualisieren = new Button();
+        
+        public static Grid Spiel_suchen_Grid = new Grid();
     }
 }

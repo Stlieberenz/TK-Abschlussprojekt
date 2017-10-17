@@ -20,8 +20,6 @@ D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\A
 D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Abschlussprojekt\obj\Debug\Seiten\Spiel_suchen.baml
 D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Abschlussprojekt\obj\Debug\Seiten\Spiel_erstellen.g.cs
 D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Abschlussprojekt\obj\Debug\Seiten\Spiel_erstellen.baml
-D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Abschlussprojekt\obj\Debug\Seiten\Spiel_beitreten.g.cs
-D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Abschlussprojekt\obj\Debug\Seiten\Spiel_beitreten.baml
 D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Abschlussprojekt\obj\Debug\Abschlussprojekt_Content.g.cs
 D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Abschlussprojekt\bin\Debug\Datenbank\Datenbank.mdb
 D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Abschlussprojekt\obj\Debug\Abschlussprojekt.csprojResolveAssemblyReference.cache
@@ -59,7 +57,6 @@ C:\Users\admin\Documents\dd\Abschlussprojekt\obj\Debug\Abschlussprojekt.pdb
 \\VBOXSVR\Abschlussprojekt\Abschlussprojekt\obj\Debug\Abschlussprojekt.csprojResolveAssemblyReference.cache
 \\VBOXSVR\Abschlussprojekt\Abschlussprojekt\obj\Debug\MainWindow.g.cs
 \\VBOXSVR\Abschlussprojekt\Abschlussprojekt\obj\Debug\Seiten\Spielwiese.g.cs
-\\VBOXSVR\Abschlussprojekt\Abschlussprojekt\obj\Debug\Seiten\Spiel_beitreten.g.cs
 \\VBOXSVR\Abschlussprojekt\Abschlussprojekt\obj\Debug\Seiten\Spiel_erstellen.g.cs
 \\VBOXSVR\Abschlussprojekt\Abschlussprojekt\obj\Debug\Seiten\Spiel_suchen.g.cs
 \\VBOXSVR\Abschlussprojekt\Abschlussprojekt\obj\Debug\Seiten\Startseite.g.cs
@@ -69,7 +66,6 @@ C:\Users\admin\Documents\dd\Abschlussprojekt\obj\Debug\Abschlussprojekt.pdb
 \\VBOXSVR\Abschlussprojekt\Abschlussprojekt\obj\Debug\Abschlussprojekt_MarkupCompile.lref
 \\VBOXSVR\Abschlussprojekt\Abschlussprojekt\obj\Debug\MainWindow.baml
 \\VBOXSVR\Abschlussprojekt\Abschlussprojekt\obj\Debug\Seiten\Spielwiese.baml
-\\VBOXSVR\Abschlussprojekt\Abschlussprojekt\obj\Debug\Seiten\Spiel_beitreten.baml
 \\VBOXSVR\Abschlussprojekt\Abschlussprojekt\obj\Debug\Seiten\Spiel_erstellen.baml
 \\VBOXSVR\Abschlussprojekt\Abschlussprojekt\obj\Debug\Seiten\Spiel_suchen.baml
 \\VBOXSVR\Abschlussprojekt\Abschlussprojekt\obj\Debug\Seiten\Startseite.baml
@@ -106,3 +102,28 @@ C:\Users\admin\Desktop\Abschlussprojekt\Abschlussprojekt\obj\Debug\Abschlussproj
 C:\Users\admin\Desktop\Abschlussprojekt\Abschlussprojekt\obj\Debug\Abschlussprojekt.csproj.CoreCompileInputs.cache
 C:\Users\admin\Desktop\Abschlussprojekt\Abschlussprojekt\obj\Debug\Abschlussprojekt.exe
 C:\Users\admin\Desktop\Abschlussprojekt\Abschlussprojekt\obj\Debug\Abschlussprojekt.pdb
+C:\Users\admin\Desktop\game\Abschlussprojekt\bin\Debug\Datenbank\Datenbank.mdb
+C:\Users\admin\Desktop\game\Abschlussprojekt\bin\Debug\Abschlussprojekt.exe.config
+C:\Users\admin\Desktop\game\Abschlussprojekt\bin\Debug\Abschlussprojekt.exe
+C:\Users\admin\Desktop\game\Abschlussprojekt\bin\Debug\Abschlussprojekt.pdb
+C:\Users\admin\Desktop\game\Abschlussprojekt\obj\Debug\Abschlussprojekt.csprojResolveAssemblyReference.cache
+C:\Users\admin\Desktop\game\Abschlussprojekt\obj\Debug\MainWindow.g.cs
+C:\Users\admin\Desktop\game\Abschlussprojekt\obj\Debug\Seiten\Spielwiese.g.cs
+C:\Users\admin\Desktop\game\Abschlussprojekt\obj\Debug\Seiten\Spiel_erstellen.g.cs
+C:\Users\admin\Desktop\game\Abschlussprojekt\obj\Debug\Seiten\Spiel_suchen.g.cs
+C:\Users\admin\Desktop\game\Abschlussprojekt\obj\Debug\Seiten\Startseite.g.cs
+C:\Users\admin\Desktop\game\Abschlussprojekt\obj\Debug\App.g.cs
+C:\Users\admin\Desktop\game\Abschlussprojekt\obj\Debug\Abschlussprojekt_Content.g.cs
+C:\Users\admin\Desktop\game\Abschlussprojekt\obj\Debug\Abschlussprojekt_MarkupCompile.cache
+C:\Users\admin\Desktop\game\Abschlussprojekt\obj\Debug\Abschlussprojekt_MarkupCompile.lref
+C:\Users\admin\Desktop\game\Abschlussprojekt\obj\Debug\MainWindow.baml
+C:\Users\admin\Desktop\game\Abschlussprojekt\obj\Debug\Seiten\Spielwiese.baml
+C:\Users\admin\Desktop\game\Abschlussprojekt\obj\Debug\Seiten\Spiel_erstellen.baml
+C:\Users\admin\Desktop\game\Abschlussprojekt\obj\Debug\Seiten\Spiel_suchen.baml
+C:\Users\admin\Desktop\game\Abschlussprojekt\obj\Debug\Seiten\Startseite.baml
+C:\Users\admin\Desktop\game\Abschlussprojekt\obj\Debug\Abschlussprojekt.g.resources
+C:\Users\admin\Desktop\game\Abschlussprojekt\obj\Debug\Abschlussprojekt.Properties.Resources.resources
+C:\Users\admin\Desktop\game\Abschlussprojekt\obj\Debug\Abschlussprojekt.csproj.GenerateResource.Cache
+C:\Users\admin\Desktop\game\Abschlussprojekt\obj\Debug\Abschlussprojekt.csproj.CoreCompileInputs.cache
+C:\Users\admin\Desktop\game\Abschlussprojekt\obj\Debug\Abschlussprojekt.exe
+C:\Users\admin\Desktop\game\Abschlussprojekt\obj\Debug\Abschlussprojekt.pdb
