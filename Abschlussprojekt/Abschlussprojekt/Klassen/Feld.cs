@@ -21,16 +21,18 @@ namespace Abschlussprojekt.Klassen
 
     class Feld
     {
-        public FARBE farbe { get; set; }
-        FELD_EIGENSCHAFT feld_art { get; set; }
+        public FARBE farbe { get; }
+        public FELD_EIGENSCHAFT feld_art { get; }
         public Figur figur { get; set; }
         public Point position { get; }
+        public int id { get; }
 
-        public Feld(FARBE farbe, FELD_EIGENSCHAFT feld_art, Point position)
+        public Feld(FARBE farbe, FELD_EIGENSCHAFT feld_art, Point position,int id)
         {
             this.farbe = farbe;
             this.feld_art = feld_art;
             this.position = position;
+            this.id = id;
 
             //
             // Hier werden die Jeweiligen Felder, die zur Laufzeit erstellt werden,

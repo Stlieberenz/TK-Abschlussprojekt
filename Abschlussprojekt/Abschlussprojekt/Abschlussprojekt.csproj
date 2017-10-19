@@ -70,7 +70,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Klassen\Datenbankschnittstelle.cs" />
     <Compile Include="Klassen\globale_temporäre_Variablen.cs" />
     <Compile Include="Klassen\Host.cs" />
     <Compile Include="Klassen\Netzwerkkommunikation.cs" />
@@ -170,11 +169,8 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Content Include="Datenbank\Datenbank.mdb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Folder Include="Datenbank\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

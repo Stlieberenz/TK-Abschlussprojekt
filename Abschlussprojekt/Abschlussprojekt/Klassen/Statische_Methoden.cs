@@ -31,43 +31,65 @@ namespace Abschlussprojekt.Klassen
                     Point image_point = new Point(control_element.Margin.Left, control_element.Margin.Top);
                     if (control_element.Uid.Contains("Start_rot"))
                     {
-                        Feld start_feld = new Feld(FARBE.ROT, FELD_EIGENSCHAFT.STARTPOSITION, image_point);
+                        Feld start_feld = new Feld(FARBE.ROT, FELD_EIGENSCHAFT.STARTPOSITION, image_point,Konvertiere_in_Feld_id(control_element.Uid));
                     }
                     else if (control_element.Uid.Contains("Start_gelb"))
                     {
-                        Feld start_feld = new Feld(FARBE.GELB, FELD_EIGENSCHAFT.STARTPOSITION, image_point);
+                        Feld start_feld = new Feld(FARBE.GELB, FELD_EIGENSCHAFT.STARTPOSITION, image_point, Konvertiere_in_Feld_id(control_element.Uid));
                     }
                     else if (control_element.Uid.Contains("Start_gruen"))
                     {
-                        Feld start_feld = new Feld(FARBE.GRUEN, FELD_EIGENSCHAFT.STARTPOSITION, image_point);
+                        Feld start_feld = new Feld(FARBE.GRUEN, FELD_EIGENSCHAFT.STARTPOSITION, image_point, Konvertiere_in_Feld_id(control_element.Uid));
                     }
                     else if (control_element.Uid.Contains("Start_blau"))
                     {
-                        Feld start_feld = new Feld(FARBE.BLAU, FELD_EIGENSCHAFT.STARTPOSITION, image_point);
+                        Feld start_feld = new Feld(FARBE.BLAU, FELD_EIGENSCHAFT.STARTPOSITION, image_point, Konvertiere_in_Feld_id(control_element.Uid));
                     }
                     else if (control_element.Uid.Contains("Feld_"))
                     {
-                        Feld feld = new Feld(FARBE.LEER, FELD_EIGENSCHAFT.SPIELFELD, image_point);
+                        Feld feld = new Feld(FARBE.LEER, FELD_EIGENSCHAFT.SPIELFELD, image_point, Konvertiere_in_Feld_id(control_element.Uid));
                     }
                     else if (control_element.Uid.Contains("Ziel_rot"))
                     {
-                        Feld ziel_feld = new Feld(FARBE.ROT, FELD_EIGENSCHAFT.ZIEL, image_point);
+                        Feld ziel_feld = new Feld(FARBE.ROT, FELD_EIGENSCHAFT.ZIEL, image_point, Konvertiere_in_Feld_id(control_element.Uid));
                     }
                     else if (control_element.Uid.Contains("Ziel_gelb"))
                     {
-                        Feld ziel_feld = new Feld(FARBE.GELB, FELD_EIGENSCHAFT.ZIEL, image_point);
+                        Feld ziel_feld = new Feld(FARBE.GELB, FELD_EIGENSCHAFT.ZIEL, image_point, Konvertiere_in_Feld_id(control_element.Uid));
                     }
                     else if (control_element.Uid.Contains("Ziel_gruen"))
                     {
-                        Feld ziel_feld = new Feld(FARBE.GRUEN, FELD_EIGENSCHAFT.ZIEL, image_point);
+                        Feld ziel_feld = new Feld(FARBE.GRUEN, FELD_EIGENSCHAFT.ZIEL, image_point, Konvertiere_in_Feld_id(control_element.Uid));
                     }
                     else if (control_element.Uid.Contains("Ziel_blau"))
                     {
-                        Feld ziel_feld = new Feld(FARBE.BLAU, FELD_EIGENSCHAFT.ZIEL, image_point);
+                        Feld ziel_feld = new Feld(FARBE.BLAU, FELD_EIGENSCHAFT.ZIEL, image_point, Konvertiere_in_Feld_id(control_element.Uid));
                     }
                 }
             }
             catch { }
+        }
+
+        private static int Konvertiere_in_Feld_id(string name)
+        {
+            string result = "";
+            foreach(char c in name)
+            {
+                switch (c)
+                {
+                    case '0': result += "0"; break;
+                    case '1': result += "1"; break;
+                    case '2': result += "2"; break;
+                    case '3': result += "3"; break;
+                    case '4': result += "4"; break;
+                    case '5': result += "5"; break;
+                    case '6': result += "6"; break;
+                    case '7': result += "7"; break;
+                    case '8': result += "8"; break;
+                    case '9': result += "9"; break;
+                }
+            }
+            return Convert.ToInt32(result);
         }
 
         public static void Initialisiere_Spiel()
@@ -167,6 +189,135 @@ namespace Abschlussprojekt.Klassen
                 }
             }
             return null;
+        }
+
+        public static int Ermittle_start_Spieler()
+        {
+            return zufallszahl.Next(0, alle_Spieler.Count);
+        }
+
+        public static bool Sind_alle_Figuren_im_Haus()
+        {
+            foreach(Figur figur in figuren_lokal)
+            {
+                if (figur.aktuelle_Position.feld_art != FELD_EIGENSCHAFT.STARTPOSITION)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public static bool Zug_ist_möglich(int zahl)
+        {
+            bool result = false;
+            foreach (Figur figur in figuren_lokal)
+            {
+
+                switch (figur.aktuelle_Position.feld_art)
+                {
+                    case FELD_EIGENSCHAFT.STARTPOSITION:
+                        {
+                            if (figur.spiel_startposition.figur == null && zahl == 6)
+                            {
+                                figur.mögliche_Position = figur.spiel_startposition;
+                                result =  true;
+                            }
+                            else
+                            {
+                                figur.mögliche_Position = null;
+                                result = true;
+                            } break;
+                        }
+                    case FELD_EIGENSCHAFT.SPIELFELD:
+                        {
+                            if (figur.a_Postition + zahl < 44)
+                            {
+                                if (figur.wegstecke[figur.a_Postition + zahl].figur != null)
+                                {
+                                    if (figur.wegstecke[figur.a_Postition + zahl].figur.farbe != figur.farbe && figur.a_Postition + zahl < 44) // Prüft ob auf dem Potentiellen Zielfeld ein eigener Spieler steht und das man nicht übers endziehl hinausschießt
+                                    {
+                                        figur.mögliche_Position = figur.wegstecke[figur.a_Postition + zahl];
+                                        result = true;
+                                    }
+                                    else
+                                    {
+                                        figur.mögliche_Position = null;
+                                    }
+                                }
+                                else
+                                {
+                                    figur.mögliche_Position = figur.wegstecke[figur.a_Postition + zahl];
+                                    result = true;
+                                }
+                            }
+                            else
+                            {
+                                figur.mögliche_Position = null;
+                            }
+                            break;
+                        }
+                    case FELD_EIGENSCHAFT.ZIEL:
+                        {
+                            if (figur.a_Postition + zahl < 44)
+                            {
+                                if (figur.wegstecke[figur.a_Postition + zahl].figur != null)
+                                {
+                                    if (figur.wegstecke[figur.a_Postition + zahl].figur.farbe != figur.farbe && figur.a_Postition + zahl < 44) // Prüft ob auf dem Potentiellen Zielfeld ein eigener Spieler steht und das man nicht übers endziehl hinausschießt
+                                    {
+                                        figur.mögliche_Position = figur.wegstecke[figur.a_Postition + zahl];
+                                        result = true;
+                                    }
+                                    else figur.mögliche_Position = null;
+                                }
+                                else figur.mögliche_Position = null;
+                            }
+                            else figur.mögliche_Position = null;
+                            break;
+                        }
+                }
+            }
+            return result;
+        }
+
+        public static void Figur_wurde_bewegt()
+        {
+            bool ziel_erreicht = Ziel_Erreicht();
+            if (!ziel_erreicht && z != 6)
+            {
+                Forward_Spielrecht();
+            }
+            else if(!ziel_erreicht && z == 6)
+            {
+                Würfel.IsEnabled = true;
+            }
+            else
+            {
+                Sende_Spielende_an_Mitspieler();
+            }
+        }
+
+        public static bool Ziel_Erreicht()
+        {
+            foreach(Figur figur in figuren_lokal)
+            {
+                if (figur.aktuelle_Position.feld_art != FELD_EIGENSCHAFT.ZIEL)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public static void Forward_Spielrecht()
+        {
+            lokaler_spieler.status = false;
+            Netzwerkkommunikation.Send_TCP_Packet("Spielrecht", nächster_Spieler);
+        }
+
+        public static void Sende_Spielende_an_Mitspieler()
+        {
+            Netzwerkkommunikation.Sende_TCP_Nachricht_an_alle_Spieler("Spielende" + lokaler_spieler.name);
         }
     }
 }

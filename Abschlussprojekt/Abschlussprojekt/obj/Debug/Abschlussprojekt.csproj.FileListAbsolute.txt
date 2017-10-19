@@ -20,8 +20,6 @@ D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\A
 D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Abschlussprojekt\obj\Debug\Seiten\Spiel_suchen.baml
 D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Abschlussprojekt\obj\Debug\Seiten\Spiel_erstellen.g.cs
 D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Abschlussprojekt\obj\Debug\Seiten\Spiel_erstellen.baml
-D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Abschlussprojekt\obj\Debug\Abschlussprojekt_Content.g.cs
-D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Abschlussprojekt\bin\Debug\Datenbank\Datenbank.mdb
 D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Abschlussprojekt\obj\Debug\Abschlussprojekt.csprojResolveAssemblyReference.cache
 C:\Users\admin\Documents\dd\Abschlussprojekt\bin\Debug\Datenbank\Datenbank.mdb
 C:\Users\admin\Documents\dd\Abschlussprojekt\bin\Debug\Abschlussprojekt.exe.config
@@ -50,7 +48,6 @@ C:\Users\admin\Documents\dd\Abschlussprojekt\obj\Debug\Abschlussprojekt.csproj.G
 C:\Users\admin\Documents\dd\Abschlussprojekt\obj\Debug\Abschlussprojekt.csproj.CoreCompileInputs.cache
 C:\Users\admin\Documents\dd\Abschlussprojekt\obj\Debug\Abschlussprojekt.exe
 C:\Users\admin\Documents\dd\Abschlussprojekt\obj\Debug\Abschlussprojekt.pdb
-\\VBOXSVR\Abschlussprojekt\Abschlussprojekt\bin\Debug\Datenbank\Datenbank.mdb
 \\VBOXSVR\Abschlussprojekt\Abschlussprojekt\bin\Debug\Abschlussprojekt.exe.config
 \\VBOXSVR\Abschlussprojekt\Abschlussprojekt\bin\Debug\Abschlussprojekt.exe
 \\VBOXSVR\Abschlussprojekt\Abschlussprojekt\bin\Debug\Abschlussprojekt.pdb
@@ -61,7 +58,6 @@ C:\Users\admin\Documents\dd\Abschlussprojekt\obj\Debug\Abschlussprojekt.pdb
 \\VBOXSVR\Abschlussprojekt\Abschlussprojekt\obj\Debug\Seiten\Spiel_suchen.g.cs
 \\VBOXSVR\Abschlussprojekt\Abschlussprojekt\obj\Debug\Seiten\Startseite.g.cs
 \\VBOXSVR\Abschlussprojekt\Abschlussprojekt\obj\Debug\App.g.cs
-\\VBOXSVR\Abschlussprojekt\Abschlussprojekt\obj\Debug\Abschlussprojekt_Content.g.cs
 \\VBOXSVR\Abschlussprojekt\Abschlussprojekt\obj\Debug\Abschlussprojekt_MarkupCompile.cache
 \\VBOXSVR\Abschlussprojekt\Abschlussprojekt\obj\Debug\Abschlussprojekt_MarkupCompile.lref
 \\VBOXSVR\Abschlussprojekt\Abschlussprojekt\obj\Debug\MainWindow.baml

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Abschlussprojekt.Klassen;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,10 +26,12 @@ namespace Abschlussprojekt
         {
             InitializeComponent();
             rootFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;
-            Klassen.Datenbankschnittstelle.init();
+            //Klassen.Datenbankschnittstelle.init();
             //Klassen.Netzwerkkommunikation.Iinitialisiere_IP_Addressen();
             //Klassen.Netzwerkkommunikation.Iinitialisiere_BC_IP_Addressen();
-            Klassen.Statische_Variablen.mainWindow = this;
+            
+            
+            Statische_Variablen.mainWindow = this;
             rootFrame.Content = new Seiten.Startseite(rootFrame);
         }
     }

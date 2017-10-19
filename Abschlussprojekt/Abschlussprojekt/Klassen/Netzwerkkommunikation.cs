@@ -232,7 +232,7 @@ namespace Abschlussprojekt.Klassen
         public static void Spielstart(string nachricht)
         {
             //
-            // Die Informationen müssen folgendes Schema haben: "Spielstart,<Name_S1>,<ip_S1>,<farbe_S1>,<Name_S2>,<ip_S2>,<farbe_S2>,<Name_S3>,<ip_S3>,<farbe_S3>,<Name_S4>,<ip_S4>,<farbe_S4>"
+            // Die Informationen müssen folgendes Schema haben: "Spielstart,<Name_S1>,<ip_S1>,<farbe_S1>,<Name_S2>,<ip_S2>,<farbe_S2>,<Name_S3>,<ip_S3>,<farbe_S3>,<Name_S4>,<ip_S4>,<farbe_S4>,<start_farbe>"
             // 
             string[] Spieler = Konvertiere_in_Stringarray(nachricht, 12);
 
@@ -240,6 +240,13 @@ namespace Abschlussprojekt.Klassen
             if (Spieler[3] != "Geschlossen") new Spieler(Statische_Methoden.Erkenne_Farbe(Spieler[5]), Spieler[3], Statische_Methoden.Erkenne_Spielerart(Spieler[3]), IPAddress.Parse(Spieler[4]));
             if (Spieler[6] != "Geschlossen") new Spieler(Statische_Methoden.Erkenne_Farbe(Spieler[8]), Spieler[6], Statische_Methoden.Erkenne_Spielerart(Spieler[6]), IPAddress.Parse(Spieler[7]));
             if (Spieler[9] != "Geschlossen") new Spieler(Statische_Methoden.Erkenne_Farbe(Spieler[11]), Spieler[9], Statische_Methoden.Erkenne_Spielerart(Spieler[9]), IPAddress.Parse(Spieler[10]));
+            foreach(Spieler spieler in alle_Spieler)
+            {
+                if (spieler.farbe == Statische_Methoden.Erkenne_Farbe(Spieler[12]))
+                {
+                    spieler.status = true;
+                }
+            }
         }
 
         public static void Spielfigur_Update(string nachricht)
@@ -524,7 +531,9 @@ namespace Abschlussprojekt.Klassen
             }
             else if (nachricht.Contains("Spielrecht") && aktive_Seite == AKTIVE_SEITE.SPIELWIESE)
             {
-                string temp = nachricht.Replace("Spielrecht,", "");
+                lokaler_spieler.status = true;
+                Würfel.Dispatcher.Invoke(new Hosts_Update(Aktiviere_Würfel));
+                verbleibende_würfelversuche = 3;
             }
             else if (nachricht.Contains("Spielfigur Update") && aktive_Seite == AKTIVE_SEITE.SPIELWIESE)
             {
@@ -537,6 +546,11 @@ namespace Abschlussprojekt.Klassen
         public static void Spiel_suchen_Spiel_starten()
         {
             Spiel_suchen_Grid.RaiseEvent(new System.Windows.RoutedEventArgs(System.Windows.Controls.Primitives.GridViewRowPresenterBase.LostFocusEvent));
+        }
+
+        public static void Aktiviere_Würfel()
+        {
+            Würfel.IsEnabled = true;
         }
 
         private static void Hosts_ListBox_aktualisieren()

@@ -37,23 +37,30 @@ namespace Abschlussprojekt.Seiten
     {
         TextBox active_chat;
         Spieler aktiver_chat_spieler;
+        
 
         //Spieler lokaler_spieler;
-        Spieler nächster_Spieler;
+        
         bool TCP_listener_status;
         Frame root_Frame;
         public Spielwiese(Frame root_Frame)
         {
-            
+            verbleibende_würfelversuche = 20;// testcode
             InitializeComponent();
             aktive_Seite = AKTIVE_SEITE.SPIELWIESE;
             this.root_Frame = root_Frame;
             lokaler_spieler = Ermittele_lokalen_Spieler();
-            this.nächster_Spieler = Ermittele_nächsten_Spieler();
+            nächster_Spieler = Ermittele_nächsten_Spieler().ip;
             this.TCP_listener_status = true;
             active_chat = Chat_rot;
+            switch (lokaler_spieler.farbe)
+            {
+                case FARBE.ROT: figuren_lokal = spieler_rot;break;
+                case FARBE.GELB: figuren_lokal = spieler_gelb; break;
+                case FARBE.GRUEN: figuren_lokal = spieler_gruen; break;
+                case FARBE.BLAU: figuren_lokal = spieler_blau; break;
+            }
             
-            Initialisiere_Images_für_Figuren(); // Hier werden die Bilder für die Figuren geladen.
             Initialisiere_alle_Felder(Grid_Spielwiese);// Hier werden alle Felder anhand der UIElement Control elemente erzeugt.
             Initialisiere_Spiel(); // Hier werden die Spielfiguren der Spieler erzeugt.
 
@@ -86,18 +93,22 @@ namespace Abschlussprojekt.Seiten
                     case Klassen.Statische_Variablen.FARBE.BLAU: L_Spielername_blau.Content = spieler.name; break;
                 }
             }
-            // ToDo: Foreach CHildren in grid -> finde die Images heraus und füge event hinzu
-
+            
+            foreach (Spieler spieler in alle_Spieler)
+            {
+                if (spieler.status)
+                {
+                    TB_aktiver_Spieler.Text = spieler.name;
+                }
+            }
+            if (lokaler_spieler.status == false)
+            {
+                Btn_Wuerfel.IsEnabled = false;
+            }
+            else Btn_Wuerfel.IsEnabled = true;
+            Würfel = Btn_Wuerfel;
             Task TCPListener = Task.Factory.StartNew(Listen_for_TCP_Pakete);
-
-            Erzeuge_zufälligen_Afnfänger();
-            spieler_gelb[0].Set_Figureposition(spiel_felder[10]);
-        }
-
-        private void Erzeuge_zufälligen_Afnfänger()
-        {
-            int z = zufallszahl.Next(1, alle_Spieler.Count);//  D = [1,4[
-            Netzwerkkommunikation.Send_TCP_Packet("Spielrecht", alle_Spieler[z - 1].ip);
+            if (lokaler_spieler.status == true) Netzwerkkommunikation.Anlaysiere_IP_Paket("Spielrecht");
         }
 
         private Spieler Ermittele_nächsten_Spieler()
@@ -226,11 +237,6 @@ namespace Abschlussprojekt.Seiten
             if (Chat_eingabe.Text == "") Chat_eingabe.Text = "Schreibe eine Nachricht";
         }
 
-        public void Add_to_control(Image bild)
-        {
-            this.AddChild(bild);
-        }
-
         private void Spieler_gelb_GotFocus(object sender, RoutedEventArgs e)
         {
             active_chat = Chat_gelb;
@@ -254,26 +260,78 @@ namespace Abschlussprojekt.Seiten
             active_chat = Chat_gruppe;
             aktiver_chat_spieler = null;
         }
-        private int i = 0;
+
+        
         private void Btn_Wuerfel_Click(object sender, RoutedEventArgs e)
         {
-            i += 1;
-            spieler_rot[0].Set_Figureposition(spiel_felder[i]);
+            
+            
+            z = zufallszahl.Next(1, 7);
 
-            Netzwerkkommunikation.Sende_TCP_Nachricht_an_alle_Spieler("Spielfigur Update," + Statische_Methoden.Konvertiere_FARBE_zu_string(lokaler_spieler.farbe) + "," + spieler_rot[0].id.ToString() + "," + spiel_felder[i].position.X.ToString() + "," + spiel_felder[i].position.Y.ToString());
+            Btn_Wuerfel.Content = z.ToString();
+            if (Sind_alle_Figuren_im_Haus() && verbleibende_würfelversuche > 0)
+            {
+                if (z != 6 && verbleibende_würfelversuche >0)
+                {
+                    verbleibende_würfelversuche--;
 
+                }
+                else
+                {
+                    Zug_ist_möglich(z);
+                    Btn_Wuerfel.IsEnabled = false;
+                }
+            }
+            else if (Sind_alle_Figuren_im_Haus() && verbleibende_würfelversuche < 1)
+            {
+                Btn_Wuerfel.IsEnabled = false;
+                Forward_Spielrecht();
+            }
+            else
+            {
+                if (z != 6)
+                {
+                    if (Zug_ist_möglich(z))
+                    {
+                        Btn_Wuerfel.IsEnabled = false;
+                    }
+                    else
+                    {
+                        Btn_Wuerfel.IsEnabled = false;
+                        MessageBox.Show("Es ist kein Zug möglich", "Information", MessageBoxButton.OK);
+                        Forward_Spielrecht();
+                    }
+                }
+                else
+                {
+                    if (Zug_ist_möglich(z))
+                    {
+                        Btn_Wuerfel.IsEnabled = false;
+                    }
+                    else
+                    {
+                        lokaler_spieler.status = true;
+                    }
+                }
+
+            }
         }
 
         private void btn_Aufgeben_Click(object sender, RoutedEventArgs e)
         {
             this.TCP_listener_status = false;
             root_Frame.Content = new Startseite(root_Frame);
+            spiel_felder.Clear();
+            ziel_felder.Clear();
+            start_felder.Clear();
+            spieler_rot.Clear();
+            spieler_gelb.Clear();
+            spieler_gruen.Clear();
+            spieler_blau.Clear();
+            alle_Spieler.Clear();
         }
 
-        private void Forward_Spielrecht()
-        {
-            Netzwerkkommunikation.Send_TCP_Packet("Spielrecht", nächster_Spieler.ip);
-        }
+        
 
         private void TB_aktiver_Spieler_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -286,3 +344,5 @@ namespace Abschlussprojekt.Seiten
         
     }
 }
+//Netzwerkkommunikation.Sende_TCP_Nachricht_an_alle_Spieler("Spielfigur Update," + Statische_Methoden.Konvertiere_FARBE_zu_string(lokaler_spieler.farbe) + "," + spieler_rot[0].id.ToString() + "," + spiel_felder[i].position.X.ToString() + "," + spiel_felder[i].position.Y.ToString());
+

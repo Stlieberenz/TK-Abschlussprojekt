@@ -57,11 +57,12 @@ namespace Abschlussprojekt.Klassen
             STARTSEITE
         }
 
-        public static bool initstatus = false;
+        public static bool initialized = false;
         public static string Host_name;
         public static MainWindow mainWindow = new MainWindow();
         public static AKTIVE_SEITE aktive_Seite;
         public static Random zufallszahl = new Random();
+        public static int z;
 
         public static List<Feld> start_felder = new List<Feld>();
         public static List<Feld> spiel_felder = new List<Feld>();
@@ -71,6 +72,8 @@ namespace Abschlussprojekt.Klassen
         public static List<Figur> spieler_gelb = new List<Figur>();
         public static List<Figur> spieler_gruen = new List<Figur>();
         public static List<Figur> spieler_blau = new List<Figur>();
+
+        public static List<Figur> figuren_lokal; // ist nur ein verweis auf eine der obigen listen.
 
         public static List<Spieler> alle_Spieler = new List<Spieler>();
         public static Spieler lokaler_spieler;
@@ -93,11 +96,16 @@ namespace Abschlussprojekt.Klassen
         public static bool anfragen_result;
 
         public static IPAddress eigene_IPAddresse = null;
+        public static IPAddress nächster_Spieler = null;
         public static List<IPAddress> broadcast_IPAdresse = new List<IPAddress>(0);
         public static int port = 50000;
         public static UdpClient receivingUdpClient = new UdpClient(port);
 
         
         public static Grid Spiel_suchen_Grid = new Grid();
+
+        public static int verbleibende_würfelversuche;
+        public static Button Würfel = new Button();
+        public static bool Figuren_waren_in_Haus;
     }
 }

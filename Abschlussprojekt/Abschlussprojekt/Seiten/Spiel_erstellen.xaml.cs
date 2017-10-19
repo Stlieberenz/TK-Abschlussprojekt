@@ -79,6 +79,7 @@ namespace Abschlussprojekt.Seiten
             if (temp >=2 && result == true)
             {
                 broadcast_status = false;
+                
                 string client_startmessage = Erstelle_message_für_clients();
                 foreach (Spieler spieler in alle_Spieler)
                 {
@@ -99,9 +100,12 @@ namespace Abschlussprojekt.Seiten
             }
             switch (rest)
             {
-                case 2: message += ",Geschlossen,_,_,Geschlossen,_,_"; break;
-                case 3: message += ",Geschlossen,_,_"; break;
+                case 2: message += ",Geschlossen,_,_,Geschlossen,_,_,"; break;
+                case 3: message += ",Geschlossen,_,_,"; break;
             }
+            int s = Statische_Methoden.Ermittle_start_Spieler();
+            alle_Spieler[s].status = true;
+            message += Statische_Methoden.Konvertiere_FARBE_zu_string(alle_Spieler[s].farbe);
             return message;
         }
 
@@ -113,6 +117,7 @@ namespace Abschlussprojekt.Seiten
                 Spielerstellenlabel.Clear();
                 alle_Spieler.Clear();
                 known_IP_S.Clear();
+                alle_Hosts.Clear();
 
                 for (int i = 0; i < 10; i++)
                 {
