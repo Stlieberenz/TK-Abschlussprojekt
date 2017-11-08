@@ -104,7 +104,7 @@ namespace Abschlussprojekt.Klassen
 
         public void Set_Figureposition(Feld feld)
         {
-            //aktuelle_Position.figur = null;
+            aktuelle_Position.figur = null;
             if (feld.figur != null)
             {
                 if (feld.figur.farbe != this.farbe)
@@ -177,7 +177,6 @@ namespace Abschlussprojekt.Klassen
         {
             if (mögliche_Position != null)
             {
-                aktuelle_Position.figur = null;
                 Set_Figureposition(mögliche_Position);
                 Netzwerkkommunikation.Sende_TCP_Nachricht_an_alle_Spieler("Spielfigur Update,"+Statische_Methoden.Konvertiere_FARBE_zu_string(this.farbe)+","+this.id+","+aktuelle_Position.position.X+","+ aktuelle_Position.position.Y);
                 Statische_Methoden.Figur_wurde_bewegt();

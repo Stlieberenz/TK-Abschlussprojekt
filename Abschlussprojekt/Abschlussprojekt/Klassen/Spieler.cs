@@ -25,6 +25,8 @@ namespace Abschlussprojekt.Klassen
         public string name { get; }
         public bool status { get; set; }
         public IPAddress ip { get; }
+        public Spieler nächster_Spieler { get; set; }
+        public List<Figur> eigene_Figuren { get; set; }
 
         public Spieler(FARBE farbe,string name, SPIELER_ART spieler_art,IPAddress ip)
         {
@@ -37,7 +39,7 @@ namespace Abschlussprojekt.Klassen
 
         public void Initialisiere_Figuren()
         {
-            Statische_Methoden.Initialisiere_Figuren(this.farbe);
+            this.eigene_Figuren = Statische_Methoden.Initialisiere_Figuren(this.farbe);
         }
     }
 }

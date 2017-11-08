@@ -37,151 +37,50 @@ namespace Abschlussprojekt.Seiten
     {
         TextBox active_chat;
         Spieler aktiver_chat_spieler;
-        
-
-        //Spieler lokaler_spieler;
+        public delegate void Click_Event();
+        private delegate void Click_Event_Objeckt(Figur figur);
         
         bool TCP_listener_status;
         Frame root_Frame;
+
         public Spielwiese(Frame root_Frame)
         {
-            verbleibende_würfelversuche = 20;// testcode
             InitializeComponent();
             aktive_Seite = AKTIVE_SEITE.SPIELWIESE;
             this.root_Frame = root_Frame;
-            lokaler_spieler = Ermittele_lokalen_Spieler();
-            nächster_Spieler = Ermittele_nächsten_Spieler().ip;
             this.TCP_listener_status = true;
+            lokaler_spieler = Ermittele_lokalen_Spieler();
+            Würfel = Btn_Wuerfel;
             active_chat = Chat_rot;
-            switch (lokaler_spieler.farbe)
-            {
-                case FARBE.ROT: figuren_lokal = spieler_rot;break;
-                case FARBE.GELB: figuren_lokal = spieler_gelb; break;
-                case FARBE.GRUEN: figuren_lokal = spieler_gruen; break;
-                case FARBE.BLAU: figuren_lokal = spieler_blau; break;
-            }
             
             Initialisiere_alle_Felder(Grid_Spielwiese);// Hier werden alle Felder anhand der UIElement Control elemente erzeugt.
             Initialisiere_Spiel(); // Hier werden die Spielfiguren der Spieler erzeugt.
-
-            //
-            //Hier wird jede figur der oberfläche hinzugefügt
-            //
-            foreach (Figur figur in spieler_rot)
-            {
-                Grid_Spielwiese.Children.Add(figur.bild);
-            }
-            foreach (Figur figur in spieler_gelb)
-            {
-                Grid_Spielwiese.Children.Add(figur.bild);
-            }
-            foreach (Figur figur in spieler_gruen)
-            {
-                Grid_Spielwiese.Children.Add(figur.bild);
-            }
-            foreach (Figur figur in spieler_blau)
-            {
-                Grid_Spielwiese.Children.Add(figur.bild);
-            }
-            foreach (Spieler spieler in alle_Spieler)
-            {
-                switch (spieler.farbe)
-                {
-                    case Klassen.Statische_Variablen.FARBE.ROT: L_Spielername_rot.Content = spieler.name; break;
-                    case Klassen.Statische_Variablen.FARBE.GELB: L_Spielername_gelb.Content = spieler.name; break;
-                    case Klassen.Statische_Variablen.FARBE.GRUEN: L_Spielername_gruen.Content = spieler.name; break;
-                    case Klassen.Statische_Variablen.FARBE.BLAU: L_Spielername_blau.Content = spieler.name; break;
-                }
-            }
             
             foreach (Spieler spieler in alle_Spieler)
             {
                 if (spieler.status)
                 {
                     TB_aktiver_Spieler.Text = spieler.name;
+                    aktiver_spieler = spieler;
                 }
-            }
-            if (lokaler_spieler.status == false)
-            {
-                Btn_Wuerfel.IsEnabled = false;
-            }
-            else Btn_Wuerfel.IsEnabled = true;
-            Würfel = Btn_Wuerfel;
-            Task TCPListener = Task.Factory.StartNew(Listen_for_TCP_Pakete);
-            if (lokaler_spieler.status == true) Netzwerkkommunikation.Anlaysiere_IP_Paket("Spielrecht");
-        }
+                switch (spieler.farbe)
+                {
+                    case FARBE.ROT: L_Spielername_rot.Content = spieler.name; break;
+                    case FARBE.GELB: L_Spielername_gelb.Content = spieler.name; break;
+                    case FARBE.GRUEN: L_Spielername_gruen.Content = spieler.name; break;
+                    case FARBE.BLAU: L_Spielername_blau.Content = spieler.name; break;
+                }
+                foreach(Figur figur in spieler.eigene_Figuren) Grid_Spielwiese.Children.Add(figur.bild);//Hier wird jede figur der oberfläche hinzugefügt
 
-        private Spieler Ermittele_nächsten_Spieler()
-        {
-            switch (lokaler_spieler.farbe)
-            {
-                case FARBE.ROT:
-                    {
-                        foreach(Spieler spieler in alle_Spieler)
-                        {
-                            if (spieler.farbe == FARBE.GELB) return spieler;
-                        }
-                        foreach (Spieler spieler in alle_Spieler)
-                        {
-                            if (spieler.farbe == FARBE.GRUEN) return spieler;
-                        }
-                        foreach (Spieler spieler in alle_Spieler)
-                        {
-                            if (spieler.farbe == FARBE.BLAU) return spieler;
-                        }
-                        break;
-                    }
-                case FARBE.GELB:
-                    {
-                        
-                        foreach (Spieler spieler in alle_Spieler)
-                        {
-                            if (spieler.farbe == FARBE.GRUEN) return spieler;
-                        }
-                        foreach (Spieler spieler in alle_Spieler)
-                        {
-                            if (spieler.farbe == FARBE.BLAU) return spieler;
-                        }
-                        foreach (Spieler spieler in alle_Spieler)
-                        {
-                            if (spieler.farbe == FARBE.ROT) return spieler;
-                        }
-                        break;
-                    }
-                case FARBE.GRUEN:
-                    {
-                        foreach (Spieler spieler in alle_Spieler)
-                        {
-                            if (spieler.farbe == FARBE.BLAU) return spieler;
-                        }
-                        foreach (Spieler spieler in alle_Spieler)
-                        {
-                            if (spieler.farbe == FARBE.ROT) return spieler;
-                        }
-                        foreach (Spieler spieler in alle_Spieler)
-                        {
-                            if (spieler.farbe == FARBE.GELB) return spieler;
-                        }
-                        break;
-                    }
-                case FARBE.BLAU:
-                    {
-                        foreach (Spieler spieler in alle_Spieler)
-                        {
-                            if (spieler.farbe == FARBE.ROT) return spieler;
-                        }
-                        foreach (Spieler spieler in alle_Spieler)
-                        {
-                            if (spieler.farbe == FARBE.GELB) return spieler;
-                        }
-                        foreach (Spieler spieler in alle_Spieler)
-                        {
-                            if (spieler.farbe == FARBE.GRUEN) return spieler;
-                        }
-                        break;
-                    }
+                spieler.nächster_Spieler = Ermittele_nächsten_Spieler(spieler.farbe);
             }
-            return null;
+            
+            if (lokaler_spieler.status == true) Netzwerkkommunikation.Anlaysiere_IP_Paket("Spielrecht");
+            Task TCPListener = Task.Factory.StartNew(Listen_for_TCP_Pakete);
+            foreach (Spieler spieler in alle_Spieler)
+            {
+                if (spieler.spieler_art == SPIELER_ART.COMPUTERGEGNER) Task.Factory.StartNew((Computergegener) => Computergegener_Runtime(spieler), spieler);
+            }
         }
 
         private void Listen_for_TCP_Pakete()
@@ -214,8 +113,8 @@ namespace Abschlussprojekt.Seiten
         public void Text_in_Chat_senden(string spielername)
         {
             active_chat.Text += "\n" + spielername + ": " + Chat_eingabe.Text;
-            if (aktiver_chat_spieler != null) Netzwerkkommunikation.Send_TCP_Packet(Chat_eingabe.Text, aktiver_chat_spieler.ip);
-            else Netzwerkkommunikation.Sende_TCP_Nachricht_an_alle_Spieler(Chat_eingabe.Text);
+            if (aktiver_chat_spieler != null) Netzwerkkommunikation.Send_TCP_Packet("Chatinformationen," + Chat_eingabe.Text, aktiver_chat_spieler.ip);
+            else Netzwerkkommunikation.Sende_TCP_Nachricht_an_alle_Spieler("Chatinformationen," + Chat_eingabe.Text);
             active_chat.ScrollToEnd();
             Chat_eingabe.Text = "";
             Chat_eingabe.Focus();
@@ -274,11 +173,10 @@ namespace Abschlussprojekt.Seiten
                 if (z != 6 && verbleibende_würfelversuche >0)
                 {
                     verbleibende_würfelversuche--;
-
                 }
                 else
                 {
-                    Zug_ist_möglich(z);
+                    Zug_ist_möglich(z,aktiver_spieler.eigene_Figuren);
                     Btn_Wuerfel.IsEnabled = false;
                 }
             }
@@ -291,7 +189,7 @@ namespace Abschlussprojekt.Seiten
             {
                 if (z != 6)
                 {
-                    if (Zug_ist_möglich(z))
+                    if (Zug_ist_möglich(z,aktiver_spieler.eigene_Figuren))
                     {
                         Btn_Wuerfel.IsEnabled = false;
                     }
@@ -304,7 +202,7 @@ namespace Abschlussprojekt.Seiten
                 }
                 else
                 {
-                    if (Zug_ist_möglich(z))
+                    if (Zug_ist_möglich(z, aktiver_spieler.eigene_Figuren))
                     {
                         Btn_Wuerfel.IsEnabled = false;
                     }
@@ -331,18 +229,49 @@ namespace Abschlussprojekt.Seiten
             alle_Spieler.Clear();
         }
 
-        
 
         private void TB_aktiver_Spieler_TextChanged(object sender, TextChangedEventArgs e)
         {
-            //if (TB_aktiver_Spieler.Text.ToString().Contains(lokaler_spieler.name))
-            //{
-
-            //}
+            
         }
 
-        
+        private void Computergegener_Runtime(Spieler CP_spieler)
+        {
+            while(true)
+            {
+                while (CP_spieler.status)
+                {
+                    System.Threading.Thread.Sleep(500);
+                    Würfel.Dispatcher.Invoke(new Click_Event(Würfel_Click));
+                    System.Threading.Thread.Sleep(500);
+                    foreach (Figur figur in CP_spieler.eigene_Figuren)
+                    {
+                        if (figur.mögliche_Position != null)
+                        {
+                            figur.Set_Figureposition(figur.mögliche_Position);
+                            Netzwerkkommunikation.Sende_TCP_Nachricht_an_alle_Spieler("Spielfigur Update," + Statische_Methoden.Konvertiere_FARBE_zu_string(figur.farbe) + "," + figur.id + "," + figur.aktuelle_Position.position.X + "," + figur.aktuelle_Position.position.Y);
+                            Figur_wurde_bewegt();
+                            
+                            break;
+                        }
+                    }
+                    foreach (Figur figur in CP_spieler.eigene_Figuren)
+                    {
+                        figur.mögliche_Position = null;
+                    }
+                }
+                System.Threading.Thread.Sleep(1000);
+            }
+        }
+
+        private void Würfel_Click()
+        {
+            Würfel.RaiseEvent(new RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent));
+        }
+
+        private void Figur_Click(Figur figur)
+        {
+            figur.bild.RaiseEvent(new RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent));
+        }
     }
 }
-//Netzwerkkommunikation.Sende_TCP_Nachricht_an_alle_Spieler("Spielfigur Update," + Statische_Methoden.Konvertiere_FARBE_zu_string(lokaler_spieler.farbe) + "," + spieler_rot[0].id.ToString() + "," + spiel_felder[i].position.X.ToString() + "," + spiel_felder[i].position.Y.ToString());
-

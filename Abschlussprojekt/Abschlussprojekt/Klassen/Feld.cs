@@ -44,7 +44,6 @@ namespace Abschlussprojekt.Klassen
                 case FELD_EIGENSCHAFT.SPIELFELD: spiel_felder.Add(this); break;
                 case FELD_EIGENSCHAFT.ZIEL: ziel_felder.Add(this); break;
             }
-
         }
 
         public void Set_figur(Figur figur)

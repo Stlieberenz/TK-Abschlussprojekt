@@ -39,9 +39,11 @@ namespace Abschlussprojekt.Klassen
             {
                 if (adr.AddressFamily == AddressFamily.InterNetwork && adr.Address != VB_addresse.Address) //-> Die VB_Addresse muss rausgefiltert werden, da sie virtual box gehört und ich sie bisher noch nicht anders gefiltert bekomme.
                 {
-                    eigene_IPAddresse = adr;
+                    if (adr != null) eigene_IPAddresse = adr;
+                   
                 }
             }
+             if( eigene_IPAddresse == null) eigene_IPAddresse = new IPAddress(0);
         }
 
         public static void Iinitialisiere_BC_IP_Addressen()

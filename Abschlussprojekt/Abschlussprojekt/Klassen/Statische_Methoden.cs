@@ -21,6 +21,8 @@ namespace Abschlussprojekt.Klassen
 {
     static class Statische_Methoden
     {
+        public delegate void Click_Event();
+
         public static void Initialisiere_alle_Felder(Grid spielwiese_grid)
         {
             try
@@ -100,12 +102,15 @@ namespace Abschlussprojekt.Klassen
             }
         }
 
-        public static void Initialisiere_Figuren(FARBE farbe)
+        public static List<Figur> Initialisiere_Figuren(FARBE farbe)
         {
+            List<Figur> result = new List<Figur>();
             for (int i = 0; i < 4; i++)
             {
                 Figur figur = new Figur(farbe,i);
+                result.Add(figur);
             }
+            return result;
         }
 
         public static void Initialisiere_Images_für_Figuren()
@@ -198,7 +203,7 @@ namespace Abschlussprojekt.Klassen
 
         public static bool Sind_alle_Figuren_im_Haus()
         {
-            foreach(Figur figur in figuren_lokal)
+            foreach(Figur figur in aktiver_spieler.eigene_Figuren)
             {
                 if (figur.aktuelle_Position.feld_art != FELD_EIGENSCHAFT.STARTPOSITION)
                 {
@@ -208,74 +213,21 @@ namespace Abschlussprojekt.Klassen
             return true;
         }
 
-        public static bool Zug_ist_möglich(int zahl)
+        public static bool Zug_ist_möglich(int zahl,List<Figur> figuren)
         {
             bool result = false;
-            foreach (Figur figur in figuren_lokal)
+            foreach (Figur figur in figuren)
             {
-
-                switch (figur.aktuelle_Position.feld_art)
+                if (figur.a_Postition + zahl > -1 && figur.a_Postition + zahl < 44)
                 {
-                    case FELD_EIGENSCHAFT.STARTPOSITION:
-                        {
-                            if (figur.spiel_startposition.figur == null && zahl == 6)
-                            {
-                                figur.mögliche_Position = figur.spiel_startposition;
-                                result =  true;
-                            }
-                            else
-                            {
-                                figur.mögliche_Position = null;
-                                result = true;
-                            } break;
-                        }
-                    case FELD_EIGENSCHAFT.SPIELFELD:
-                        {
-                            if (figur.a_Postition + zahl < 44)
-                            {
-                                if (figur.wegstecke[figur.a_Postition + zahl].figur != null)
-                                {
-                                    if (figur.wegstecke[figur.a_Postition + zahl].figur.farbe != figur.farbe && figur.a_Postition + zahl < 44) // Prüft ob auf dem Potentiellen Zielfeld ein eigener Spieler steht und das man nicht übers endziehl hinausschießt
-                                    {
-                                        figur.mögliche_Position = figur.wegstecke[figur.a_Postition + zahl];
-                                        result = true;
-                                    }
-                                    else
-                                    {
-                                        figur.mögliche_Position = null;
-                                    }
-                                }
-                                else
-                                {
-                                    figur.mögliche_Position = figur.wegstecke[figur.a_Postition + zahl];
-                                    result = true;
-                                }
-                            }
-                            else
-                            {
-                                figur.mögliche_Position = null;
-                            }
-                            break;
-                        }
-                    case FELD_EIGENSCHAFT.ZIEL:
-                        {
-                            if (figur.a_Postition + zahl < 44)
-                            {
-                                if (figur.wegstecke[figur.a_Postition + zahl].figur != null)
-                                {
-                                    if (figur.wegstecke[figur.a_Postition + zahl].figur.farbe != figur.farbe && figur.a_Postition + zahl < 44) // Prüft ob auf dem Potentiellen Zielfeld ein eigener Spieler steht und das man nicht übers endziehl hinausschießt
-                                    {
-                                        figur.mögliche_Position = figur.wegstecke[figur.a_Postition + zahl];
-                                        result = true;
-                                    }
-                                    else figur.mögliche_Position = null;
-                                }
-                                else figur.mögliche_Position = null;
-                            }
-                            else figur.mögliche_Position = null;
-                            break;
-                        }
+                    if (figur.wegstecke[figur.a_Postition + zahl].figur != null)
+                    {
+                        if (figur.wegstecke[figur.a_Postition + zahl].figur.farbe == figur.farbe) figur.mögliche_Position = null;
+                        else figur.mögliche_Position = figur.wegstecke[figur.a_Postition + zahl]; result = true;
+                    }
+                    else figur.mögliche_Position = figur.wegstecke[figur.a_Postition + zahl]; result = true;
                 }
+                else figur.mögliche_Position = null;
             }
             return result;
         }
@@ -289,7 +241,7 @@ namespace Abschlussprojekt.Klassen
             }
             else if(!ziel_erreicht && z == 6)
             {
-                Würfel.IsEnabled = true;
+                if (aktiver_spieler.spieler_art != SPIELER_ART.COMPUTERGEGNER) Würfel.IsEnabled = true;
             }
             else
             {
@@ -299,7 +251,7 @@ namespace Abschlussprojekt.Klassen
 
         public static bool Ziel_Erreicht()
         {
-            foreach(Figur figur in figuren_lokal)
+            foreach(Figur figur in aktiver_spieler.eigene_Figuren)
             {
                 if (figur.aktuelle_Position.feld_art != FELD_EIGENSCHAFT.ZIEL)
                 {
@@ -311,13 +263,117 @@ namespace Abschlussprojekt.Klassen
 
         public static void Forward_Spielrecht()
         {
-            lokaler_spieler.status = false;
-            Netzwerkkommunikation.Send_TCP_Packet("Spielrecht", nächster_Spieler);
+            aktiver_spieler.status = false;
+            if (aktiver_spieler.nächster_Spieler.spieler_art == SPIELER_ART.NORMALER_SPIELER && aktiver_spieler.nächster_Spieler.ip.Address != eigene_IPAddresse.Address) Netzwerkkommunikation.Send_TCP_Packet("Spielrecht", aktiver_spieler.nächster_Spieler.ip);
+            else
+            {
+                aktiver_spieler.nächster_Spieler.status = true;
+                aktiver_spieler = aktiver_spieler.nächster_Spieler;
+                if (aktiver_spieler.spieler_art == SPIELER_ART.NORMALER_SPIELER) Würfel.Dispatcher.Invoke(new Click_Event(Würfel_einschalten));
+                verbleibende_würfelversuche = 3;
+            }
         }
 
         public static void Sende_Spielende_an_Mitspieler()
         {
             Netzwerkkommunikation.Sende_TCP_Nachricht_an_alle_Spieler("Spielende" + lokaler_spieler.name);
+        }
+
+        public static void Würfel_einschalten()
+        {
+            Würfel.IsEnabled = true;
+        }
+
+        public static Spieler Ermittele_nächsten_Spieler(FARBE farbe)
+        {
+            switch (farbe)
+            {
+                case FARBE.ROT:
+                    {
+                        foreach (Spieler spieler in alle_Spieler)
+                        {
+                            if (spieler.farbe == FARBE.GELB) return spieler;
+                        }
+                        foreach (Spieler spieler in alle_Spieler)
+                        {
+                            if (spieler.farbe == FARBE.GRUEN) return spieler;
+                        }
+                        foreach (Spieler spieler in alle_Spieler)
+                        {
+                            if (spieler.farbe == FARBE.BLAU) return spieler;
+                        }
+                        break;
+                    }
+                case FARBE.GELB:
+                    {
+
+                        foreach (Spieler spieler in alle_Spieler)
+                        {
+                            if (spieler.farbe == FARBE.GRUEN) return spieler;
+                        }
+                        foreach (Spieler spieler in alle_Spieler)
+                        {
+                            if (spieler.farbe == FARBE.BLAU) return spieler;
+                        }
+                        foreach (Spieler spieler in alle_Spieler)
+                        {
+                            if (spieler.farbe == FARBE.ROT) return spieler;
+                        }
+                        break;
+                    }
+                case FARBE.GRUEN:
+                    {
+                        foreach (Spieler spieler in alle_Spieler)
+                        {
+                            if (spieler.farbe == FARBE.BLAU) return spieler;
+                        }
+                        foreach (Spieler spieler in alle_Spieler)
+                        {
+                            if (spieler.farbe == FARBE.ROT) return spieler;
+                        }
+                        foreach (Spieler spieler in alle_Spieler)
+                        {
+                            if (spieler.farbe == FARBE.GELB) return spieler;
+                        }
+                        break;
+                    }
+                case FARBE.BLAU:
+                    {
+                        foreach (Spieler spieler in alle_Spieler)
+                        {
+                            if (spieler.farbe == FARBE.ROT) return spieler;
+                        }
+                        foreach (Spieler spieler in alle_Spieler)
+                        {
+                            if (spieler.farbe == FARBE.GELB) return spieler;
+                        }
+                        foreach (Spieler spieler in alle_Spieler)
+                        {
+                            if (spieler.farbe == FARBE.GRUEN) return spieler;
+                        }
+                        break;
+                    }
+            }
+            return null;
+        }
+
+        public static string Erstelle_Startnachricht_für_clients()
+        {
+            string message = "Spielstart";
+            int rest = alle_Spieler.Count;
+            foreach (Spieler spieler in alle_Spieler)
+            {
+                message += "," + spieler.name + "," + spieler.ip.ToString() + "," + Statische_Methoden.Konvertiere_FARBE_zu_string(spieler.farbe);
+            }
+            switch (rest)
+            {
+                case 2: message += ",Geschlossen,_,_,Geschlossen,_,_"; break;
+                case 3: message += ",Geschlossen,_,_"; break;
+            }
+            int s = Statische_Methoden.Ermittle_start_Spieler();
+            alle_Spieler[s].status = true;
+            message += "," + Statische_Methoden.Konvertiere_FARBE_zu_string(alle_Spieler[s].farbe);
+            return message;
         }
     }
 }

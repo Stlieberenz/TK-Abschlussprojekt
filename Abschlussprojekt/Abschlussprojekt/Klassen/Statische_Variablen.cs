@@ -77,6 +77,7 @@ namespace Abschlussprojekt.Klassen
 
         public static List<Spieler> alle_Spieler = new List<Spieler>();
         public static Spieler lokaler_spieler;
+        public static Spieler aktiver_spieler;
 
         public static List<TextBox> Beitrittslabel = new List<TextBox>();//Für wenn man dem Spiel beitritt
         public static List<TextBox> Spielerstellenlabel = new List<TextBox>();//Für wenn man ein Spiel Hostet
@@ -96,7 +97,6 @@ namespace Abschlussprojekt.Klassen
         public static bool anfragen_result;
 
         public static IPAddress eigene_IPAddresse = null;
-        public static IPAddress nächster_Spieler = null;
         public static List<IPAddress> broadcast_IPAdresse = new List<IPAddress>(0);
         public static int port = 50000;
         public static UdpClient receivingUdpClient = new UdpClient(port);
