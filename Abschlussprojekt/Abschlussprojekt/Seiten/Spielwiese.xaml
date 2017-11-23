@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Abschlussprojekt.Seiten"
              mc:Ignorable="d" Height="{DynamicResource {x:Static SystemParameters.FullPrimaryScreenHeightKey}}" Width="{DynamicResource {x:Static SystemParameters.FullPrimaryScreenWidthKey}}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
 
-    <Grid x:Name="Grid_Spielwiese" Background="White" Width="{DynamicResource {x:Static SystemParameters.FullPrimaryScreenWidthKey}}" Height="{DynamicResource {x:Static SystemParameters.FullPrimaryScreenHeightKey}}">
+    <Grid x:Name="Grid_Spielwiese" Background="White" Width="{DynamicResource {x:Static SystemParameters.FullPrimaryScreenWidthKey}}" Height="{DynamicResource {x:Static SystemParameters.FullPrimaryScreenHeightKey}}" RenderTransformOrigin="0.591,0.48">
         <Image x:Name="Start_rot_3" HorizontalAlignment="Center" Height="62" Margin="545,688,929,55.6" VerticalAlignment="Center" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_rot.bmp" Uid="{Binding Name, ElementName=Start_rot_3}"	/>
         <Image x:Name="Start_rot_4" HorizontalAlignment="Center" Height="62" Margin="612,688,862,55.6" VerticalAlignment="Center" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_rot.bmp" Uid="{Binding Name, ElementName=Start_rot_4}"	/>
         <Image x:Name="Start_rot_1" HorizontalAlignment="Center" Height="62" Margin="545,621,929,122.6" VerticalAlignment="Center" Width="62" Source="/Abschlussprojekt;component/Bilder/Feld_rot.bmp" Uid="{Binding Name, ElementName=Start_rot_1}"/>
@@ -116,5 +116,6 @@
         <Button x:Name="Btn_senden" Content="Senden" HorizontalAlignment="Left" Margin="39,721,0,0" VerticalAlignment="Top" Width="75" Click="Btn_senden_Click"/>
         <Button x:Name="btn_Aufgeben" Content="Aufgeben &amp; sich ärgern" HorizontalAlignment="Left" Margin="79,197,0,0" VerticalAlignment="Top" Width="285" Height="86" FontSize="24" Click="btn_Aufgeben_Click"/>
         <TextBox x:Name="TB_aktiver_Spieler" HorizontalAlignment="Left" Height="23" Margin="79,338,0,0" TextWrapping="Wrap" Text="Spieler ist am Zug" VerticalAlignment="Top" Width="285" IsReadOnly="True" TextChanged="TB_aktiver_Spieler_TextChanged"/>
+        <Label x:Name="experimentell" Content="Label" HorizontalAlignment="Left" Margin="84,154,0,0" VerticalAlignment="Top" Width="655"/>
     </Grid>
 </UserControl>

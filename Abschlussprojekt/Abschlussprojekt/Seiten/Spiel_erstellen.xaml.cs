@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using static Abschlussprojekt.Klassen.Statische_Variablen;
 using  Abschlussprojekt.Klassen;
+using Abschlussprojekt.Klassen.Seiten_Funktionen;
 
 // Namenskonvention: --------------------------------------+
 //                                                         |
@@ -54,14 +55,16 @@ namespace Abschlussprojekt.Seiten
             Netzwerkkommunikation.Iinitialisiere_IP_Addressen();
         }
 
+
+
         private void btn_spiel_starten_Click(object sender, RoutedEventArgs e)
         {
             //
             //In den If Abfragen wird geprüft ob min 2 gültige spieler da sind und kein slot mehr offen ist und ein Name angegeben wurde.
             //
             int temp = 0;
-            bool result = true;
-            
+            if (!Überprüfe_eingabe_Name()) return;
+
             if (Prüfe_Startbedingungen(L_Name_Spieler_rot)) temp++;
             if (Prüfe_Startbedingungen(L_Name_Spieler_gelb)) temp++;
             if (Prüfe_Startbedingungen(L_Name_Spieler_gruen)) temp++;
@@ -72,23 +75,63 @@ namespace Abschlussprojekt.Seiten
                 MessageBox.Show("Es müssen mindestens 2 Spieler gegeneinander antreten", "Fehler", MessageBoxButton.OK);
                 return;
             }
-            if (Spielername_eingabe.Text == "" || Spielername_eingabe.Text == "Hier Namen eingeben" || Spielername_eingabe.Text.Length >=20|| Spielername_eingabe.Text.Contains(","))
-            {
-                MessageBox.Show("Es muss ein gültiger Name eingegeben werden!\nUngültige Namen sind :\n\"Hier Namen eingeben\"\nund Namen die ein \",\" enthalten.", "Fehler", MessageBoxButton.OK);
-                return;
-            }
-            if (temp >=2 && result == true)
+
+            if (temp >= 2)
             {
                 broadcast_status = false;
-                
+                if (L_Name_Spieler_rot.Text.ToString() == "Computergegner")
+                {
+                    Spieler CP_Gegner1 = new Spieler(FARBE.ROT, "Computergegner 1", SPIELER_ART.COMPUTERGEGNER, new System.Net.IPAddress(0));
+                }
+                if (L_Name_Spieler_gelb.Text.ToString() == "Computergegner")
+                {
+                    Spieler CP_Gegner1 = new Spieler(FARBE.GELB, "Computergegner 2", SPIELER_ART.COMPUTERGEGNER, new System.Net.IPAddress(0));
+                }
+                if (L_Name_Spieler_gruen.Text.ToString() == "Computergegner")
+                {
+                    Spieler CP_Gegner1 = new Spieler(FARBE.GRUEN, "Computergegner 3", SPIELER_ART.COMPUTERGEGNER, new System.Net.IPAddress(0));
+                }
+                if (L_Name_Spieler_blau.Text.ToString() == "Computergegner")
+                {
+                    Spieler CP_Gegner1 = new Spieler(FARBE.BLAU, "Computergegner 4", SPIELER_ART.COMPUTERGEGNER, new System.Net.IPAddress(0));
+                }
+
+                Spieler host_spieler = new Spieler(ausgewählte_farbe, Spielername_eingabe.Text, SPIELER_ART.NORMALER_SPIELER, eigene_IPAddresse);
+                host_spieler.status = true;
+
                 string client_startmessage = Statische_Methoden.Erstelle_Startnachricht_für_clients();
                 foreach (Spieler spieler in alle_Spieler)
                 {
-                    if (spieler.spieler_art == SPIELER_ART.NORMALER_SPIELER)Netzwerkkommunikation.Send_TCP_Packet(client_startmessage,spieler.ip);
+                    if (spieler.spieler_art == SPIELER_ART.NORMALER_SPIELER) Netzwerkkommunikation.Send_TCP_Packet(client_startmessage, spieler.ip);
                 }
-                
+
+                Spielerstellenlabel.Clear();
                 root_Frame.Content = new Spielwiese(root_Frame);
             }
+        }
+       
+        private void btn_Hosten_Click(object sender, RoutedEventArgs e)
+        {
+            if (!Überprüfe_eingabe_Name()) return;
+           
+            comboBox_rot.IsEnabled = false;
+            comboBox_gelb.IsEnabled = false;
+            comboBox_gruen.IsEnabled = false;
+            comboBox_blau.IsEnabled = false;
+            Spielername_eingabe.IsEnabled = false;
+            btn_Hosten.IsEnabled = false;
+
+            switch (ausgewählte_farbe)
+            {
+                case FARBE.ROT: L_Name_Spieler_rot.Text = Spielername_eingabe.Text; break;
+                case FARBE.GELB: L_Name_Spieler_gelb.Text = Spielername_eingabe.Text; break;
+                case FARBE.GRUEN: L_Name_Spieler_gruen.Text = Spielername_eingabe.Text; break;
+                case FARBE.BLAU: L_Name_Spieler_blau.Text = Spielername_eingabe.Text; break;
+            }
+
+            Create_BC_message();
+            Task send_Broadcast = Task.Factory.StartNew(Send_Broadcast);
+            Task TCPListener = Task.Factory.StartNew(Listen_for_TCP_Pakete);
         }
 
         private void btn_abbrechen_Click(object sender, RoutedEventArgs e)
@@ -107,78 +150,6 @@ namespace Abschlussprojekt.Seiten
                 }
                 root_Frame.Content = new Startseite(root_Frame);
             }
-        }
-
-        private void btn_Hosten_Click(object sender, RoutedEventArgs e)
-        {
-            int temp = 0;
-            
-            if (L_Name_Spieler_rot.Text.ToString() == "Computergegner" || L_Name_Spieler_rot.Text.ToString() == "Ich" || L_Name_Spieler_rot.Text.ToString() == "Offen")
-            {
-                temp++;
-                if (L_Name_Spieler_rot.Text.ToString() == "Computergegner")
-                {
-                    Spieler CP_Gegner1 = new Spieler(FARBE.ROT, "Computergegner 1", SPIELER_ART.COMPUTERGEGNER, new System.Net.IPAddress(0));
-                }
-            }
-
-            if (L_Name_Spieler_gelb.Text.ToString() == "Computergegner" || L_Name_Spieler_gelb.Text.ToString() == "Ich" || L_Name_Spieler_gelb.Text.ToString() == "Offen")
-            {
-                temp++;
-                if (L_Name_Spieler_gelb.Text.ToString() == "Computergegner")
-                {
-                    Spieler CP_Gegner2 = new Spieler(FARBE.GELB, "Computergegner 2", SPIELER_ART.COMPUTERGEGNER, new System.Net.IPAddress(0));
-                }
-            }
-
-            if (L_Name_Spieler_gruen.Text.ToString() == "Computergegner" || L_Name_Spieler_gruen.Text.ToString() == "Ich" || L_Name_Spieler_gruen.Text.ToString() == "Offen")
-            {
-                temp++;
-                if (L_Name_Spieler_gruen.Text.ToString() == "Computergegner")
-                {
-                    Spieler CP_Gegner3 = new Spieler(FARBE.GRUEN, "Computergegner 3", SPIELER_ART.COMPUTERGEGNER, new System.Net.IPAddress(0));
-                }
-            }
-
-            if (L_Name_Spieler_blau.Text.ToString() == "Computergegner" || L_Name_Spieler_blau.Text.ToString() == "Ich" || L_Name_Spieler_blau.Text.ToString() == "Offen")
-            {
-                temp++;
-                if (L_Name_Spieler_blau.Text.ToString() == "Computergegner")
-                {
-                    Spieler CP_Gegner4 = new Spieler(FARBE.BLAU, "Computergegner 4", SPIELER_ART.COMPUTERGEGNER, new System.Net.IPAddress(0));
-                }
-            }
-
-            if (temp < 2)
-            {
-                MessageBox.Show("Es müssen mindestens 2 Spieler gegeneinander antreten", "Fehler", MessageBoxButton.OK);
-                return;
-            }
-            if (Spielername_eingabe.Text == "" || Spielername_eingabe.Text == "Hier Namen eingeben" || Spielername_eingabe.Text.Length >= 20 || Spielername_eingabe.Text.Contains(","))
-            {
-                MessageBox.Show("Es muss ein gültiger Name eingegeben werden!\nUngültige Namen sind :\n\"Hier Namen eingeben\"\nund Namen die ein \",\" enthalten.", "Fehler", MessageBoxButton.OK);
-                return;
-            }
-
-            comboBox_rot.IsEnabled = false;
-            comboBox_gelb.IsEnabled = false;
-            comboBox_gruen.IsEnabled = false;
-            comboBox_blau.IsEnabled = false;
-            Spielername_eingabe.IsEnabled = false;
-            btn_Hosten.IsEnabled = false;
-
-            switch (ausgewählte_farbe)
-            {
-                case FARBE.ROT: L_Name_Spieler_rot.Text = Spielername_eingabe.Text; break;
-                case FARBE.GELB: L_Name_Spieler_gelb.Text = Spielername_eingabe.Text; break;
-                case FARBE.GRUEN: L_Name_Spieler_gruen.Text = Spielername_eingabe.Text; break;
-                case FARBE.BLAU: L_Name_Spieler_blau.Text = Spielername_eingabe.Text; break;
-            }
-
-            Spieler host_spieler = new Spieler(ausgewählte_farbe, Spielername_eingabe.Text, SPIELER_ART.NORMALER_SPIELER, eigene_IPAddresse);
-            Create_BC_message();
-            Task send_Broadcast = Task.Factory.StartNew(Send_Broadcast);
-            Task TCPListener = Task.Factory.StartNew(Listen_for_TCP_Pakete);
         }
 
         // Bei den Folgenden 3 Funktionen passiert genau das gleiche wie in dieser
@@ -291,7 +262,16 @@ namespace Abschlussprojekt.Seiten
         {
             switch (Label.Text.ToString())
             {
-                case "Ich": MessageBox.Show("Fehler", "Ihr Spielername dar nicht \"Ich\" lauten!", MessageBoxButton.OK); return false;
+                case "Ich":
+                    {
+                        string eing = Spielername_eingabe.Text;
+                        if (eing == "Ich" || eing == "Geschlossen" || eing == "Computergegner" || eing.Length > 20 || eing.Contains(","))
+                        {
+                            MessageBox.Show( "Ihr Spielername dar nicht \"Ich , Geschlossen, Computergegner\" lauten, leer sein, länger als 20 Zeichen sein\noder \",\" enthalten !", "Fehler", MessageBoxButton.OK);
+                            return false;
+                        }
+                        else return true;
+                    }
                 case "Offen": MessageBox.Show("Fehler", "Es darf kein Slott mehr offen sein!", MessageBoxButton.OK); return false;
                 case "Geschlossen": return false;
             }
@@ -377,6 +357,30 @@ namespace Abschlussprojekt.Seiten
             if (L_Name_Spieler_blau.Text.ToString() == "Offen") return;
 
             btn_spiel_starten.IsEnabled = true;
+        }
+
+        private bool Überprüfe_eingabe_Name()
+        {
+            if (Spielername_eingabe.Text.Length >= 20)
+            {
+                MessageBox.Show("Dein Name darf nicht länger als 20 Zeichen sein!", "Fehler", MessageBoxButton.OK);
+                return false;
+            }
+            if (Spielername_eingabe.Text.Contains(","))
+            {
+                MessageBox.Show("Dein Name darf keine \",\"'s enthalten!", "Fehler", MessageBoxButton.OK);
+                return false;
+            }
+            switch (Spielername_eingabe.Text)
+            {
+                case "Ich": MessageBox.Show("Dein Name darf nicht \"Ich\" lauten!", "Fehler", MessageBoxButton.OK); return false;
+                case "Computergegner": MessageBox.Show("Dein Name darf nicht \"Computergegner\" lauten!", "Fehler", MessageBoxButton.OK); return false;
+                case "": MessageBox.Show("Dein Name darf nicht leer sein!", "Fehler", MessageBoxButton.OK); return false;
+                case "Hier Namen eingeben": MessageBox.Show("Dein Name darf nicht \"Hier Namen eingeben\" lauten!", "Fehler", MessageBoxButton.OK); return false;
+                case "Offen": MessageBox.Show("Dein Name darf nicht \"Offen\" lauten!", "Fehler", MessageBoxButton.OK); return false;
+                case "Geschlossen": MessageBox.Show("Dein Name darf nicht \"Geschlossen\" lauten!", "Fehler", MessageBoxButton.OK); return false;
+            }
+            return true;
         }
     }
 }

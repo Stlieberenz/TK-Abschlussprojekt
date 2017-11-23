@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Abschlussprojekt.Seiten;
+using Abschlussprojekt.Klassen.Seiten_Funktionen;
 
 // Namenskonvention: --------------------------------------+
 //                                                         |
@@ -21,6 +22,7 @@ using Abschlussprojekt.Seiten;
 // Methoden    = Methode_Bsp   => erster Buchstabe groß    |
 // Variable    = variable_Bsp  => erster Buchstabe klein   |
 // ENUM        = ENUM_BSP      => alle Buchstaben groß     |
+// Delegate    = ?                                         |
 //---------------------------------------------------------+
 
 namespace Abschlussprojekt.Seiten

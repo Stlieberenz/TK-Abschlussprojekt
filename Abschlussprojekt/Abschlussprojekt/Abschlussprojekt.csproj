@@ -73,6 +73,10 @@
     <Compile Include="Klassen\globale_temporäre_Variablen.cs" />
     <Compile Include="Klassen\Host.cs" />
     <Compile Include="Klassen\Netzwerkkommunikation.cs" />
+    <Compile Include="Klassen\Seiten_Funktionen\Spielwiese_funktionen.cs" />
+    <Compile Include="Klassen\Seiten_Funktionen\Spiel_erstellen_funktionen.cs" />
+    <Compile Include="Klassen\Seiten_Funktionen\Spiel_suchen_funktionen.cs" />
+    <Compile Include="Klassen\Seiten_Funktionen\Startseite_funktionen.cs" />
     <Compile Include="Seiten\Spielwiese.xaml.cs">
       <DependentUpon>Spielwiese.xaml</DependentUpon>
     </Compile>

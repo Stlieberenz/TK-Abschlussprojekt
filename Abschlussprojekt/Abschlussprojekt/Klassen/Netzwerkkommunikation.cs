@@ -31,6 +31,12 @@ namespace Abschlussprojekt.Klassen
 
         public delegate void Hosts_Update();
 
+        public delegate void Ende();
+
+        public delegate void Würfelupdate(string zahl);
+
+        public delegate void LabelUpdate(string content);
+
         public static void Iinitialisiere_IP_Addressen()
         {
             IPAddress VB_addresse = new IPAddress(new byte[] { 192, 168, 0, 1 });
@@ -516,6 +522,12 @@ namespace Abschlussprojekt.Klassen
                 Spielstart(temp);
                 Spiel_suchen_Grid.Dispatcher.Invoke(new Hosts_Update(Spiel_suchen_Spiel_starten));
             }
+            else if (nachricht.Contains("Spielende") && aktive_Seite == AKTIVE_SEITE.SPIELWIESE)
+            {
+                string temp = nachricht.Replace("Spielende,", "");
+                Statische_Methoden.Spielende();
+                Aufgeben.Dispatcher.Invoke(new Ende(Statische_Methoden.Spielende));
+            }
             else if (nachricht.Contains("Clientanfrage") && aktive_Seite == AKTIVE_SEITE.SPIEL_ERSTELLEN)
             {
                 string temp = nachricht.Replace("Clientanfrage,", "");
@@ -533,16 +545,25 @@ namespace Abschlussprojekt.Klassen
             }
             else if (nachricht.Contains("Spielrecht") && aktive_Seite == AKTIVE_SEITE.SPIELWIESE)
             {
-                lokaler_spieler.status = true;
-                Würfel.Dispatcher.Invoke(new Hosts_Update(Aktiviere_Würfel));
-                verbleibende_würfelversuche = 3;
+                string temp = nachricht.Replace("Spielrecht,", "");
+                if (nachricht.Contains(lokaler_spieler.name))
+                {
+                    lokaler_spieler.status = true;
+                    Würfel.Dispatcher.Invoke(new Hosts_Update(Aktiviere_Würfel));
+                    verbleibende_würfelversuche = 3;
+                }
+                aktiver_Spieler.Dispatcher.Invoke(new LabelUpdate(LabelUpdate_aktiver_Spieler), temp);
             }
             else if (nachricht.Contains("Spielfigur Update") && aktive_Seite == AKTIVE_SEITE.SPIELWIESE)
             {
                 string temp = nachricht.Replace("Spielfigur Update,", "");
                 Spielfigur_Update(temp);
             }
-
+            else if (nachricht.Contains("Wuerfelzahl") && aktive_Seite == AKTIVE_SEITE.SPIELWIESE)
+            {
+                string temp = nachricht.Replace("Wuerfelzahl,", "");
+                Würfel.Dispatcher.Invoke(new Würfelupdate(Würfel_update),nachricht.Last().ToString());
+            }
         }
 
         public static void Spiel_suchen_Spiel_starten()
@@ -575,6 +596,16 @@ namespace Abschlussprojekt.Klassen
             for (int i = 0; i < result.Length; i++)
                 result[i] = (byte)(ipAdressBytes[i] | (subnetMaskBytes[i] ^ 255));
             return new IPAddress(result);
+        }
+
+        public static void Würfel_update(string zahl)
+        {
+            Würfel.Content = zahl;
+        }
+
+        public static void LabelUpdate_aktiver_Spieler(string content)
+        {
+            aktiver_Spieler.Text = content + " ist am zug";
         }
     }
 }

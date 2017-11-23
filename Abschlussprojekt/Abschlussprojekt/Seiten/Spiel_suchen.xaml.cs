@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Abschlussprojekt.Klassen;
+using Abschlussprojekt.Klassen.Seiten_Funktionen;
 
 // Namenskonvention: --------------------------------------+
 //                                                         |
@@ -42,6 +43,7 @@ namespace Abschlussprojekt.Seiten
             this.root_Frame = root_Frame;
             InitializeComponent();
             Statische_Variablen.hosts = Hosts;
+            Task.Factory.StartNew( invoker);
             
             btn_Abbrechen.IsEnabled = false;
             Task UDP_Listener = Task.Factory.StartNew(Start_UDP_Listener);
@@ -64,27 +66,23 @@ namespace Abschlussprojekt.Seiten
                 Spieler_name.Focus();
                 return;
             }
-
-            foreach (Host host in Statische_Variablen.alle_Hosts)
+            if (ausgewählten_Host.freie_plätze > 0)
             {
-                if (Hosts.SelectedItem.ToString().Contains(host.hostname) && host.freie_plätze > 0)
+                string message = "Clientanfrage," + Spieler_name.Text + "," + Statische_Variablen.eigene_IPAddresse.ToString() + "," + ausgewählte_Farbe;
+                Netzwerkkommunikation.Send_TCP_Packet(message, ausgewählten_Host.host_ip);
+                //Warten auf zusage
+                Netzwerkkommunikation.Start_TCP_Listener();
+                if (Statische_Variablen.anfragen_result == true)
                 {
-                    string message = "Clientanfrage," + Spieler_name.Text + "," + Statische_Variablen.eigene_IPAddresse.ToString() + "," + ausgewählte_Farbe;
-                    Netzwerkkommunikation.Send_TCP_Packet(message, host.host_ip);
-                    //Warten auf zusage
-                    Netzwerkkommunikation.Start_TCP_Listener();
-                    if (Statische_Variablen.anfragen_result == true)
-                    {
-                        Task tcp_listener = Task.Factory.StartNew(Sart_TCP_Listener);
-                        btn_beitreten.IsEnabled = false;
-                        Spieler_name.IsEnabled = false;
-                        RB_blau.IsEnabled = false;
-                        RB_gelb.IsEnabled = false;
-                        RB_gruen.IsEnabled = false;
-                        RB_blau.IsEnabled = false;
-                        btn_Abbrechen.IsEnabled = true;
-                        Hosts.IsEnabled = false;
-                    }
+                    Task tcp_listener = Task.Factory.StartNew(Sart_TCP_Listener);
+                    btn_beitreten.IsEnabled = false;
+                    Spieler_name.IsEnabled = false;
+                    RB_blau.IsEnabled = false;
+                    RB_gelb.IsEnabled = false;
+                    RB_gruen.IsEnabled = false;
+                    RB_blau.IsEnabled = false;
+                    btn_Abbrechen.IsEnabled = true;
+                    Hosts.IsEnabled = false;
                 }
             }
         }
@@ -94,12 +92,6 @@ namespace Abschlussprojekt.Seiten
             Statische_Variablen.alle_Hosts.Clear();
             Statische_Variablen.known_IP_S.Clear();
             //Hosts.Dispatcher.Invoke(new Hosts_Update(Updater));
-        }
-
-        private void btn_Bestätigen_Click(object sender, RoutedEventArgs e)
-        {
-            Netzwerkkommunikation.Send_TCP_Packet("Clientanfrage," + Spieler_name.Text + "," + Statische_Variablen.eigene_IPAddresse.ToString() + "," + ausgewählte_Farbe, ausgewählten_Host.host_ip);
-            //Start TCP_Listener() for acknolage;
         }
 
         private void Hosts_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -143,25 +135,25 @@ namespace Abschlussprojekt.Seiten
         private void L_Name_Spieler_rot_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (L_Name_Spieler_rot.Text != "Offen" && RB_rot != null) RB_rot.IsEnabled = false;
-            else if (L_Name_Spieler_rot.Text == "Offen" && RB_rot != null) RB_rot.IsEnabled = true;
+            else if (L_Name_Spieler_rot.Text == "Offen" && RB_rot != null && btn_beitreten.IsEnabled) RB_rot.IsEnabled = true;
         }
 
         private void L_Name_Spieler_gelb_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (L_Name_Spieler_gelb.Text != "Offen" && RB_gelb != null) RB_gelb.IsEnabled = false;
-            else if (L_Name_Spieler_gelb.Text == "Offen" && RB_gelb != null) RB_gelb.IsEnabled = true;
+            else if (L_Name_Spieler_gelb.Text == "Offen" && RB_gelb != null && btn_beitreten.IsEnabled) RB_gelb.IsEnabled = true;
         }
 
         private void L_Name_Spieler_gruen_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (L_Name_Spieler_gruen.Text != "Offen" && RB_gruen != null) RB_gruen.IsEnabled = false;
-            else if (L_Name_Spieler_gruen.Text == "Offen" && RB_gruen != null) RB_gruen.IsEnabled = true;
+            else if (L_Name_Spieler_gruen.Text == "Offen" && RB_gruen != null && btn_beitreten.IsEnabled) RB_gruen.IsEnabled = true;
         }
 
         private void L_Name_Spieler_blau_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (L_Name_Spieler_blau.Text != "Offen" && RB_blau != null) RB_blau.IsEnabled = false;
-            else if (L_Name_Spieler_blau.Text == "Offen" && RB_blau != null) RB_blau.IsEnabled = true;
+            else if (L_Name_Spieler_blau.Text == "Offen" && RB_blau != null && btn_beitreten.IsEnabled) RB_blau.IsEnabled = true;
         }
 
         private void Spieler_name_LostFocus(object sender, RoutedEventArgs e)
@@ -219,6 +211,8 @@ namespace Abschlussprojekt.Seiten
             {
                 Hosts.Items.Add(host.hostname + " --- Freie plätze:" + host.freie_plätze.ToString());
             }
+            if (L_Name_Spieler_blau != null && ausgewählten_Host != null) L_Name_Spieler_blau.Text = ausgewählten_Host.Spieler_blau;
+            if (L_Name_Spieler_blau != null && ausgewählten_Host != null) L_Name_Spieler_gelb.Text = ausgewählten_Host.Spieler_gelb;
         }
 
         private void btn_zurueck_Click(object sender, RoutedEventArgs e)

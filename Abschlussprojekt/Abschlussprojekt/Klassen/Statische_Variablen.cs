@@ -106,6 +106,8 @@ namespace Abschlussprojekt.Klassen
 
         public static int verbleibende_würfelversuche;
         public static Button Würfel = new Button();
+        public static Button Aufgeben = new Button();
+        public static TextBox aktiver_Spieler = new TextBox();
         public static bool Figuren_waren_in_Haus;
     }
 }

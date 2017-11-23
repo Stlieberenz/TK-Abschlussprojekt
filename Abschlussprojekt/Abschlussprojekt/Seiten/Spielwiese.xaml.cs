@@ -17,6 +17,7 @@ using static Abschlussprojekt.Klassen.Statische_Methoden;
 using static Abschlussprojekt.Klassen.Statische_Variablen;
 using static Abschlussprojekt.Klassen.Spieler;
 using Abschlussprojekt.Klassen;
+using Abschlussprojekt.Klassen.Seiten_Funktionen;
 
 // Namenskonvention: --------------------------------------+
 //                                                         |
@@ -52,7 +53,7 @@ namespace Abschlussprojekt.Seiten
             lokaler_spieler = Ermittele_lokalen_Spieler();
             Würfel = Btn_Wuerfel;
             active_chat = Chat_rot;
-            
+
             Initialisiere_alle_Felder(Grid_Spielwiese);// Hier werden alle Felder anhand der UIElement Control elemente erzeugt.
             Initialisiere_Spiel(); // Hier werden die Spielfiguren der Spieler erzeugt.
             
@@ -75,7 +76,7 @@ namespace Abschlussprojekt.Seiten
                 spieler.nächster_Spieler = Ermittele_nächsten_Spieler(spieler.farbe);
             }
             
-            if (lokaler_spieler.status == true) Netzwerkkommunikation.Anlaysiere_IP_Paket("Spielrecht");
+            if (lokaler_spieler.status == true) Netzwerkkommunikation.Anlaysiere_IP_Paket("Spielrecht," + lokaler_spieler.name);
             Task TCPListener = Task.Factory.StartNew(Listen_for_TCP_Pakete);
             foreach (Spieler spieler in alle_Spieler)
             {
@@ -100,6 +101,27 @@ namespace Abschlussprojekt.Seiten
             return null;
         }
 
+        private void TB_aktiver_Spieler_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void btn_Aufgeben_Click(object sender, RoutedEventArgs e)
+        {
+            this.TCP_listener_status = false;
+            root_Frame.Content = new Startseite(root_Frame);
+            spiel_felder.Clear();
+            ziel_felder.Clear();
+            start_felder.Clear();
+            spieler_rot.Clear();
+            spieler_gelb.Clear();
+            spieler_gruen.Clear();
+            spieler_blau.Clear();
+            alle_Spieler.Clear();
+        }
+
+
+        //--------------ChatFunktionen------------//
         private void Btn_senden_Click(object sender, RoutedEventArgs e)
         {
             if (Chat_eingabe.Text != "Schreibe eine Nachricht") Text_in_Chat_senden(lokaler_spieler.name);
@@ -108,6 +130,16 @@ namespace Abschlussprojekt.Seiten
         private void Chat_eingabe_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Return) Text_in_Chat_senden(lokaler_spieler.name);
+        }
+
+        private void Chat_eingabe_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (Chat_eingabe.Text == "Schreibe eine Nachricht") Chat_eingabe.Text = "";
+        }
+
+        private void Chat_eingabe_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (Chat_eingabe.Text == "") Chat_eingabe.Text = "Schreibe eine Nachricht";
         }
 
         public void Text_in_Chat_senden(string spielername)
@@ -125,17 +157,7 @@ namespace Abschlussprojekt.Seiten
             active_chat = Chat_rot;
             aktiver_chat_spieler = Finde_Spieler_nach_Farbe(FARBE.ROT);
         }
-
-        private void Chat_eingabe_GotFocus(object sender, RoutedEventArgs e)
-        {
-            if (Chat_eingabe.Text == "Schreibe eine Nachricht") Chat_eingabe.Text = "";
-        }
-
-        private void Chat_eingabe_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (Chat_eingabe.Text == "") Chat_eingabe.Text = "Schreibe eine Nachricht";
-        }
-
+        
         private void Spieler_gelb_GotFocus(object sender, RoutedEventArgs e)
         {
             active_chat = Chat_gelb;
@@ -160,14 +182,15 @@ namespace Abschlussprojekt.Seiten
             aktiver_chat_spieler = null;
         }
 
-        
+
+        //--------------Würfellogick--------------//
         private void Btn_Wuerfel_Click(object sender, RoutedEventArgs e)
         {
-            
-            
             z = zufallszahl.Next(1, 7);
-
             Btn_Wuerfel.Content = z.ToString();
+
+            Netzwerkkommunikation.Sende_TCP_Nachricht_an_alle_Spieler("Wuerfelzahl,"+z.ToString());
+
             if (Sind_alle_Figuren_im_Haus() && verbleibende_würfelversuche > 0)
             {
                 if (z != 6 && verbleibende_würfelversuche >0)
@@ -196,7 +219,7 @@ namespace Abschlussprojekt.Seiten
                     else
                     {
                         Btn_Wuerfel.IsEnabled = false;
-                        MessageBox.Show("Es ist kein Zug möglich", "Information", MessageBoxButton.OK);
+                        if(aktiver_spieler.spieler_art == SPIELER_ART.NORMALER_SPIELER) MessageBox.Show("Es ist kein Zug möglich", "Information", MessageBoxButton.OK);
                         Forward_Spielrecht();
                     }
                 }
@@ -211,30 +234,13 @@ namespace Abschlussprojekt.Seiten
                         lokaler_spieler.status = true;
                     }
                 }
-
             }
+
+            if (verbleibende_würfelversuche < 1) Forward_Spielrecht();
         }
+        
 
-        private void btn_Aufgeben_Click(object sender, RoutedEventArgs e)
-        {
-            this.TCP_listener_status = false;
-            root_Frame.Content = new Startseite(root_Frame);
-            spiel_felder.Clear();
-            ziel_felder.Clear();
-            start_felder.Clear();
-            spieler_rot.Clear();
-            spieler_gelb.Clear();
-            spieler_gruen.Clear();
-            spieler_blau.Clear();
-            alle_Spieler.Clear();
-        }
-
-
-        private void TB_aktiver_Spieler_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            
-        }
-
+        //--------Computergegner Runtime-------------//
         private void Computergegener_Runtime(Spieler CP_spieler)
         {
             while(true)

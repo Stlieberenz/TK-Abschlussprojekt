@@ -23,6 +23,8 @@ namespace Abschlussprojekt.Klassen
     {
         public delegate void Click_Event();
 
+        public delegate void Update_Aufgeben_btn();
+
         public static void Initialisiere_alle_Felder(Grid spielwiese_grid)
         {
             try
@@ -205,12 +207,36 @@ namespace Abschlussprojekt.Klassen
         {
             foreach(Figur figur in aktiver_spieler.eigene_Figuren)
             {
-                if (figur.aktuelle_Position.feld_art != FELD_EIGENSCHAFT.STARTPOSITION)
+                if (figur.aktuelle_Position.feld_art == FELD_EIGENSCHAFT.SPIELFELD)
                 {
                     return false;
                 }
+                if (figur.aktuelle_Position.feld_art == FELD_EIGENSCHAFT.ZIEL)
+                {
+                    bool temp = false;
+                    if      ((figur.wegstecke[40].figur == null && figur.wegstecke[41].figur != null && figur.wegstecke[42].figur != null && figur.wegstecke[43].figur != null)) temp = true;
+                    else if ((figur.wegstecke[40].figur == null && figur.wegstecke[41].figur == null && figur.wegstecke[42].figur != null && figur.wegstecke[43].figur != null)) temp = true; 
+                    else if ((figur.wegstecke[40].figur == null && figur.wegstecke[41].figur == null && figur.wegstecke[42].figur == null && figur.wegstecke[43].figur != null)) temp = true;
+                    if (temp != true) return false;
+                }
             }
             return true;
+        }
+        
+        public static bool Zug_ist_möglich(int zahl, Figur figur)
+        {
+            bool result = false;
+            if (figur.a_Postition + zahl > -1 && figur.a_Postition + zahl < 44)
+            {
+                if (figur.wegstecke[figur.a_Postition + zahl].figur != null)
+                {
+                    if (figur.wegstecke[figur.a_Postition + zahl].figur.farbe == figur.farbe) figur.mögliche_Position = null;
+                    else figur.mögliche_Position = figur.wegstecke[figur.a_Postition + zahl]; result = true;
+                }
+                else figur.mögliche_Position = figur.wegstecke[figur.a_Postition + zahl]; result = true;
+            }
+            else figur.mögliche_Position = null;
+            return result;
         }
 
         public static bool Zug_ist_möglich(int zahl,List<Figur> figuren)
@@ -264,7 +290,7 @@ namespace Abschlussprojekt.Klassen
         public static void Forward_Spielrecht()
         {
             aktiver_spieler.status = false;
-            if (aktiver_spieler.nächster_Spieler.spieler_art == SPIELER_ART.NORMALER_SPIELER && aktiver_spieler.nächster_Spieler.ip.Address != eigene_IPAddresse.Address) Netzwerkkommunikation.Send_TCP_Packet("Spielrecht", aktiver_spieler.nächster_Spieler.ip);
+            if (aktiver_spieler.nächster_Spieler.spieler_art == SPIELER_ART.NORMALER_SPIELER && aktiver_spieler.nächster_Spieler.ip.Address != eigene_IPAddresse.Address) Netzwerkkommunikation.Sende_TCP_Nachricht_an_alle_Spieler("Spielrecht," + aktiver_spieler.nächster_Spieler.name);
             else
             {
                 aktiver_spieler.nächster_Spieler.status = true;
@@ -276,7 +302,14 @@ namespace Abschlussprojekt.Klassen
 
         public static void Sende_Spielende_an_Mitspieler()
         {
-            Netzwerkkommunikation.Sende_TCP_Nachricht_an_alle_Spieler("Spielende" + lokaler_spieler.name);
+            Netzwerkkommunikation.Sende_TCP_Nachricht_an_alle_Spieler("Spielende" + aktiver_spieler.name);
+            Spielende();
+        }
+
+        public static void Spielende()
+        {
+            MessageBox.Show(aktiver_spieler.name + " hat das Spiel gewonnen !!!", "Spielende", MessageBoxButton.OK);
+            Aufgeben.Dispatcher.Invoke(new Update_Aufgeben_btn(Update_aufgeben_btn));
         }
 
         public static void Würfel_einschalten()
@@ -371,9 +404,17 @@ namespace Abschlussprojekt.Klassen
                 case 3: message += ",Geschlossen,_,_"; break;
             }
             int s = Statische_Methoden.Ermittle_start_Spieler();
-            alle_Spieler[s].status = true;
-            message += "," + Statische_Methoden.Konvertiere_FARBE_zu_string(alle_Spieler[s].farbe);
+            if (s > 0)
+            {
+                alle_Spieler[s].status = true;
+                message += "," + Statische_Methoden.Konvertiere_FARBE_zu_string(alle_Spieler[s].farbe);
+            }
             return message;
+        }
+
+        public static void Update_aufgeben_btn()
+        {
+            Aufgeben.Content = "Beenden";
         }
     }
 }
