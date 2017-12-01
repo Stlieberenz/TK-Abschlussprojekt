@@ -26,7 +26,7 @@ namespace Abschlussprojekt.Klassen
 {
     class Netzwerkkommunikation
     {
-        
+        // Attribute -----------------------------------------------------------------------
         public delegate bool ClientSpieler(string name);
 
         public delegate void Hosts_Update();
@@ -37,6 +37,7 @@ namespace Abschlussprojekt.Klassen
 
         public delegate void LabelUpdate(string content);
 
+        // Initialisierung -------------------------------------------------------------------
         public static void Iinitialisiere_IP_Addressen()
         {
             IPAddress VB_addresse = new IPAddress(new byte[] { 192, 168, 0, 1 });
@@ -73,237 +74,9 @@ namespace Abschlussprojekt.Klassen
             }
         }
 
-        public static void Update_Hostinformationen(string nachricht)
-        {
-            //
-            // Die Informationen müssen folgendes Schema haben: "Hostinformationen,<ip>,<Hostname>,<offene slots>,<offen farben>,<Spieler rot>,<Spieler gelb>,<Spieler gruen>,<Spieler blau>"
-            // <ip> muss folgendes Format haben,bsp ->: [...],255.255.255.255,[...]
-            //
-            // |    #Kranker scheiß     |
-            //\ /                      \ /
-            if (nachricht.Count(x => x.Equals(',')) == 7)
-            {
-                string[] hostinfos = Konvertiere_in_Stringarray(nachricht,7);
-                IPAddress host_addres = IPAddress.Parse(hostinfos[0]);
-                if (hostinfos[1] != "absage") {
-                    if (known_IP_S.Contains(hostinfos[0]))
-                    {
-                        foreach (Host host_ in alle_Hosts)
-                        {
-                            if (host_.host_ip.Address == host_addres.Address && (host_.freie_plätze != Convert.ToInt32(hostinfos[2]) || host_.Spieler_rot != hostinfos[4] || host_.Spieler_gelb != hostinfos[5] || host_.Spieler_gruen != hostinfos[6] || host_.Spieler_blau != hostinfos[7]))
-                            {
-                                alle_Hosts[alle_Hosts.IndexOf(host_)].freie_plätze = Convert.ToInt32(hostinfos[2]);
-                                alle_Hosts[alle_Hosts.IndexOf(host_)].freie_farben = Convert.ToInt32(hostinfos[3]);
-                                alle_Hosts[alle_Hosts.IndexOf(host_)].Spieler_rot = hostinfos[4];
-                                alle_Hosts[alle_Hosts.IndexOf(host_)].Spieler_gelb = hostinfos[5];
-                                alle_Hosts[alle_Hosts.IndexOf(host_)].Spieler_gruen = hostinfos[6];
-                                alle_Hosts[alle_Hosts.IndexOf(host_)].Spieler_blau = hostinfos[7];
-                                hosts.Dispatcher.Invoke(new Hosts_Update(Hosts_ListBox_aktualisieren));
-                            }
-                        }
-                    }
-                    else
-                    {
-                        known_IP_S.Add(hostinfos[0]);
-                        Host host = new Host(hostinfos[1],IPAddress.Parse(hostinfos[0]), Convert.ToInt32(hostinfos[2]));
-                        hosts.Dispatcher.Invoke(new Hosts_Update(Hosts_ListBox_aktualisieren));
-                    }
-                }
-                else
-                {
-                    int result = -1;
-                    foreach (Host host_ in alle_Hosts)
-                    {
-                        if (host_.host_ip.Address == host_addres.Address)
-                        {
-                            result = alle_Hosts.IndexOf(host_);
-                        }
-                    }
-                    if (result > -1)
-                    {
-                        alle_Hosts.RemoveAt(result);
-                        hosts.Dispatcher.Invoke(new Hosts_Update(Hosts_ListBox_aktualisieren));
-                    }
-                }
-            }
-        }
+        
 
-        public static void Update_Chatinformationen(string nachricht)
-        {
-
-        }
-
-        public static void Clientanfrage(string nachricht)
-        {
-            //
-            // Die Informationen müssen folgendes Schema haben: "Clientanfrage,<Spielername>,<ip>,<farbe>"
-            //
-            if (nachricht.Count(x => x.Equals(',')) == 2)
-            {
-                string[] clientinfo = Konvertiere_in_Stringarray(nachricht,3);
-                IPAddress ip = IPAddress.Parse(clientinfo[1]);
-                foreach (Spieler spieler in alle_Spieler)// Prüfen ob der spieler evtl schon vorhanden ist.
-                {
-                    if (spieler.ip.Address == ip.Address)
-                    {
-                        Task.Factory.StartNew((absagen) => { Send_TCP_Packet("Hostabsage", ip); }, ip);
-                        return;
-                    }
-                }
-
-                object result = false;
-                FARBE clientfarbe = FARBE.LEER;
-
-                switch (clientinfo[2])
-                {
-                    case "rot":
-                        {
-                            result = Spielerstellenlabel[0].Dispatcher.Invoke(new ClientSpieler(Prüfe_Label_rot), clientinfo[0]);
-                            clientfarbe = FARBE.ROT;
-                            break;
-                        }
-                    case "gelb":
-                        {
-                            result = Spielerstellenlabel[1].Dispatcher.Invoke(new ClientSpieler(Prüfe_Label_gelb), clientinfo[0]);
-                            clientfarbe = FARBE.GELB;
-                            break;
-                        }
-                    case "gruen":
-                        {
-                            result = Spielerstellenlabel[2].Dispatcher.Invoke(new ClientSpieler(Prüfe_Label_gruen), clientinfo[0]);
-                            clientfarbe = FARBE.GRUEN;
-                            break;
-                        }
-                    case "blau":
-                        {
-                            result = Spielerstellenlabel[3].Dispatcher.Invoke(new ClientSpieler(Prüfe_Label_blau), clientinfo[0]);
-                            clientfarbe = FARBE.BLAU;
-                            break;
-                        }
-                }
-                 // Prüft ob der slot frei ist und fügt namen dem label hinzu
-
-                if (Convert.ToBoolean(result))
-                {
-                    new Spieler(clientfarbe, clientinfo[0], SPIELER_ART.NORMALER_SPIELER, ip);
-                    Task.Factory.StartNew((Zusagen) => { Send_TCP_Packet("Hostzusage", ip); },ip);
-                }
-                else Task.Factory.StartNew((absagen) => { Send_TCP_Packet("Hostabsage", ip); }, ip);
-            }
-        }
-
-        public static void Clientabsage(string nachricht)
-        {
-            //
-            // Die Informationen müssen folgendes Schema haben: "Clientabsage,<ip>"
-            //
-            if (nachricht.Count(x => x.Equals(',')) == 0)
-            {
-                string clientinfo = nachricht.Replace("Clientabsage,", "");
-
-                IPAddress ip = IPAddress.Parse(clientinfo);
-                Spieler spiele = null;
-                foreach (Spieler spieler in alle_Spieler)
-                {
-                    if (spieler.ip.Address == ip.Address)
-                    {
-                        spiele = spieler;
-                    }
-                }
-                switch (spiele.farbe)
-                {
-                    case FARBE.ROT:
-                        {
-                            Spielerstellenlabel[0].Dispatcher.Invoke(new ClientSpieler(Setze_Label_rot_auf_Offen), "Offen");
-                            break;
-                        }
-                    case FARBE.GELB:
-                        {
-                            Spielerstellenlabel[1].Dispatcher.Invoke(new ClientSpieler(Setze_Label_gelb_auf_Offen), "Offen");
-                            break;
-                        }
-                    case FARBE.GRUEN:
-                        {
-                            Spielerstellenlabel[2].Dispatcher.Invoke(new ClientSpieler(Setze_Label_gruen_auf_Offen), "Offen");
-                            break;
-                        }
-                    case FARBE.BLAU:
-                        {
-                            Spielerstellenlabel[3].Dispatcher.Invoke(new ClientSpieler(Setze_Label_blau_auf_Offen), "Offen");
-                            break;
-                        }
-                } // fügt "Offen" dem label hinzu
-                if (spiele != null) alle_Spieler.Remove(spiele);
-            }
-        }
-
-        public static void Spielstart(string nachricht)
-        {
-            //
-            // Die Informationen müssen folgendes Schema haben: "Spielstart,<Name_S1>,<ip_S1>,<farbe_S1>,<Name_S2>,<ip_S2>,<farbe_S2>,<Name_S3>,<ip_S3>,<farbe_S3>,<Name_S4>,<ip_S4>,<farbe_S4>,<start_farbe>"
-            // 
-            string[] Spieler = Konvertiere_in_Stringarray(nachricht, 12);
-
-            if (Spieler[0] != "Geschlossen") new Spieler(Statische_Methoden.Erkenne_Farbe(Spieler[2]), Spieler[0], Statische_Methoden.Erkenne_Spielerart(Spieler[0]), IPAddress.Parse(Spieler[1]));
-            if (Spieler[3] != "Geschlossen") new Spieler(Statische_Methoden.Erkenne_Farbe(Spieler[5]), Spieler[3], Statische_Methoden.Erkenne_Spielerart(Spieler[3]), IPAddress.Parse(Spieler[4]));
-            if (Spieler[6] != "Geschlossen") new Spieler(Statische_Methoden.Erkenne_Farbe(Spieler[8]), Spieler[6], Statische_Methoden.Erkenne_Spielerart(Spieler[6]), IPAddress.Parse(Spieler[7]));
-            if (Spieler[9] != "Geschlossen") new Spieler(Statische_Methoden.Erkenne_Farbe(Spieler[11]), Spieler[9], Statische_Methoden.Erkenne_Spielerart(Spieler[9]), IPAddress.Parse(Spieler[10]));
-            foreach(Spieler spieler in alle_Spieler)
-            {
-                if (spieler.farbe == Statische_Methoden.Erkenne_Farbe(Spieler[12]))
-                {
-                    spieler.status = true;
-                }
-            }
-        }
-
-        public static void Spielfigur_Update(string nachricht)
-        {
-            //
-            // Die Informationen müssen folgendes Schema haben: "Spielfigur Update,<Farbe>,<Figur Nr>,<zielfeld_Position_X>,<zielfeldposition_Y>"
-            //
-            string[] informationen = Konvertiere_in_Stringarray(nachricht, 4);
-            int x = Convert.ToInt32(informationen[2]);
-            int y = Convert.ToInt32(informationen[3]);
-            
-            switch (Statische_Methoden.Erkenne_Farbe(informationen[0]))
-            {
-                case FARBE.ROT:
-                    {
-                        foreach (Figur figur in spieler_rot)
-                        {
-                            if (figur.id == Convert.ToInt32(informationen[1])) figur.Set_Figureposition(Statische_Methoden.Finde_Feld(x, y));
-                        }
-                        break;
-                    }
-                case FARBE.GELB:
-                    {
-                        foreach (Figur figur in spieler_gelb)
-                        {
-                            if (figur.id == Convert.ToInt32(informationen[1])) figur.Set_Figureposition(Statische_Methoden.Finde_Feld(x, y));
-                        }
-                        break;
-                    }
-                case FARBE.GRUEN:
-                    {
-                        foreach (Figur figur in spieler_gruen)
-                        {
-                            if (figur.id == Convert.ToInt32(informationen[1])) figur.Set_Figureposition(Statische_Methoden.Finde_Feld(x, y));
-                        }
-                        break;
-                    }
-                case FARBE.BLAU:
-                    {
-                        foreach (Figur figur in spieler_blau)
-                        {
-                            if (figur.id == Convert.ToInt32(informationen[1])) figur.Set_Figureposition(Statische_Methoden.Finde_Feld(x, y));
-                        }
-                        break;
-                    }
-            }
-        }
-
-
+        // Senden - Empfangen ---------------------------------------------------------------
         public static void Start_TCP_Listener()
         {
             try
@@ -369,27 +142,6 @@ namespace Abschlussprojekt.Klassen
             }
         }
 
-        public static void Send_UDP_BC_Packet(string content, IPAddress target_ip)
-        {
-
-            Socket sock = null;
-            try
-            {
-                var destinationEndpoint = new IPEndPoint(target_ip, port);
-                sock = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-                sock.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.Broadcast, 1);
-                sock.SendTo(Konvertiere_string_in_Bytearray(content), destinationEndpoint);
-            }
-            finally
-            {
-                if (sock != null)
-                {
-                    sock.Close();
-                }
-            }
-
-        }
-
         public static void Send_TCP_Packet(string content,IPAddress zieladresse)
         {
             byte[] ba = new ASCIIEncoding().GetBytes(content);
@@ -423,59 +175,9 @@ namespace Abschlussprojekt.Klassen
                 }
             }
         }
+        
 
-
-
-        //      Relativ trivialer Kram
-        //       ||               ||
-        //       \/               \/  
-
-        public static bool Prüfe_Label_rot(string name)
-        {
-            if (Spielerstellenlabel[0].Text == "Offen") Spielerstellenlabel[0].Text = name;
-            else return false;
-            return true;
-        }
-        public static bool Prüfe_Label_gelb(string name)
-        {
-            if (Spielerstellenlabel[1].Text == "Offen") Spielerstellenlabel[1].Text = name;
-            else return false;
-            return true;
-        }
-        public static bool Prüfe_Label_gruen(string name)
-        {
-            if (Spielerstellenlabel[2].Text == "Offen") Spielerstellenlabel[2].Text = name;
-            else return false;
-            return true;
-        }
-        public static bool Prüfe_Label_blau(string name)
-        {
-            if (Spielerstellenlabel[3].Text == "Offen") Spielerstellenlabel[3].Text = name;
-            else return false;
-            return true;
-        }
-
-        public static bool Setze_Label_rot_auf_Offen(string offen)
-        {
-            Spielerstellenlabel[0].Text = offen;
-            return true;
-        }
-        public static bool Setze_Label_gelb_auf_Offen(string offen)
-        {
-            Spielerstellenlabel[1].Text = offen;
-            return true;
-        }
-        public static bool Setze_Label_gruen_auf_Offen(string offen)
-        {
-            Spielerstellenlabel[2].Text = offen;
-            return true;
-        }
-        public static bool Setze_Label_blau_auf_Offen(string offen)
-        {
-            Spielerstellenlabel[3].Text = offen;
-            return true;
-        }
-
+        // IP-Paketanalyse ----------------------------------------------------------------------
         private static string[] Konvertiere_in_Stringarray(string nachricht, int array_länge)
         {
             string[] result = new string[array_länge +1];
@@ -564,8 +266,77 @@ namespace Abschlussprojekt.Klassen
                 string temp = nachricht.Replace("Wuerfelzahl,", "");
                 Würfel.Dispatcher.Invoke(new Würfelupdate(Würfel_update),nachricht.Last().ToString());
             }
+            else if (nachricht.Contains("Client_abbruch"))
+            {
+                string temp = nachricht.Replace("Client_abbruch,","");
+                int index = -1;
+                foreach(Spieler sp in alle_Spieler)
+                {
+                    if (sp.name == temp) index = alle_Spieler.IndexOf(sp);
+                }
+                foreach (Figur fig in alle_Spieler[index].eigene_Figuren)
+                {
+                    fig.Set_Figure_to_Start();
+                }
+
+                if (index > -1) alle_Spieler.RemoveAt(index);
+            }
         }
 
+        // Gehört nicht hier hin ...
+
+        //      Relativ trivialer Kram
+        //       ||               ||
+        //       \/               \/  
+
+        public static bool Prüfe_Label_rot(string name)
+        {
+            if (Spielerstellenlabel[0].Text == "Offen") Spielerstellenlabel[0].Text = name;
+            else return false;
+            return true;
+        }
+        public static bool Prüfe_Label_gelb(string name)
+        {
+            if (Spielerstellenlabel[1].Text == "Offen") Spielerstellenlabel[1].Text = name;
+            else return false;
+            return true;
+        }
+        public static bool Prüfe_Label_gruen(string name)
+        {
+            if (Spielerstellenlabel[2].Text == "Offen") Spielerstellenlabel[2].Text = name;
+            else return false;
+            return true;
+        }
+        public static bool Prüfe_Label_blau(string name)
+        {
+            if (Spielerstellenlabel[3].Text == "Offen") Spielerstellenlabel[3].Text = name;
+            else return false;
+            return true;
+        }
+
+        public static bool Setze_Label_rot_auf_Offen(string offen)
+        {
+            Spielerstellenlabel[0].Text = offen;
+            return true;
+        }
+        public static bool Setze_Label_gelb_auf_Offen(string offen)
+        {
+            Spielerstellenlabel[1].Text = offen;
+            return true;
+        }
+        public static bool Setze_Label_gruen_auf_Offen(string offen)
+        {
+            Spielerstellenlabel[2].Text = offen;
+            return true;
+        }
+        public static bool Setze_Label_blau_auf_Offen(string offen)
+        {
+            Spielerstellenlabel[3].Text = offen;
+            return true;
+        }
+
+        //------------------------------------------------------------------------------
+        
         public static void Spiel_suchen_Spiel_starten()
         {
             Spiel_suchen_Grid.RaiseEvent(new System.Windows.RoutedEventArgs(System.Windows.Controls.Primitives.GridViewRowPresenterBase.LostFocusEvent));
@@ -586,18 +357,6 @@ namespace Abschlussprojekt.Klassen
             }
         }
 
-        public static IPAddress GetBroadcastAddress(IPAddress ipAddress, IPAddress subnetMask)
-        {
-            byte[] ipAdressBytes = ipAddress.GetAddressBytes();
-            byte[] subnetMaskBytes = subnetMask.GetAddressBytes();
-            if (ipAdressBytes.Length != subnetMaskBytes.Length)
-                throw new ArgumentException("Both IP address and subnet mask should be of the same length");
-            var result = new byte[ipAdressBytes.Length];
-            for (int i = 0; i < result.Length; i++)
-                result[i] = (byte)(ipAdressBytes[i] | (subnetMaskBytes[i] ^ 255));
-            return new IPAddress(result);
-        }
-
         public static void Würfel_update(string zahl)
         {
             Würfel.Content = zahl;
@@ -606,6 +365,237 @@ namespace Abschlussprojekt.Klassen
         public static void LabelUpdate_aktiver_Spieler(string content)
         {
             aktiver_Spieler.Text = content + " ist am zug";
+        }
+
+        public static void Update_Hostinformationen(string nachricht)
+        {
+            //
+            // Die Informationen müssen folgendes Schema haben: "Hostinformationen,<ip>,<Hostname>,<offene slots>,<offen farben>,<Spieler rot>,<Spieler gelb>,<Spieler gruen>,<Spieler blau>"
+            // <ip> muss folgendes Format haben,bsp ->: [...],255.255.255.255,[...]
+            //
+            // |    #Kranker scheiß     |
+            //\ /                      \ /
+            if (nachricht.Count(x => x.Equals(',')) == 7)
+            {
+                string[] hostinfos = Konvertiere_in_Stringarray(nachricht, 7);
+                IPAddress host_addres = IPAddress.Parse(hostinfos[0]);
+                if (hostinfos[1] != "absage")
+                {
+                    if (known_IP_S.Contains(hostinfos[0]))
+                    {
+                        foreach (Host host_ in alle_Hosts)
+                        {
+                            if (host_.host_ip.Address == host_addres.Address && (host_.freie_plätze != Convert.ToInt32(hostinfos[2]) || host_.Spieler_rot != hostinfos[4] || host_.Spieler_gelb != hostinfos[5] || host_.Spieler_gruen != hostinfos[6] || host_.Spieler_blau != hostinfos[7]))
+                            {
+                                alle_Hosts[alle_Hosts.IndexOf(host_)].freie_plätze = Convert.ToInt32(hostinfos[2]);
+                                alle_Hosts[alle_Hosts.IndexOf(host_)].freie_farben = Convert.ToInt32(hostinfos[3]);
+                                alle_Hosts[alle_Hosts.IndexOf(host_)].Spieler_rot = hostinfos[4];
+                                alle_Hosts[alle_Hosts.IndexOf(host_)].Spieler_gelb = hostinfos[5];
+                                alle_Hosts[alle_Hosts.IndexOf(host_)].Spieler_gruen = hostinfos[6];
+                                alle_Hosts[alle_Hosts.IndexOf(host_)].Spieler_blau = hostinfos[7];
+                                hosts.Dispatcher.Invoke(new Hosts_Update(Hosts_ListBox_aktualisieren));
+                            }
+                        }
+                    }
+                    else
+                    {
+                        known_IP_S.Add(hostinfos[0]);
+                        Host host = new Host(hostinfos[1], IPAddress.Parse(hostinfos[0]), Convert.ToInt32(hostinfos[2]));
+                        hosts.Dispatcher.Invoke(new Hosts_Update(Hosts_ListBox_aktualisieren));
+                    }
+                }
+                else
+                {
+                    int result = -1;
+                    foreach (Host host_ in alle_Hosts)
+                    {
+                        if (host_.host_ip.Address == host_addres.Address)
+                        {
+                            result = alle_Hosts.IndexOf(host_);
+                        }
+                    }
+                    if (result > -1)
+                    {
+                        alle_Hosts.RemoveAt(result);
+                        hosts.Dispatcher.Invoke(new Hosts_Update(Hosts_ListBox_aktualisieren));
+                    }
+                }
+            }
+        }
+
+        public static void Update_Chatinformationen(string nachricht)
+        {
+
+        }
+
+        public static void Clientanfrage(string nachricht)
+        {
+            //
+            // Die Informationen müssen folgendes Schema haben: "Clientanfrage,<Spielername>,<ip>,<farbe>"
+            //
+            if (nachricht.Count(x => x.Equals(',')) == 2)
+            {
+                string[] clientinfo = Konvertiere_in_Stringarray(nachricht, 3);
+                IPAddress ip = IPAddress.Parse(clientinfo[1]);
+                foreach (Spieler spieler in alle_Spieler)// Prüfen ob der spieler evtl schon vorhanden ist.
+                {
+                    if (spieler.ip.Address == ip.Address)
+                    {
+                        Task.Factory.StartNew((absagen) => { Send_TCP_Packet("Hostabsage", ip); }, ip);
+                        return;
+                    }
+                }
+
+                object result = false;
+                FARBE clientfarbe = FARBE.LEER;
+
+                switch (clientinfo[2])
+                {
+                    case "rot":
+                        {
+                            result = Spielerstellenlabel[0].Dispatcher.Invoke(new ClientSpieler(Prüfe_Label_rot), clientinfo[0]);
+                            clientfarbe = FARBE.ROT;
+                            break;
+                        }
+                    case "gelb":
+                        {
+                            result = Spielerstellenlabel[1].Dispatcher.Invoke(new ClientSpieler(Prüfe_Label_gelb), clientinfo[0]);
+                            clientfarbe = FARBE.GELB;
+                            break;
+                        }
+                    case "gruen":
+                        {
+                            result = Spielerstellenlabel[2].Dispatcher.Invoke(new ClientSpieler(Prüfe_Label_gruen), clientinfo[0]);
+                            clientfarbe = FARBE.GRUEN;
+                            break;
+                        }
+                    case "blau":
+                        {
+                            result = Spielerstellenlabel[3].Dispatcher.Invoke(new ClientSpieler(Prüfe_Label_blau), clientinfo[0]);
+                            clientfarbe = FARBE.BLAU;
+                            break;
+                        }
+                }
+                // Prüft ob der slot frei ist und fügt namen dem label hinzu
+
+                if (Convert.ToBoolean(result))
+                {
+                    new Spieler(clientfarbe, clientinfo[0], SPIELER_ART.NORMALER_SPIELER, ip);
+                    Task.Factory.StartNew((Zusagen) => { Send_TCP_Packet("Hostzusage", ip); }, ip);
+                }
+                else Task.Factory.StartNew((absagen) => { Send_TCP_Packet("Hostabsage", ip); }, ip);
+            }
+        }
+
+        public static void Clientabsage(string nachricht)
+        {
+            //
+            // Die Informationen müssen folgendes Schema haben: "Clientabsage,<ip>"
+            //
+            if (nachricht.Count(x => x.Equals(',')) == 0)
+            {
+                string clientinfo = nachricht.Replace("Clientabsage,", "");
+
+                IPAddress ip = IPAddress.Parse(clientinfo);
+                Spieler spiele = null;
+                foreach (Spieler spieler in alle_Spieler)
+                {
+                    if (spieler.ip.Address == ip.Address)
+                    {
+                        spiele = spieler;
+                    }
+                }
+                switch (spiele.farbe)
+                {
+                    case FARBE.ROT:
+                        {
+                            Spielerstellenlabel[0].Dispatcher.Invoke(new ClientSpieler(Setze_Label_rot_auf_Offen), "Offen");
+                            break;
+                        }
+                    case FARBE.GELB:
+                        {
+                            Spielerstellenlabel[1].Dispatcher.Invoke(new ClientSpieler(Setze_Label_gelb_auf_Offen), "Offen");
+                            break;
+                        }
+                    case FARBE.GRUEN:
+                        {
+                            Spielerstellenlabel[2].Dispatcher.Invoke(new ClientSpieler(Setze_Label_gruen_auf_Offen), "Offen");
+                            break;
+                        }
+                    case FARBE.BLAU:
+                        {
+                            Spielerstellenlabel[3].Dispatcher.Invoke(new ClientSpieler(Setze_Label_blau_auf_Offen), "Offen");
+                            break;
+                        }
+                } // fügt "Offen" dem label hinzu
+                if (spiele != null) alle_Spieler.Remove(spiele);
+            }
+        }
+
+        public static void Spielstart(string nachricht)
+        {
+            //
+            // Die Informationen müssen folgendes Schema haben: "Spielstart,<Name_S1>,<ip_S1>,<farbe_S1>,<Name_S2>,<ip_S2>,<farbe_S2>,<Name_S3>,<ip_S3>,<farbe_S3>,<Name_S4>,<ip_S4>,<farbe_S4>,<start_farbe>"
+            // 
+            string[] Spieler = Konvertiere_in_Stringarray(nachricht, 12);
+
+            if (Spieler[0] != "Geschlossen") new Spieler(Statische_Methoden.Erkenne_Farbe(Spieler[2]), Spieler[0], Statische_Methoden.Erkenne_Spielerart(Spieler[0]), IPAddress.Parse(Spieler[1]));
+            if (Spieler[3] != "Geschlossen") new Spieler(Statische_Methoden.Erkenne_Farbe(Spieler[5]), Spieler[3], Statische_Methoden.Erkenne_Spielerart(Spieler[3]), IPAddress.Parse(Spieler[4]));
+            if (Spieler[6] != "Geschlossen") new Spieler(Statische_Methoden.Erkenne_Farbe(Spieler[8]), Spieler[6], Statische_Methoden.Erkenne_Spielerart(Spieler[6]), IPAddress.Parse(Spieler[7]));
+            if (Spieler[9] != "Geschlossen") new Spieler(Statische_Methoden.Erkenne_Farbe(Spieler[11]), Spieler[9], Statische_Methoden.Erkenne_Spielerart(Spieler[9]), IPAddress.Parse(Spieler[10]));
+            foreach (Spieler spieler in alle_Spieler)
+            {
+                if (spieler.farbe == Statische_Methoden.Erkenne_Farbe(Spieler[12]))
+                {
+                    spieler.status = true;
+                }
+            }
+        }
+
+        public static void Spielfigur_Update(string nachricht)
+        {
+            //
+            // Die Informationen müssen folgendes Schema haben: "Spielfigur Update,<Farbe>,<Figur Nr>,<zielfeld_Position_X>,<zielfeldposition_Y>"
+            //
+            string[] informationen = Konvertiere_in_Stringarray(nachricht, 4);
+            int x = Convert.ToInt32(informationen[2]);
+            int y = Convert.ToInt32(informationen[3]);
+
+            switch (Statische_Methoden.Erkenne_Farbe(informationen[0]))
+            {
+                case FARBE.ROT:
+                    {
+                        foreach (Figur figur in spieler_rot)
+                        {
+                            if (figur.id == Convert.ToInt32(informationen[1])) figur.Set_Figureposition(Statische_Methoden.Finde_Feld(x, y));
+                        }
+                        break;
+                    }
+                case FARBE.GELB:
+                    {
+                        foreach (Figur figur in spieler_gelb)
+                        {
+                            if (figur.id == Convert.ToInt32(informationen[1])) figur.Set_Figureposition(Statische_Methoden.Finde_Feld(x, y));
+                        }
+                        break;
+                    }
+                case FARBE.GRUEN:
+                    {
+                        foreach (Figur figur in spieler_gruen)
+                        {
+                            if (figur.id == Convert.ToInt32(informationen[1])) figur.Set_Figureposition(Statische_Methoden.Finde_Feld(x, y));
+                        }
+                        break;
+                    }
+                case FARBE.BLAU:
+                    {
+                        foreach (Figur figur in spieler_blau)
+                        {
+                            if (figur.id == Convert.ToInt32(informationen[1])) figur.Set_Figureposition(Statische_Methoden.Finde_Feld(x, y));
+                        }
+                        break;
+                    }
+            }
         }
     }
 }

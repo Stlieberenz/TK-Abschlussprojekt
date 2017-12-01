@@ -25,6 +25,79 @@ namespace Abschlussprojekt.Klassen
 
         public delegate void Update_Aufgeben_btn();
 
+        public delegate void Update_Aktiver_Spieler_Label(string name);
+
+        //Spielwiese -----------------------------------------------------------------
+
+        public static bool Zug_ist_möglich(int zahl, List<Figur> figuren)
+        {
+            bool result = false;
+            foreach (Figur figur in figuren)
+            {
+                if (figur.a_Postition + zahl > -1 && figur.a_Postition + zahl < 44)
+                {
+                    if (figur.wegstecke[figur.a_Postition + zahl].figur != null)
+                    {
+                        if (figur.wegstecke[figur.a_Postition + zahl].figur.farbe == figur.farbe) figur.mögliche_Position = null;
+                        else figur.mögliche_Position = figur.wegstecke[figur.a_Postition + zahl]; result = true;
+                    }
+                    else figur.mögliche_Position = figur.wegstecke[figur.a_Postition + zahl]; result = true;
+                }
+                else figur.mögliche_Position = null;
+            }
+            return result;
+        }
+
+        public static void Figur_wurde_bewegt()
+        {
+            bool ziel_erreicht = Ziel_Erreicht();
+            if (!ziel_erreicht && z != 6)
+            {
+                Forward_Spielrecht();
+            }
+            else if (!ziel_erreicht && z == 6)
+            {
+                if (aktiver_spieler.spieler_art != SPIELER_ART.COMPUTERGEGNER) Würfel.IsEnabled = true;
+            }
+            else
+            {
+                Sende_Spielende_an_Mitspieler();
+            }
+        }
+
+        public static bool Ziel_Erreicht()
+        {
+            foreach (Figur figur in aktiver_spieler.eigene_Figuren)
+            {
+                if (figur.aktuelle_Position.feld_art != FELD_EIGENSCHAFT.ZIEL)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public static void Forward_Spielrecht()
+        {
+            Würfel.Dispatcher.Invoke(new Click_Event(Würfel_ausschalten));
+
+            aktiver_spieler.status = false;
+
+            Netzwerkkommunikation.Sende_TCP_Nachricht_an_alle_Spieler("Spielrecht," + aktiver_spieler.nächster_Spieler.name);
+            aktiver_spieler = aktiver_spieler.nächster_Spieler;
+            aktiver_Spieler.Dispatcher.Invoke(new Update_Aktiver_Spieler_Label(Update_Aktiver_Spieler_Text), aktiver_spieler.name);
+            aktiver_spieler.status = true;
+
+            if (aktiver_spieler == lokaler_spieler)
+            {
+                Netzwerkkommunikation.Anlaysiere_IP_Paket("Spielrecht," + aktiver_spieler.name);
+            }
+            if (aktiver_spieler.spieler_art == SPIELER_ART.COMPUTERGEGNER)
+            {
+                verbleibende_würfelversuche = 3;
+            }
+        }
+
         public static void Initialisiere_alle_Felder(Grid spielwiese_grid)
         {
             try
@@ -132,6 +205,102 @@ namespace Abschlussprojekt.Klassen
             Figur_blau.EndInit();
         }
 
+        public static void Sende_Spielende_an_Mitspieler()
+        {
+            Netzwerkkommunikation.Sende_TCP_Nachricht_an_alle_Spieler("Spielende" + aktiver_spieler.name);
+            Spielende();
+        }
+
+        public static void Spielende()
+        {
+            MessageBox.Show(aktiver_spieler.name + " hat das Spiel gewonnen !!!", "Spielende", MessageBoxButton.OK);
+            Aufgeben.Dispatcher.Invoke(new Update_Aufgeben_btn(Update_aufgeben_btn));
+        }
+
+        public static void Würfel_einschalten()
+        {
+            Würfel.IsEnabled = true;
+        }
+
+        public static void Würfel_ausschalten()
+        {
+            Würfel.IsEnabled = false;
+        }
+
+        public static Spieler Ermittele_nächsten_Spieler(FARBE farbe)
+        {
+            switch (farbe)
+            {
+                case FARBE.ROT:
+                    {
+                        foreach (Spieler spieler in alle_Spieler)
+                        {
+                            if (spieler.farbe == FARBE.GELB) return spieler;
+                        }
+                        foreach (Spieler spieler in alle_Spieler)
+                        {
+                            if (spieler.farbe == FARBE.GRUEN) return spieler;
+                        }
+                        foreach (Spieler spieler in alle_Spieler)
+                        {
+                            if (spieler.farbe == FARBE.BLAU) return spieler;
+                        }
+                        break;
+                    }
+                case FARBE.GELB:
+                    {
+
+                        foreach (Spieler spieler in alle_Spieler)
+                        {
+                            if (spieler.farbe == FARBE.GRUEN) return spieler;
+                        }
+                        foreach (Spieler spieler in alle_Spieler)
+                        {
+                            if (spieler.farbe == FARBE.BLAU) return spieler;
+                        }
+                        foreach (Spieler spieler in alle_Spieler)
+                        {
+                            if (spieler.farbe == FARBE.ROT) return spieler;
+                        }
+                        break;
+                    }
+                case FARBE.GRUEN:
+                    {
+                        foreach (Spieler spieler in alle_Spieler)
+                        {
+                            if (spieler.farbe == FARBE.BLAU) return spieler;
+                        }
+                        foreach (Spieler spieler in alle_Spieler)
+                        {
+                            if (spieler.farbe == FARBE.ROT) return spieler;
+                        }
+                        foreach (Spieler spieler in alle_Spieler)
+                        {
+                            if (spieler.farbe == FARBE.GELB) return spieler;
+                        }
+                        break;
+                    }
+                case FARBE.BLAU:
+                    {
+                        foreach (Spieler spieler in alle_Spieler)
+                        {
+                            if (spieler.farbe == FARBE.ROT) return spieler;
+                        }
+                        foreach (Spieler spieler in alle_Spieler)
+                        {
+                            if (spieler.farbe == FARBE.GELB) return spieler;
+                        }
+                        foreach (Spieler spieler in alle_Spieler)
+                        {
+                            if (spieler.farbe == FARBE.GRUEN) return spieler;
+                        }
+                        break;
+                    }
+            }
+            return null;
+        }
+
+
 
         public static string Erzeuge_Dateipfad()
         {
@@ -223,172 +392,23 @@ namespace Abschlussprojekt.Klassen
             return true;
         }
         
-        public static bool Zug_ist_möglich(int zahl, Figur figur)
-        {
-            bool result = false;
-            if (figur.a_Postition + zahl > -1 && figur.a_Postition + zahl < 44)
-            {
-                if (figur.wegstecke[figur.a_Postition + zahl].figur != null)
-                {
-                    if (figur.wegstecke[figur.a_Postition + zahl].figur.farbe == figur.farbe) figur.mögliche_Position = null;
-                    else figur.mögliche_Position = figur.wegstecke[figur.a_Postition + zahl]; result = true;
-                }
-                else figur.mögliche_Position = figur.wegstecke[figur.a_Postition + zahl]; result = true;
-            }
-            else figur.mögliche_Position = null;
-            return result;
-        }
+       
 
-        public static bool Zug_ist_möglich(int zahl,List<Figur> figuren)
-        {
-            bool result = false;
-            foreach (Figur figur in figuren)
-            {
-                if (figur.a_Postition + zahl > -1 && figur.a_Postition + zahl < 44)
-                {
-                    if (figur.wegstecke[figur.a_Postition + zahl].figur != null)
-                    {
-                        if (figur.wegstecke[figur.a_Postition + zahl].figur.farbe == figur.farbe) figur.mögliche_Position = null;
-                        else figur.mögliche_Position = figur.wegstecke[figur.a_Postition + zahl]; result = true;
-                    }
-                    else figur.mögliche_Position = figur.wegstecke[figur.a_Postition + zahl]; result = true;
-                }
-                else figur.mögliche_Position = null;
-            }
-            return result;
-        }
+        // ALTE VERSION DER FORWARD FUNKTION -->
+        //public static void Forward_Spielrecht()
+        //{
+        //    aktiver_spieler.status = false;
+        //    if (aktiver_spieler.nächster_Spieler.spieler_art == SPIELER_ART.NORMALER_SPIELER && aktiver_spieler.nächster_Spieler.ip.Address != eigene_IPAddresse.Address) Netzwerkkommunikation.Sende_TCP_Nachricht_an_alle_Spieler("Spielrecht," + aktiver_spieler.nächster_Spieler.name);
+        //    else
+        //    {
+        //        aktiver_spieler.nächster_Spieler.status = true;
+        //        aktiver_spieler = aktiver_spieler.nächster_Spieler;
+        //        if (aktiver_spieler.spieler_art == SPIELER_ART.NORMALER_SPIELER) Würfel.Dispatcher.Invoke(new Click_Event(Würfel_einschalten));
+        //        verbleibende_würfelversuche = 3;
+        //    }
+        //}
 
-        public static void Figur_wurde_bewegt()
-        {
-            bool ziel_erreicht = Ziel_Erreicht();
-            if (!ziel_erreicht && z != 6)
-            {
-                Forward_Spielrecht();
-            }
-            else if(!ziel_erreicht && z == 6)
-            {
-                if (aktiver_spieler.spieler_art != SPIELER_ART.COMPUTERGEGNER) Würfel.IsEnabled = true;
-            }
-            else
-            {
-                Sende_Spielende_an_Mitspieler();
-            }
-        }
-
-        public static bool Ziel_Erreicht()
-        {
-            foreach(Figur figur in aktiver_spieler.eigene_Figuren)
-            {
-                if (figur.aktuelle_Position.feld_art != FELD_EIGENSCHAFT.ZIEL)
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        public static void Forward_Spielrecht()
-        {
-            aktiver_spieler.status = false;
-            if (aktiver_spieler.nächster_Spieler.spieler_art == SPIELER_ART.NORMALER_SPIELER && aktiver_spieler.nächster_Spieler.ip.Address != eigene_IPAddresse.Address) Netzwerkkommunikation.Sende_TCP_Nachricht_an_alle_Spieler("Spielrecht," + aktiver_spieler.nächster_Spieler.name);
-            else
-            {
-                aktiver_spieler.nächster_Spieler.status = true;
-                aktiver_spieler = aktiver_spieler.nächster_Spieler;
-                if (aktiver_spieler.spieler_art == SPIELER_ART.NORMALER_SPIELER) Würfel.Dispatcher.Invoke(new Click_Event(Würfel_einschalten));
-                verbleibende_würfelversuche = 3;
-            }
-        }
-
-        public static void Sende_Spielende_an_Mitspieler()
-        {
-            Netzwerkkommunikation.Sende_TCP_Nachricht_an_alle_Spieler("Spielende" + aktiver_spieler.name);
-            Spielende();
-        }
-
-        public static void Spielende()
-        {
-            MessageBox.Show(aktiver_spieler.name + " hat das Spiel gewonnen !!!", "Spielende", MessageBoxButton.OK);
-            Aufgeben.Dispatcher.Invoke(new Update_Aufgeben_btn(Update_aufgeben_btn));
-        }
-
-        public static void Würfel_einschalten()
-        {
-            Würfel.IsEnabled = true;
-        }
-
-        public static Spieler Ermittele_nächsten_Spieler(FARBE farbe)
-        {
-            switch (farbe)
-            {
-                case FARBE.ROT:
-                    {
-                        foreach (Spieler spieler in alle_Spieler)
-                        {
-                            if (spieler.farbe == FARBE.GELB) return spieler;
-                        }
-                        foreach (Spieler spieler in alle_Spieler)
-                        {
-                            if (spieler.farbe == FARBE.GRUEN) return spieler;
-                        }
-                        foreach (Spieler spieler in alle_Spieler)
-                        {
-                            if (spieler.farbe == FARBE.BLAU) return spieler;
-                        }
-                        break;
-                    }
-                case FARBE.GELB:
-                    {
-
-                        foreach (Spieler spieler in alle_Spieler)
-                        {
-                            if (spieler.farbe == FARBE.GRUEN) return spieler;
-                        }
-                        foreach (Spieler spieler in alle_Spieler)
-                        {
-                            if (spieler.farbe == FARBE.BLAU) return spieler;
-                        }
-                        foreach (Spieler spieler in alle_Spieler)
-                        {
-                            if (spieler.farbe == FARBE.ROT) return spieler;
-                        }
-                        break;
-                    }
-                case FARBE.GRUEN:
-                    {
-                        foreach (Spieler spieler in alle_Spieler)
-                        {
-                            if (spieler.farbe == FARBE.BLAU) return spieler;
-                        }
-                        foreach (Spieler spieler in alle_Spieler)
-                        {
-                            if (spieler.farbe == FARBE.ROT) return spieler;
-                        }
-                        foreach (Spieler spieler in alle_Spieler)
-                        {
-                            if (spieler.farbe == FARBE.GELB) return spieler;
-                        }
-                        break;
-                    }
-                case FARBE.BLAU:
-                    {
-                        foreach (Spieler spieler in alle_Spieler)
-                        {
-                            if (spieler.farbe == FARBE.ROT) return spieler;
-                        }
-                        foreach (Spieler spieler in alle_Spieler)
-                        {
-                            if (spieler.farbe == FARBE.GELB) return spieler;
-                        }
-                        foreach (Spieler spieler in alle_Spieler)
-                        {
-                            if (spieler.farbe == FARBE.GRUEN) return spieler;
-                        }
-                        break;
-                    }
-            }
-            return null;
-        }
+       
 
         public static string Erstelle_Startnachricht_für_clients()
         {
@@ -415,6 +435,11 @@ namespace Abschlussprojekt.Klassen
         public static void Update_aufgeben_btn()
         {
             Aufgeben.Content = "Beenden";
+        }
+
+        public static void Update_Aktiver_Spieler_Text(string name)
+        {
+            aktiver_Spieler.Text = "Aktiver Spieler ist: " + name;
         }
     }
 }

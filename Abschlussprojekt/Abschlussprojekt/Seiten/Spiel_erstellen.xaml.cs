@@ -55,8 +55,6 @@ namespace Abschlussprojekt.Seiten
             Netzwerkkommunikation.Iinitialisiere_IP_Addressen();
         }
 
-
-
         private void btn_spiel_starten_Click(object sender, RoutedEventArgs e)
         {
             //

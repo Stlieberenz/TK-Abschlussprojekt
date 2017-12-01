@@ -110,6 +110,7 @@ namespace Abschlussprojekt.Seiten
         {
             this.TCP_listener_status = false;
             root_Frame.Content = new Startseite(root_Frame);
+            Netzwerkkommunikation.Sende_TCP_Nachricht_an_alle_Spieler("Client_abbruch," + lokaler_spieler.name);
             spiel_felder.Clear();
             ziel_felder.Clear();
             start_felder.Clear();
@@ -188,55 +189,86 @@ namespace Abschlussprojekt.Seiten
         {
             z = zufallszahl.Next(1, 7);
             Btn_Wuerfel.Content = z.ToString();
-
+            
+            Btn_Wuerfel.IsEnabled = false;
             Netzwerkkommunikation.Sende_TCP_Nachricht_an_alle_Spieler("Wuerfelzahl,"+z.ToString());
 
-            if (Sind_alle_Figuren_im_Haus() && verbleibende_würfelversuche > 0)
-            {
-                if (z != 6 && verbleibende_würfelversuche >0)
-                {
-                    verbleibende_würfelversuche--;
-                }
-                else
-                {
-                    Zug_ist_möglich(z,aktiver_spieler.eigene_Figuren);
-                    Btn_Wuerfel.IsEnabled = false;
-                }
-            }
-            else if (Sind_alle_Figuren_im_Haus() && verbleibende_würfelversuche < 1)
-            {
-                Btn_Wuerfel.IsEnabled = false;
-                Forward_Spielrecht();
-            }
-            else
+            if(!Zug_ist_möglich(z,aktiver_spieler.eigene_Figuren))
             {
                 if (z != 6)
                 {
-                    if (Zug_ist_möglich(z,aktiver_spieler.eigene_Figuren))
+                    if (Sind_alle_Figuren_im_Haus())
                     {
-                        Btn_Wuerfel.IsEnabled = false;
+                        verbleibende_würfelversuche -= 1;
+                        if (verbleibende_würfelversuche > 0)
+                        {
+                            if (aktiver_spieler.spieler_art == SPIELER_ART.NORMALER_SPIELER)
+                            {
+                                Btn_Wuerfel.IsEnabled = true;
+                            }
+                        }
+                        else Forward_Spielrecht();
                     }
                     else
                     {
-                        Btn_Wuerfel.IsEnabled = false;
-                        if(aktiver_spieler.spieler_art == SPIELER_ART.NORMALER_SPIELER) MessageBox.Show("Es ist kein Zug möglich", "Information", MessageBoxButton.OK);
                         Forward_Spielrecht();
                     }
                 }
                 else
                 {
-                    if (Zug_ist_möglich(z, aktiver_spieler.eigene_Figuren))
+                    if (aktiver_spieler.spieler_art == SPIELER_ART.NORMALER_SPIELER)
                     {
-                        Btn_Wuerfel.IsEnabled = false;
-                    }
-                    else
-                    {
-                        lokaler_spieler.status = true;
+                        Btn_Wuerfel.IsEnabled = true;
                     }
                 }
             }
+            //________________________________________________________________________________________________________________________
+            //if (Sind_alle_Figuren_im_Haus() && verbleibende_würfelversuche > 0)
+            //{
+            //    if (z != 6 && verbleibende_würfelversuche >0)
+            //    {
+            //        verbleibende_würfelversuche--;
+            //    }
+            //    else
+            //    {
+            //        Zug_ist_möglich(z,aktiver_spieler.eigene_Figuren);
+            //        Btn_Wuerfel.IsEnabled = false;
+            //    }
+            //}
+            //else if (Sind_alle_Figuren_im_Haus() && verbleibende_würfelversuche < 1)
+            //{
+            //    Btn_Wuerfel.IsEnabled = false;
+            //    Forward_Spielrecht();
+            //}
+            //else
+            //{
+            //    if (z != 6)
+            //    {
+            //        if (Zug_ist_möglich(z,aktiver_spieler.eigene_Figuren))
+            //        {
+            //            Btn_Wuerfel.IsEnabled = false;
+            //        }
+            //        else
+            //        {
+            //            Btn_Wuerfel.IsEnabled = false;
+            //            if(aktiver_spieler.spieler_art == SPIELER_ART.NORMALER_SPIELER) MessageBox.Show("Es ist kein Zug möglich", "Information", MessageBoxButton.OK);
+            //            Forward_Spielrecht();
+            //        }
+            //    }
+            //    else
+            //    {
+            //        if (Zug_ist_möglich(z, aktiver_spieler.eigene_Figuren))
+            //        {
+            //            Btn_Wuerfel.IsEnabled = false;
+            //        }
+            //        else
+            //        {
+            //            lokaler_spieler.status = true;
+            //        }
+            //    }
+            //}
 
-            if (verbleibende_würfelversuche < 1) Forward_Spielrecht();
+            //if (verbleibende_würfelversuche < 1) Forward_Spielrecht();
         }
         
 
