@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Mensch_ärgere_dich_nicht;
 
 namespace Mensch_ärgere_dich_nicht
 {
@@ -23,6 +24,10 @@ namespace Mensch_ärgere_dich_nicht
         public MainWindow()
         {
             InitializeComponent();
+            Statische_Variablen.rootFrame = this.rootFrame;
+            Statische_Variablen.mainWindow = this;
+            rootFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;
+            rootFrame.Content = new Seiten.Startseite();
         }
     }
 }

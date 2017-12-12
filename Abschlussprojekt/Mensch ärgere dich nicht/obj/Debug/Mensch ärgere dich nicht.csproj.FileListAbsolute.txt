@@ -1,0 +1,25 @@
+D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\bin\Debug\Mensch ärgere dich nicht.exe.config
+D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\bin\Debug\Mensch ärgere dich nicht.exe
+D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\bin\Debug\Mensch ärgere dich nicht.pdb
+D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\Mensch ärgere dich nicht.csprojResolveAssemblyReference.cache
+D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\MainWindow.g.cs
+D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\Seiten\Menü.g.cs
+D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\Seiten\Spielfeld.g.cs
+D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\Seiten\Sp_erstellen.g.cs
+D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\Seiten\Sp_suchen.g.cs
+D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\Seiten\Startseite.g.cs
+D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\App.g.cs
+D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\Mensch ärgere dich nicht_MarkupCompile.cache
+D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\Mensch ärgere dich nicht_MarkupCompile.lref
+D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\MainWindow.baml
+D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\Seiten\Menü.baml
+D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\Seiten\Spielfeld.baml
+D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\Seiten\Sp_erstellen.baml
+D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\Seiten\Sp_suchen.baml
+D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\Seiten\Startseite.baml
+D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\Mensch ärgere dich nicht.g.resources
+D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\Mensch_ärgere_dich_nicht.Properties.Resources.resources
+D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\Mensch ärgere dich nicht.csproj.GenerateResource.Cache
+D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\Mensch ärgere dich nicht.csproj.CoreCompileInputs.cache
+D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\Mensch ärgere dich nicht.exe
+D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\Mensch ärgere dich nicht.pdb

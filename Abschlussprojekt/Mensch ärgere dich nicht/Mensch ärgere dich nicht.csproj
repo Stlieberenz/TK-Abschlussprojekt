@@ -36,6 +36,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -54,6 +55,26 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Klassen\Netzwerkkommunikation.cs" />
+    <Compile Include="Klassen\SeitenFunktionen\Startseite.cs" />
+    <Compile Include="Klassen\SeitenFunktionen\S_erstellen.cs" />
+    <Compile Include="Klassen\SeitenFunktionen\S_suchen.cs" />
+    <Compile Include="Seiten\Menü.xaml.cs">
+      <DependentUpon>Menü.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Seiten\Spielfeld.xaml.cs">
+      <DependentUpon>Spielfeld.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Seiten\Sp_erstellen.xaml.cs">
+      <DependentUpon>Sp_erstellen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Seiten\Sp_suchen.xaml.cs">
+      <DependentUpon>Sp_suchen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Seiten\Startseite.xaml.cs">
+      <DependentUpon>Startseite.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Statische_Variablen.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -66,6 +87,26 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Seiten\Menü.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Seiten\Spielfeld.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Seiten\Sp_erstellen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Seiten\Sp_suchen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Seiten\Startseite.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -92,6 +133,36 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Bilder\Figur_rot.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Bilder\Feld_blau.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Bilder\Feld_gelb.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Bilder\Feld_grau.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Bilder\Feld_gruen.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Bilder\Feld_rot.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Bilder\Feld_schwarz.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Bilder\Figur_blau.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Bilder\Figur_gelb.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Bilder\Figur_gruen.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
