@@ -23,9 +23,11 @@ namespace Mensch_ärgere_dich_nicht.Klassen
 
         public delegate void LabelUpdate(string content);
 
+
+        private static int port = 50000;
         private static IPAddress eigene_IPAddresse;
         private static List<IPAddress> broadcast_IPAdresse = new List<IPAddress>();
-        private static int port = 50000;
+        private static UdpClient receivingUdpClient = new UdpClient(port);
 
         // Initialisierung -------------------------------------------------------------------
         public static void Iinitialisiere_IP_Addressen()
@@ -92,23 +94,23 @@ namespace Mensch_ärgere_dich_nicht.Klassen
             }
         }
 
-        //public static void Start_UDP_Listener()
-        //{
-        //    //Creates an IPEndPoint to record the IP Address and port number of the sender. 
-        //    // The IPEndPoint will allow you to read datagrams sent from any source.
-        //    IPEndPoint RemoteIpEndPoint = new IPEndPoint(IPAddress.Any, 0);
-        //    try
-        //    {
-        //        // Blocks until a message returns on this socket from a remote host.
-        //        Byte[] receiveBytes = receivingUdpClient.Receive(ref RemoteIpEndPoint);
+        public static void Start_UDP_Listener()
+        {
+            //Creates an IPEndPoint to record the IP Address and port number of the sender. 
+            // The IPEndPoint will allow you to read datagrams sent from any source.
+            IPEndPoint RemoteIpEndPoint = new IPEndPoint(IPAddress.Any, 0);
+            try
+            {
+                // Blocks until a message returns on this socket from a remote host.
+                Byte[] receiveBytes = receivingUdpClient.Receive(ref RemoteIpEndPoint);
 
-        //        Anlaysiere_IP_Paket(Encoding.ASCII.GetString(receiveBytes));
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Console.WriteLine(e.ToString());
-        //    }
-        //}
+                //Anlaysiere_IP_Paket(Encoding.ASCII.GetString(receiveBytes));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+        }
 
         public static void Send_UDP_BC_Packet(string content)
         {

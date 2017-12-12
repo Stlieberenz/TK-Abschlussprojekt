@@ -21,7 +21,6 @@ namespace Mensch_ärgere_dich_nicht.Klassen.SeitenFunktionen
             while (UDP_Threadstatus)
             {
                 Netzwerkkommunikation.Start_TCP_Listener();
-                Thread.Sleep(1000);
             }
         }
 

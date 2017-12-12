@@ -111,7 +111,7 @@ namespace Abschlussprojekt.Klassen
             {
                 // Blocks until a message returns on this socket from a remote host.
                 Byte[] receiveBytes = receivingUdpClient.Receive(ref RemoteIpEndPoint);
-
+                
                 Anlaysiere_IP_Paket( Encoding.ASCII.GetString(receiveBytes));
             }
             catch (Exception e)

@@ -12,5 +12,6 @@ namespace Mensch_ärgere_dich_nicht
         public static MainWindow mainWindow = new MainWindow();
         public static Frame rootFrame = new Frame();
         public static string lokaler_Spieler;
+        public static Page aktuelle_Seite;
     }
 }
