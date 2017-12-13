@@ -84,7 +84,7 @@ namespace Mensch_ärgere_dich_nicht.Klassen
                 {
                     message += Convert.ToChar(b[i]);
                 }
-                Anlaysiere_IP_Paket(message);
+                Analysiere_IP_Paket(message);
                 s.Close();
                 myListener.Stop();
             }
@@ -104,7 +104,7 @@ namespace Mensch_ärgere_dich_nicht.Klassen
                 // Blocks until a message returns on this socket from a remote host.
                 Byte[] receiveBytes = receivingUdpClient.Receive(ref RemoteIpEndPoint);
 
-                Anlaysiere_IP_Paket(Encoding.ASCII.GetString(receiveBytes));
+                Analysiere_IP_Paket(Encoding.ASCII.GetString(receiveBytes));
             }
             catch (Exception e)
             {
@@ -205,10 +205,10 @@ namespace Mensch_ärgere_dich_nicht.Klassen
             return new byte[] { 0 };
         }
 
-        public static void Anlaysiere_IP_Paket(string nachricht)
+        public static void Analysiere_IP_Paket(string nachricht)
         {
             //------------------------------------------------------------------------------
-            // Alle nachrichten werden nach volgendem Schema aufgebaut:
+            // Alle nachrichten werden nach folgendem Schema aufgebaut:
             // "für wen, was, benötigte Informationen"
             //------------------------------------------------------------------------------
             if (nachricht.Contains("Host") && Statische_Variablen.aktuelle_Seite == "Spiel_erstellen")

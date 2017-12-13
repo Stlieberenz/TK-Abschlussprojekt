@@ -37,7 +37,7 @@
         <TextBox x:Name="L_Gelb" Text="{Binding Text, ElementName=CB_Gelb}" HorizontalAlignment="Left" Margin="103,119,0,0" VerticalAlignment="Top" Width="154" Height="22" IsReadOnlyCaretVisible="True" BorderBrush="White" Focusable="False" SelectionBrush="White" TextChanged="L_Gelb_TextChanged"/>
         <TextBox x:Name="L_Grün" Text="{Binding Text, ElementName=CB_Grün}" HorizontalAlignment="Left" Margin="103,147,0,0" VerticalAlignment="Top" Width="154" Height="22" IsReadOnlyCaretVisible="True" BorderBrush="White" Focusable="False" SelectionBrush="White" TextChanged="L_Grün_TextChanged"/>
         <TextBox x:Name="L_Blau" Text="{Binding Text, ElementName=CB_Blau}" HorizontalAlignment="Left" Margin="103,174,0,0" VerticalAlignment="Top" Width="154" Height="23" BorderBrush="White" Focusable="False" SelectionBrush="White" TextChanged="L_Blau_TextChanged"/>
-        <Label x:Name="L_Tietel" Content="Spiel erstellen" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="183"/>
+        <Label x:Name="L_Titel" Content="Spiel erstellen" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="183"/>
         <Button x:Name="BTN_Starten" Content="Starten" HorizontalAlignment="Left" Margin="13,240,0,0" VerticalAlignment="Top" Width="75" Click="BTN_Starten_Click"/>
         <Button x:Name="BTN_Zurück" Content="Zurück" HorizontalAlignment="Left" Margin="173,240,0,0" VerticalAlignment="Top" Width="75" Click="BTN_Zurück_Click"/>
         <Label Content="Spieler Rot" HorizontalAlignment="Left" Margin="10,93,0,0" VerticalAlignment="Top" Width="88"/>

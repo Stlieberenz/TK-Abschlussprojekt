@@ -39,6 +39,7 @@ namespace Mensch_ärgere_dich_nicht.Seiten
         private void BTN_Suchen_Click(object sender, RoutedEventArgs e)
         {
             Statische_Variablen.rootFrame.Content = new Seiten.Sp_suchen();
+            while (true) Klassen.Netzwerkkommunikation.Start_UDP_Listener();            
         }
 
         private void BTN_Erstellen_Click(object sender, RoutedEventArgs e)

@@ -19,11 +19,20 @@ namespace Mensch_ärgere_dich_nicht.Seiten
     /// Interaktionslogik für Sp_suchen.xaml
     /// </summary>
     public partial class Sp_suchen : Page
-    {
+    {       
         public Sp_suchen()
         {
             InitializeComponent();
             Statische_Variablen.aktuelle_Seite = "Spiel_suchen";
+            Klassen.SeitenFunktionen.S_suchen.Server_liste = Server_Liste;
         }
+
+
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+            
     }
 }

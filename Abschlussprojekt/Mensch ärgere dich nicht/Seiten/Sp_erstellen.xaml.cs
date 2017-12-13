@@ -24,7 +24,7 @@ namespace Mensch_ärgere_dich_nicht.Seiten
         public Sp_erstellen()
         {
             InitializeComponent();
-            L_Tietel.Content = Statische_Variablen.lokaler_Spieler + "'s Spiel erstellen";
+            L_Titel.Content = Statische_Variablen.lokaler_Spieler + "'s Spiel erstellen";
             Statische_Variablen.aktuelle_Seite = "Spiel_erstellen";
         }
 

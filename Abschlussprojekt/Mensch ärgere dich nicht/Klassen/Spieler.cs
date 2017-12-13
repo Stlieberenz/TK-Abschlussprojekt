@@ -17,7 +17,7 @@ using System.Net;
 
 namespace Mensch_ärgere_dich_nicht.Klassen
 {
-    class Spieler
+    /*class Spieler
     {
         public Statische_Variablen.FARBE farbe { get; }
         public Statische_Variablen.SPIELER_ART spieler_art { get; }
@@ -40,5 +40,5 @@ namespace Mensch_ärgere_dich_nicht.Klassen
         {
             this.eigene_Figuren = Statische_Methoden.Initialisiere_Figuren(this.farbe);
         }
-    }
+    }*/
 }
