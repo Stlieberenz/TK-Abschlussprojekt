@@ -24,21 +24,14 @@ namespace Mensch_ärgere_dich_nicht.Klassen
         public string name { get; }
         public bool status { get; set; }
         public IPAddress ip { get; }
-        public Spieler nächster_Spieler { get; set; }
         public List<Figur> eigene_Figuren { get; set; }
 
-        public Spieler(FARBE farbe,string name, SPIELER_ART spieler_art,IPAddress ip)
+        public Spieler(Statische_Variablen.FARBE farbe,string name, Statische_Variablen.SPIELER_ART spieler_art,IPAddress ip)
         {
             this.name = name;
             this.farbe = farbe;
             this.spieler_art = spieler_art;
-            alle_Spieler.Add(this);
             this.ip = ip;
-        }
-
-        public void Initialisiere_Figuren()
-        {
-            this.eigene_Figuren = Statische_Methoden.Initialisiere_Figuren(this.farbe);
         }
     }
 }

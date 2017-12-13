@@ -55,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Klassen\Figur.cs" />
     <Compile Include="Klassen\Netzwerkkommunikation.cs" />
     <Compile Include="Klassen\SeitenFunktionen\Spielfeld.cs" />
     <Compile Include="Klassen\SeitenFunktionen\Startseite.cs" />
