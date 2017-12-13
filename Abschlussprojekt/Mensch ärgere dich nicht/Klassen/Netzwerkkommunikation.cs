@@ -66,8 +66,6 @@ namespace Mensch_ärgere_dich_nicht.Klassen
             }
         }
 
-
-
         // Senden - Empfangen ---------------------------------------------------------------
         public static void Start_TCP_Listener()
         {
@@ -188,7 +186,7 @@ namespace Mensch_ärgere_dich_nicht.Klassen
             index = 0;
             foreach (string str in temp)
             {
-                if (str != null) result[index] = str;
+                if (str != null && temp[0] != str) result[index] = str; // mit "temp[0] != str" wird bewirkt das die erste Information nicht mitkopiert wird, da sie nicht mehr benötigt wird.
                 index++;
             }
             return result;
@@ -227,7 +225,9 @@ namespace Mensch_ärgere_dich_nicht.Klassen
 
         public static string Eigene_IP_Adresse()
         {
-            return eigene_IPAddresse.ToString();
+            return eigene_IPAddresse.Address.ToString();
         }
+
+         
     }
 }

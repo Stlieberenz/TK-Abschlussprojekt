@@ -18,11 +18,15 @@ namespace Mensch_ärgere_dich_nicht
             ROT,
             GELB,
             GRÜN,
-            BLAU
+            BLAU,
+            NULL
         }
         public enum SPIELER_ART
         {
-
+            NORMALER_SPIELER,
+            CP_GEGNER
         }
+
+
     }
 }
