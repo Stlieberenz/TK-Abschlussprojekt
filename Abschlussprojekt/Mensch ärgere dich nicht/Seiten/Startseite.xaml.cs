@@ -25,7 +25,7 @@ namespace Mensch_ärgere_dich_nicht.Seiten
             InitializeComponent();
             Klassen.Netzwerkkommunikation.Iinitialisiere_IP_Addressen();
             Klassen.Netzwerkkommunikation.Iinitialisiere_BC_IP_Addressen();
-            Statische_Variablen.aktuelle_Seite = this;
+            Statische_Variablen.aktuelle_Seite = "Startseite";
         }
 
         private void BTN_Anmelden_Click(object sender, RoutedEventArgs e)

@@ -72,5 +72,21 @@ namespace Mensch_ärgere_dich_nicht.Klassen.SeitenFunktionen
         {
             return Netzwerkkommunikation.Eigene_IP_Adresse() + ";" + Spieler_Rot + ";" + Spieler_Gelb + ";" + Spieler_Grün + ";" + Spieler_Blau;
         }
+
+        public static void Analysiere_Nachricht(string[] content)
+        {
+            switch (content[0])
+            {
+                case "Clientanfrage":
+                    {
+
+                        break;
+                    }
+                case "Clientabsage":
+                    {
+                        break;
+                    }
+            }
+        }
     }
 }

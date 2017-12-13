@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Mensch_ärgere_dich_nicht.Klassen.SeitenFunktionen
 {
-    static class S_suchen
+    static class Spielfeld
     {
         public static void Analysiere_Nachricht(string[] content)
         {
-            
+
         }
     }
 }

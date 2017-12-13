@@ -84,7 +84,7 @@ namespace Mensch_ärgere_dich_nicht.Klassen
                 {
                     message += Convert.ToChar(b[i]);
                 }
-                //Anlaysiere_IP_Paket(message);
+                Anlaysiere_IP_Paket(message);
                 s.Close();
                 myListener.Stop();
             }
@@ -104,7 +104,7 @@ namespace Mensch_ärgere_dich_nicht.Klassen
                 // Blocks until a message returns on this socket from a remote host.
                 Byte[] receiveBytes = receivingUdpClient.Receive(ref RemoteIpEndPoint);
 
-                //Anlaysiere_IP_Paket(Encoding.ASCII.GetString(receiveBytes));
+                Anlaysiere_IP_Paket(Encoding.ASCII.GetString(receiveBytes));
             }
             catch (Exception e)
             {
@@ -172,15 +172,24 @@ namespace Mensch_ärgere_dich_nicht.Klassen
         // IP-Paketanalyse ----------------------------------------------------------------------
 
         
-        private static string[] Konvertiere_in_Stringarray(string nachricht, int array_länge)
+        public static string[] Konvertiere_in_Stringarray(string nachricht)
         {
-            string[] result = new string[array_länge + 1];
-            int counter;
+            string[] temp = new string[20];
+           
             int index = 0;
-            for (counter = 0; counter < nachricht.Count(); counter++)
+            for (int counter = 0; counter < nachricht.Count(); counter++)
             {
-                if (nachricht[counter] != ',') result[index] += nachricht[counter].ToString();
+                if (nachricht[counter] != ';') temp[index] += nachricht[counter].ToString();
                 else index++;
+            }
+            index = 0;
+            foreach (string str in temp) if (str != null) index++;
+            string[] result = new string[index];
+            index = 0;
+            foreach (string str in temp)
+            {
+                if (str != null) result[index] = str;
+                index++;
             }
             return result;
         }
@@ -196,86 +205,25 @@ namespace Mensch_ärgere_dich_nicht.Klassen
             return new byte[] { 0 };
         }
 
-        //public static void Anlaysiere_IP_Paket(string nachricht)
-        //{
-
-        //    if (nachricht.Contains("Hostinformationen") && aktive_Seite == AKTIVE_SEITE.SPIEL_SUCHEN)
-        //    {
-        //        string temp = nachricht.Replace("Hostinformationen,", "");
-        //        Update_Hostinformationen(temp);
-        //    }
-        //    else if (nachricht.Contains("Hostabsage") && aktive_Seite == AKTIVE_SEITE.SPIEL_SUCHEN)
-        //    {
-        //        anfragen_result = false;
-        //    }
-        //    else if (nachricht.Contains("Hostzusage") && aktive_Seite == AKTIVE_SEITE.SPIEL_SUCHEN)
-        //    {
-        //        anfragen_result = true;
-        //    }
-        //    else if (nachricht.Contains("Spielstart") && aktive_Seite == AKTIVE_SEITE.SPIEL_SUCHEN)
-        //    {
-        //        string temp = nachricht.Replace("Spielstart,", "");
-        //        Spielstart(temp);
-        //        Spiel_suchen_Grid.Dispatcher.Invoke(new Hosts_Update(Spiel_suchen_Spiel_starten));
-        //    }
-        //    else if (nachricht.Contains("Spielende") && aktive_Seite == AKTIVE_SEITE.SPIELWIESE)
-        //    {
-        //        string temp = nachricht.Replace("Spielende,", "");
-        //        Statische_Methoden.Spielende();
-        //        Aufgeben.Dispatcher.Invoke(new Ende(Statische_Methoden.Spielende));
-        //    }
-        //    else if (nachricht.Contains("Clientanfrage") && aktive_Seite == AKTIVE_SEITE.SPIEL_ERSTELLEN)
-        //    {
-        //        string temp = nachricht.Replace("Clientanfrage,", "");
-        //        Clientanfrage(temp);
-        //    }
-        //    else if (nachricht.Contains("Clientabsage") && aktive_Seite == AKTIVE_SEITE.SPIEL_ERSTELLEN)
-        //    {
-        //        string temp = nachricht.Replace("Clientabsage,", "");
-        //        Clientabsage(temp);
-        //    }
-        //    else if (nachricht.Contains("Chatinformationen") && aktive_Seite == AKTIVE_SEITE.SPIELWIESE)
-        //    {
-        //        string temp = nachricht.Replace("Chatinformationen,", "");
-        //        Update_Chatinformationen(temp);
-        //    }
-        //    else if (nachricht.Contains("Spielrecht") && aktive_Seite == AKTIVE_SEITE.SPIELWIESE)
-        //    {
-        //        string temp = nachricht.Replace("Spielrecht,", "");
-        //        if (nachricht.Contains(lokaler_spieler.name))
-        //        {
-        //            lokaler_spieler.status = true;
-        //            Würfel.Dispatcher.Invoke(new Hosts_Update(Aktiviere_Würfel));
-        //            verbleibende_würfelversuche = 3;
-        //        }
-        //        aktiver_Spieler.Dispatcher.Invoke(new LabelUpdate(LabelUpdate_aktiver_Spieler), temp);
-        //    }
-        //    else if (nachricht.Contains("Spielfigur Update") && aktive_Seite == AKTIVE_SEITE.SPIELWIESE)
-        //    {
-        //        string temp = nachricht.Replace("Spielfigur Update,", "");
-        //        Spielfigur_Update(temp);
-        //    }
-        //    else if (nachricht.Contains("Wuerfelzahl") && aktive_Seite == AKTIVE_SEITE.SPIELWIESE)
-        //    {
-        //        string temp = nachricht.Replace("Wuerfelzahl,", "");
-        //        Würfel.Dispatcher.Invoke(new Würfelupdate(Würfel_update), nachricht.Last().ToString());
-        //    }
-        //    else if (nachricht.Contains("Client_abbruch"))
-        //    {
-        //        string temp = nachricht.Replace("Client_abbruch,", "");
-        //        int index = -1;
-        //        foreach (Spieler sp in alle_Spieler)
-        //        {
-        //            if (sp.name == temp) index = alle_Spieler.IndexOf(sp);
-        //        }
-        //        foreach (Figur fig in alle_Spieler[index].eigene_Figuren)
-        //        {
-        //            fig.Set_Figure_to_Start();
-        //        }
-
-        //        if (index > -1) alle_Spieler.RemoveAt(index);
-        //    }
-        //}
+        public static void Anlaysiere_IP_Paket(string nachricht)
+        {
+            //------------------------------------------------------------------------------
+            // Alle nachrichten werden nach volgendem Schema aufgebaut:
+            // "für wen, was, benötigte Informationen"
+            //------------------------------------------------------------------------------
+            if (nachricht.Contains("Host") && Statische_Variablen.aktuelle_Seite == "Spiel_erstellen")
+            {
+                SeitenFunktionen.S_erstellen.Analysiere_Nachricht(Konvertiere_in_Stringarray(nachricht));
+            }
+            if (nachricht.Contains("Client") && Statische_Variablen.aktuelle_Seite == "Spiel_suchen")
+            {
+                SeitenFunktionen.S_suchen.Analysiere_Nachricht(Konvertiere_in_Stringarray(nachricht));
+            }
+            if (nachricht.Contains("Mitspieler") && Statische_Variablen.aktuelle_Seite == "Spielfeld")
+            {
+                SeitenFunktionen.Spielfeld.Analysiere_Nachricht(Konvertiere_in_Stringarray( nachricht));
+            }
+        }
 
         public static string Eigene_IP_Adresse()
         {

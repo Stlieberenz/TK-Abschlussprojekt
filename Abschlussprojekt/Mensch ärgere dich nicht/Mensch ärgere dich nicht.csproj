@@ -56,9 +56,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Klassen\Netzwerkkommunikation.cs" />
+    <Compile Include="Klassen\SeitenFunktionen\Spielfeld.cs" />
     <Compile Include="Klassen\SeitenFunktionen\Startseite.cs" />
     <Compile Include="Klassen\SeitenFunktionen\S_erstellen.cs" />
     <Compile Include="Klassen\SeitenFunktionen\S_suchen.cs" />
+    <Compile Include="Klassen\Spieler.cs" />
+    <Compile Include="Klassen\Statische_Funktionen.cs" />
     <Compile Include="Seiten\Menü.xaml.cs">
       <DependentUpon>Menü.xaml</DependentUpon>
     </Compile>

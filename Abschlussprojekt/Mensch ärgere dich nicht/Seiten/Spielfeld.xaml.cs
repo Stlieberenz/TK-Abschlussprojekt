@@ -23,8 +23,7 @@ namespace Mensch_ärgere_dich_nicht.Seiten
         public Spielfeld()
         {
             InitializeComponent();
-
-            Statische_Variablen.aktuelle_Seite = this;
+            Statische_Variablen.aktuelle_Seite = "Spielfeld";
         }
     }
 }

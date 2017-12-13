@@ -23,8 +23,7 @@ namespace Mensch_ärgere_dich_nicht.Seiten
         public Sp_suchen()
         {
             InitializeComponent();
-
-            Statische_Variablen.aktuelle_Seite = this;
+            Statische_Variablen.aktuelle_Seite = "Spiel_suchen";
         }
     }
 }
