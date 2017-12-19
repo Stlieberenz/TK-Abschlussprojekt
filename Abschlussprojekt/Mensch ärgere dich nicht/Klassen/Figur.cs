@@ -32,6 +32,8 @@ namespace Mensch_ärgere_dich_nicht.Klassen
             this.id = id;
             this.farbe = farbe;
             this.bild = new Image();
+
+            // Weist dem Image objekt sein Bild zu
             switch (farbe)
             {
                 case Statische_Variablen.FARBE.ROT: bild.Source = new BitmapImage(new Uri(@"D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\Bilder\Figur_rot.gif")); break;
@@ -39,8 +41,9 @@ namespace Mensch_ärgere_dich_nicht.Klassen
                 case Statische_Variablen.FARBE.GRÜN: bild.Source = new BitmapImage(new Uri(@"D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\Bilder\Figur_gruen.gif")); break;
                 case Statische_Variablen.FARBE.BLAU: bild.Source = new BitmapImage(new Uri(@"D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\Bilder\Figur_blau.gif")); break;
             }
+
+            //Hinzufügen der Figur der jeweiligen Listen
             SeitenFunktionen.Spielfeld.alle_Figuren.Add(this);
-            Bestimme_Haus_position(this.Haus_position);
             switch (farbe)
             {
                 case Statische_Variablen.FARBE.ROT: Haus_position = SeitenFunktionen.Spielfeld.alle_Hausfelder_Rot[id]; break;
@@ -51,11 +54,7 @@ namespace Mensch_ärgere_dich_nicht.Klassen
             Setze_Figur(Haus_position);
         }
 
-        private void Bestimme_Haus_position(Feld Haus_position)
-        {
-            
-        }
-
+        //Diese Funktion Setzt die Figur auf ein belibiges Feld. Dafür nutzt sie die Zeilen und Spaltenangaben des Felds.
         public void Setze_Figur(Feld feld)
         {
             Grid.SetColumn(bild, feld.Spalte);

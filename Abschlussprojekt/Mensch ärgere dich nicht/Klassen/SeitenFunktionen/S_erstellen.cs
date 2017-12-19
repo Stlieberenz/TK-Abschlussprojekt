@@ -11,6 +11,7 @@ namespace Mensch_ärgere_dich_nicht.Klassen.SeitenFunktionen
 {
     static class S_erstellen
     {
+        //Atribute -----------------------------------------------------------------------------------------------------------------------------
         public delegate void Click_Event();
 
         public static int index_rot_alt, index_gelb_alt, index_grün_alt, index_blau_alt; // Dienen zum Wiederherstellen der Werte im Fehlerfall
@@ -21,9 +22,9 @@ namespace Mensch_ärgere_dich_nicht.Klassen.SeitenFunktionen
 
         public static Button Start_Button;
 
-
         public static bool UDP_Threadstatus;
 
+        //Senden / Empfangen -----------------------------------------------------------------------------------------------
         public static void Warte_auf_Spieler()
         {
             while (UDP_Threadstatus)
@@ -36,75 +37,6 @@ namespace Mensch_ärgere_dich_nicht.Klassen.SeitenFunktionen
                 }
                 Netzwerkkommunikation.Start_TCP_Listener();
             }
-        }
-
-        private static bool Prüfe_Startfähigkeit()
-        {
-
-            if (Prüfe_Spielernamen(Spieler_Rot) && Prüfe_Spielernamen(Spieler_Gelb) &&
-                Prüfe_Spielernamen(Spieler_Grün) && Prüfe_Spielernamen(Spieler_Blau)) return true;
-            else return false;
-        }
-
-        private static bool Prüfe_Spielernamen(string name)
-        {
-            if (name != "Offen") return true;
-            else return false;
-        }
-
-        public static void Sende_UDP()
-        {
-            while (UDP_Threadstatus)
-            {
-                Netzwerkkommunikation.Send_UDP_BC_Packet(Generiere_UDP_Nachricht());
-                Thread.Sleep(1000);
-            }
-        }
-
-        public static bool Prüfe_auswahl(List<int> Indexe,ComboBox CB_aktuell)
-        {
-            int prüfsumme1 = 0;
-            int prüfsumme2 = 0;
-            bool result = true;
-            foreach (int index in Indexe) if (index == 1) prüfsumme1 += 1;
-            foreach (int index in Indexe) if (index == 3) prüfsumme2 += 1;
-            if (prüfsumme1 == 4 || prüfsumme2 == 0) CB_aktuell.SelectedIndex = Wähle_richtigen_Wert_aus(CB_aktuell); // Hier wurde dann eine falsche Auswahl getroffen und der alte Wert wiederhergestellt
-            if (prüfsumme2 > 1) result = false;
-            return result;
-        }
-
-        internal static bool Prüfe_auswahl()
-        { // prüft, dass immer mindestens 2 Spieler mit einander Spielen
-            int prüfsumme = 0;
-            if (index_rot_alt != 1) prüfsumme += 1;
-            if (index_gelb_alt != 1) prüfsumme += 1;
-            if (index_grün_alt != 1) prüfsumme += 1;
-            if (index_blau_alt != 1) prüfsumme += 1;
-
-            if (prüfsumme > 1) return true;
-            else return false;
-            
-        }
-
-        private static int Wähle_richtigen_Wert_aus(ComboBox CB_aktuell)
-        {
-            if (CB_aktuell.Name.Contains("Rot")) return index_rot_alt;
-            else if (CB_aktuell.Name.Contains("Gelb")) return index_gelb_alt;
-            else if (CB_aktuell.Name.Contains("Grün")) return index_grün_alt;
-            else if (CB_aktuell.Name.Contains("Blau")) return index_blau_alt;
-            else return 1;
-        }
-
-        private static string Generiere_UDP_Nachricht()
-        {
-            return "Client" + ";"+ 
-                "Spielangebot" + ";" + 
-                Netzwerkkommunikation.Eigene_IP_Adresse() + ";" + 
-                "Spielname" + ";" + 
-                Spieler_Rot + ";" + 
-                Spieler_Gelb + ";" + 
-                Spieler_Grün + ";" + 
-                Spieler_Blau;
         }
 
         public static void Analysiere_Nachricht(string[] content)
@@ -130,41 +62,65 @@ namespace Mensch_ärgere_dich_nicht.Klassen.SeitenFunktionen
             Aktualisiere_GUI();
         }
 
-        private static void Aktualisiere_GUI()
+        public static void Sende_UDP()
         {
-            foreach(Spieler spieler in Spielfeld.alle_Mitspieler)
+            while (UDP_Threadstatus)
             {
-                switch (spieler.farbe)
-                {
-                    case Statische_Variablen.FARBE.ROT: Spieler_Rot = spieler.name; break;
-                    case Statische_Variablen.FARBE.GELB: Spieler_Gelb = spieler.name; break;
-                    case Statische_Variablen.FARBE.GRÜN: Spieler_Grün = spieler.name; break;
-                    case Statische_Variablen.FARBE.BLAU: Spieler_Blau = spieler.name; break;
-                }
+                Netzwerkkommunikation.Send_UDP_BC_Packet(Generiere_UDP_Nachricht());
+                Thread.Sleep(1000);
             }
-            versteckter_Button.Dispatcher.Invoke(new Click_Event(() => 
-            versteckter_Button.RaiseEvent(new System.Windows.RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent))));
         }
 
-        private static void Entferne_Client(string[] content)
+        private static string Generiere_UDP_Nachricht()
         {
-            int index_zum_Löschen = -1;
-            foreach (Spieler spieler in Spielfeld.alle_Mitspieler) if (spieler.name == content[1]) index_zum_Löschen = Spielfeld.alle_Mitspieler.IndexOf(spieler);
-            Spielfeld.alle_Mitspieler.RemoveAt(index_zum_Löschen);
+            return "Client" + ";" +
+                "Spielangebot" + ";" +
+                Netzwerkkommunikation.Eigene_IP_Adresse() + ";" +
+                "Spielname" + ";" +
+                Spieler_Rot + ";" +
+                Spieler_Gelb + ";" +
+                Spieler_Grün + ";" +
+                Spieler_Blau;
         }
 
-        private static void Erstelle_Spieler(string[] content)
+        // Funktionen zum Überprüfen von  dingen -----------------------------------------------------------------------------
+        private static bool Prüfe_Startfähigkeit()
         {
-            new Spieler(Ermittle_Spielerfarbe(content[0]), content[1], IPAddress.Parse(content[2]));
+
+            if (Prüfe_Spielernamen(Spieler_Rot) && Prüfe_Spielernamen(Spieler_Gelb) &&
+                Prüfe_Spielernamen(Spieler_Grün) && Prüfe_Spielernamen(Spieler_Blau)) return true;
+            else return false;
         }
 
-        private static Statische_Variablen.FARBE Ermittle_Spielerfarbe(string farbe)
+        private static bool Prüfe_Spielernamen(string name)
         {
-            if (farbe == Statische_Variablen.FARBE.ROT.ToString()) return Statische_Variablen.FARBE.ROT;
-            else if (farbe == Statische_Variablen.FARBE.GELB.ToString()) return Statische_Variablen.FARBE.GELB;
-            else if (farbe == Statische_Variablen.FARBE.GRÜN.ToString()) return Statische_Variablen.FARBE.GRÜN;
-            else if (farbe == Statische_Variablen.FARBE.BLAU.ToString()) return Statische_Variablen.FARBE.BLAU;
-            else return Statische_Variablen.FARBE.NULL;
+            if (name != "Offen") return true;
+            else return false;
+        }
+
+        public static bool Prüfe_auswahl(List<int> Indexe,ComboBox CB_aktuell)
+        {
+            int prüfsumme1 = 0;
+            int prüfsumme2 = 0;
+            bool result = true;
+            foreach (int index in Indexe) if (index == 1) prüfsumme1 += 1;
+            foreach (int index in Indexe) if (index == 3) prüfsumme2 += 1;
+            if (prüfsumme1 == 4 || prüfsumme2 == 0) CB_aktuell.SelectedIndex = Wähle_richtigen_Wert_aus(CB_aktuell); // Hier wurde dann eine falsche Auswahl getroffen und der alte Wert wiederhergestellt
+            if (prüfsumme2 > 1) result = false;
+            return result;
+        }
+
+        internal static bool Prüfe_auswahl()
+        { // prüft, dass immer mindestens 2 Spieler mit einander Spielen
+            int prüfsumme = 0;
+            if (index_rot_alt != 1) prüfsumme += 1;
+            if (index_gelb_alt != 1) prüfsumme += 1;
+            if (index_grün_alt != 1) prüfsumme += 1;
+            if (index_blau_alt != 1) prüfsumme += 1;
+
+            if (prüfsumme > 1) return true;
+            else return false;
+            
         }
 
         private static bool Prüfe_anfrage(string[] content)
@@ -210,6 +166,56 @@ namespace Mensch_ärgere_dich_nicht.Klassen.SeitenFunktionen
             return true;
         }
 
+        private static int Wähle_richtigen_Wert_aus(ComboBox CB_aktuell)
+        {
+            //Stellt den alten Wert einer Auswahlbox wiederher, wenn man eine Falsche auswahl getroffen hat
+            if (CB_aktuell.Name.Contains("Rot")) return index_rot_alt;
+            else if (CB_aktuell.Name.Contains("Gelb")) return index_gelb_alt;
+            else if (CB_aktuell.Name.Contains("Grün")) return index_grün_alt;
+            else if (CB_aktuell.Name.Contains("Blau")) return index_blau_alt;
+            else return 1;
+        }
+
+
+        // Reaktionen auf ausgewertete Nachrichten ------------------------------------------------------------------------------------------
+        private static void Aktualisiere_GUI()
+        {
+            foreach(Spieler spieler in Spielfeld.alle_Mitspieler)
+            {
+                switch (spieler.farbe)
+                {
+                    case Statische_Variablen.FARBE.ROT: Spieler_Rot = spieler.name; break;
+                    case Statische_Variablen.FARBE.GELB: Spieler_Gelb = spieler.name; break;
+                    case Statische_Variablen.FARBE.GRÜN: Spieler_Grün = spieler.name; break;
+                    case Statische_Variablen.FARBE.BLAU: Spieler_Blau = spieler.name; break;
+                }
+            }
+            versteckter_Button.Dispatcher.Invoke(new Click_Event(() => 
+            versteckter_Button.RaiseEvent(new System.Windows.RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent))));
+        }
+
+        private static void Entferne_Client(string[] content)
+        {
+            int index_zum_Löschen = -1;
+            foreach (Spieler spieler in Spielfeld.alle_Mitspieler) if (spieler.name == content[1]) index_zum_Löschen = Spielfeld.alle_Mitspieler.IndexOf(spieler);
+            Spielfeld.alle_Mitspieler.RemoveAt(index_zum_Löschen);
+        }
+
+        private static void Erstelle_Spieler(string[] content)
+        {
+            new Spieler(Ermittle_Spielerfarbe(content[0]), content[1], IPAddress.Parse(content[2]));
+        }
+
+        private static Statische_Variablen.FARBE Ermittle_Spielerfarbe(string farbe)
+        {
+            if (farbe == Statische_Variablen.FARBE.ROT.ToString()) return Statische_Variablen.FARBE.ROT;
+            else if (farbe == Statische_Variablen.FARBE.GELB.ToString()) return Statische_Variablen.FARBE.GELB;
+            else if (farbe == Statische_Variablen.FARBE.GRÜN.ToString()) return Statische_Variablen.FARBE.GRÜN;
+            else if (farbe == Statische_Variablen.FARBE.BLAU.ToString()) return Statische_Variablen.FARBE.BLAU;
+            else return Statische_Variablen.FARBE.NULL;
+        }
+
+        // Spielstart ------------------------------------------------------------------------------------------------------------------------
         private static void Starte_Spiel()
         {
             // Erstellt Computergegner

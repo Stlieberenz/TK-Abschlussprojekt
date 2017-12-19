@@ -13,20 +13,9 @@ namespace Mensch_ärgere_dich_nicht.Klassen
     class Netzwerkkommunikation
     {
         // Attribute -----------------------------------------------------------------------
-        public delegate bool ClientSpieler(string name);
-
-        public delegate void Hosts_Update();
-
-        public delegate void Ende();
-
-        public delegate void Würfelupdate(string zahl);
-
-        public delegate void LabelUpdate(string content);
-
-
         private static int port = 50000;
         private static IPAddress eigene_IPAddresse;
-        private static List<IPAddress> broadcast_IPAdresse = new List<IPAddress>();
+        private static List<IPAddress> broadcast_IPAdresse = new List<IPAddress>(); //Es kann mehrere geben, da man z.B. per Ethernet und Wlan verbunden sein kann
         private static UdpClient receivingUdpClient = new UdpClient(port);
 
         // Initialisierung -------------------------------------------------------------------
@@ -155,23 +144,24 @@ namespace Mensch_ärgere_dich_nicht.Klassen
             }
         }
 
-        //public static void Sende_TCP_Nachricht_an_alle_Spieler(string nachricht)
-        //{
-        //    foreach (Spieler spieler in alle_Spieler)
-        //    {
-        //        if (spieler.spieler_art != SPIELER_ART.COMPUTERGEGNER && spieler.ip.Address != lokaler_spieler.ip.Address)
-        //        {
-        //            Netzwerkkommunikation.Send_TCP_Packet(nachricht, spieler.ip);
-        //        }
-        //    }
-        //}
+        public static void Sende_TCP_Nachricht_an_alle_Spieler(string nachricht)
+        {
+            foreach (Spieler spieler in SeitenFunktionen.Spielfeld.alle_Mitspieler)
+            {
+                if (spieler.spieler_art != Statische_Variablen.SPIELER_ART.CP_GEGNER && spieler.ip.Address != eigene_IPAddresse.Address)
+                {
+                    Send_TCP_Packet(nachricht, spieler.ip);
+                }
+            }
+        }
 
 
         // IP-Paketanalyse ----------------------------------------------------------------------
 
-        
+
         public static string[] Konvertiere_in_Stringarray(string nachricht)
         {
+            //Teilt die nachricht in Logische einheinten, getrennt durch ein ";"
             string[] temp = new string[20];
            
             int index = 0;
@@ -223,6 +213,8 @@ namespace Mensch_ärgere_dich_nicht.Klassen
             }
         }
 
+
+        // Sonstiges -------------------------------------------------------------------------------
         public static string Eigene_IP_Adresse()
         {
             return eigene_IPAddresse.Address.ToString();

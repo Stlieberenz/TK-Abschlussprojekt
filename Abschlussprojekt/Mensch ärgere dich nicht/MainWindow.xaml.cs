@@ -23,11 +23,12 @@ namespace Mensch_ärgere_dich_nicht
     {
         public MainWindow()
         {
+            //Hier wird nur das mainWindow und das Grudfenster (rootFrame) in Variablen Geschrieben, die von über all aus erreicht werden kann.
             InitializeComponent();
             Statische_Variablen.rootFrame = this.rootFrame;
             Statische_Variablen.mainWindow = this;
-            rootFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;
-            rootFrame.Content = new Seiten.Startseite();
+            rootFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden; //Versteckt die Navigationsleiste
+            rootFrame.Content = new Seiten.Startseite(); // Öffnet die Startseite
         }
     }
 }
