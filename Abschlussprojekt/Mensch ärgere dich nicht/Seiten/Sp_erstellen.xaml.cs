@@ -26,24 +26,38 @@ namespace Mensch_ärgere_dich_nicht.Seiten
             InitializeComponent();
             L_Tietel.Content = Statische_Variablen.lokaler_Spieler + "'s Spiel erstellen";
             Statische_Variablen.aktuelle_Seite = "Spiel_erstellen";
+            Klassen.SeitenFunktionen.S_erstellen.versteckter_Button = BTN_Versteckter_Button;
         }
 
         private void BTN_Starten_Click(object sender, RoutedEventArgs e)
         {
-            if (Klassen.SeitenFunktionen.S_erstellen.Prüfe_auswahl())
+            
+            if (BTN_Starten.IsEnabled)
             {
-                BTN_Starten.IsEnabled = false;
-                CB_Blau.IsEnabled = false;
-                CB_Gelb.IsEnabled = false;
-                CB_Rot.IsEnabled = false;
-                CB_Grün.IsEnabled = false;
-                Klassen.SeitenFunktionen.S_erstellen.UDP_Threadstatus = true;
-                Task.Factory.StartNew(Klassen.SeitenFunktionen.S_erstellen.Warte_auf_Spieler);
-                Task.Factory.StartNew(Klassen.SeitenFunktionen.S_erstellen.Sende_UDP);
+                if (Klassen.SeitenFunktionen.S_erstellen.Prüfe_auswahl())
+                {
+                    BTN_Starten.IsEnabled = false;
+                    CB_Blau.IsEnabled = false;
+                    CB_Gelb.IsEnabled = false;
+                    CB_Rot.IsEnabled = false;
+                    CB_Grün.IsEnabled = false;
+                    Klassen.SeitenFunktionen.S_erstellen.Spieler_Rot = CB_Rot.Text;
+                    Klassen.SeitenFunktionen.S_erstellen.Spieler_Gelb = CB_Gelb.Text;
+                    Klassen.SeitenFunktionen.S_erstellen.Spieler_Grün = CB_Grün.Text;
+                    Klassen.SeitenFunktionen.S_erstellen.Spieler_Blau = CB_Blau.Text;
+                    Klassen.SeitenFunktionen.S_erstellen.UDP_Threadstatus = true;
+                    Task.Factory.StartNew(Klassen.SeitenFunktionen.S_erstellen.Warte_auf_Spieler);
+                    Task.Factory.StartNew(Klassen.SeitenFunktionen.S_erstellen.Sende_UDP);
+                }
+                else
+                {
+                    MessageBox.Show("Es müssen mindestens 2 Spieler gegeneinander antreten", "Fehler - ungültige Auswahl", MessageBoxButton.OK);
+                }
             }
             else
             {
-                MessageBox.Show("Es müssen mindestens 2 Spieler gegeneinander antreten", "Fehler - ungültige Auswahl", MessageBoxButton.OK);
+                Statische_Variablen.aktuelle_Seite = "Spielfeld";
+                Statische_Variablen.rootFrame.Content = new Seiten.Spielfeld();
             }
         }
 
@@ -120,7 +134,16 @@ namespace Mensch_ärgere_dich_nicht.Seiten
             CB_Gelb.SelectedIndex = 2;
             CB_Grün.SelectedIndex = 1;
             CB_Blau.SelectedIndex = 1;
+            L_Rot.Text = CB_Rot.Text;
+            L_Gelb.Text = CB_Gelb.Text;
+            L_Grün.Text = CB_Grün.Text;
+            L_Blau.Text = CB_Blau.Text;
             Update_Index_variablen();
+            Klassen.SeitenFunktionen.S_erstellen.Spieler_Rot = CB_Rot.Text;
+            Klassen.SeitenFunktionen.S_erstellen.Spieler_Gelb = CB_Gelb.Text;
+            Klassen.SeitenFunktionen.S_erstellen.Spieler_Grün = CB_Grün.Text;
+            Klassen.SeitenFunktionen.S_erstellen.Spieler_Blau = CB_Blau.Text;
+            Klassen.SeitenFunktionen.S_erstellen.Start_Button = BTN_Starten;
         }
 
         private void Update_Index_variablen()
@@ -133,24 +156,30 @@ namespace Mensch_ärgere_dich_nicht.Seiten
 
         private void L_Rot_TextChanged(object sender, TextChangedEventArgs e)
         {
-            Klassen.SeitenFunktionen.S_erstellen.Spieler_Rot = L_Rot.Text;
+            L_Rot.Text = Klassen.SeitenFunktionen.S_erstellen.Spieler_Rot;
         }
 
         private void L_Gelb_TextChanged(object sender, TextChangedEventArgs e)
         {
-            Klassen.SeitenFunktionen.S_erstellen.Spieler_Gelb = L_Gelb.Text;
+            L_Gelb.Text = Klassen.SeitenFunktionen.S_erstellen.Spieler_Gelb;
         }
 
         private void L_Grün_TextChanged(object sender, TextChangedEventArgs e)
         {
-            Klassen.SeitenFunktionen.S_erstellen.Spieler_Grün = L_Grün.Text;
+            L_Grün.Text = Klassen.SeitenFunktionen.S_erstellen.Spieler_Grün;
         }
 
         private void L_Blau_TextChanged(object sender, TextChangedEventArgs e)
         {
-            Klassen.SeitenFunktionen.S_erstellen.Spieler_Blau = L_Blau.Text;
+            L_Blau.Text = Klassen.SeitenFunktionen.S_erstellen.Spieler_Blau;
         }
 
-
+        private void BTN_Versteckter_Button_Click(object sender, RoutedEventArgs e)
+        {
+            L_Rot.RaiseEvent(new System.Windows.RoutedEventArgs(System.Windows.Controls.Primitives.TextBoxBase.TextChangedEvent));
+            L_Gelb.RaiseEvent(new System.Windows.RoutedEventArgs(System.Windows.Controls.Primitives.TextBoxBase.TextChangedEvent));
+            L_Grün.RaiseEvent(new System.Windows.RoutedEventArgs(System.Windows.Controls.Primitives.TextBoxBase.TextChangedEvent));
+            L_Blau.RaiseEvent(new System.Windows.RoutedEventArgs(System.Windows.Controls.Primitives.TextBoxBase.TextChangedEvent));
+        }
     }
 }

@@ -6,9 +6,47 @@
       xmlns:local="clr-namespace:Mensch_ärgere_dich_nicht.Seiten"
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="300"
-      Title="Spielfeld">
+      Title="Spielfeld" Width="{DynamicResource {x:Static SystemParameters.FullPrimaryScreenWidthKey}}" Height="{DynamicResource {x:Static SystemParameters.FullPrimaryScreenHeightKey}}" Loaded="Page_Loaded">
 
-    <Grid>
-        
+    <Grid Background="#FFFFD846">
+        <Image HorizontalAlignment="Left" Height="761" Margin="562,10,0,0" VerticalAlignment="Top" Width="786" Source="/Mensch ärgere dich nicht;component/Bilder/Spielbrett.gif"/>
+        <Label Content="Mensch" HorizontalAlignment="Left" Margin="605,217,0,0" VerticalAlignment="Top" Width="215" Height="58" FontSize="36" FontFamily="Italic" FontWeight="Bold"/>
+        <Label Content="ärgere" HorizontalAlignment="Left" Margin="1107,217,0,0" VerticalAlignment="Top" Width="215" Height="58" FontSize="36" FontFamily="Italic" FontWeight="Bold"/>
+        <Label Content="dich" HorizontalAlignment="Left" Margin="605,550,0,0" VerticalAlignment="Top" Width="215" Height="58" FontSize="36" FontFamily="Italic" FontWeight="Bold"/>
+        <Label Content="nicht" HorizontalAlignment="Left" Margin="1107,550,0,0" VerticalAlignment="Top" Width="215" Height="58" FontSize="36" FontFamily="Italic" FontWeight="Bold"/>
+        <Button Content="Aufgeben" HorizontalAlignment="Left" Margin="83,172,0,0" VerticalAlignment="Top" Width="178" Height="60" FontSize="36" Click="Button_Click"/>
+        <TextBox HorizontalAlignment="Left" Height="22" Margin="418,65,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" Focusable="False"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="418,692,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" Focusable="False"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="1348,692,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" Focusable="False"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="1348,65,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" Focusable="False"/>
+        <Grid x:Name="G_spielfeld" HorizontalAlignment="Left" Height="761" Margin="562,10,0,0" VerticalAlignment="Top" Width="760">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70*"/>
+                <RowDefinition Height="70*"/>
+                <RowDefinition Height="70*"/>
+                <RowDefinition Height="70*"/>
+                <RowDefinition Height="70*"/>
+                <RowDefinition Height="70*"/>
+                <RowDefinition Height="70*"/>
+                <RowDefinition Height="70*"/>
+                <RowDefinition Height="70*"/>
+                <RowDefinition Height="70*"/>
+                <RowDefinition Height="70*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="70*"/>
+                <ColumnDefinition Width="70*"/>
+                <ColumnDefinition Width="70*"/>
+                <ColumnDefinition Width="70*"/>
+                <ColumnDefinition Width="70*"/>
+                <ColumnDefinition Width="70*"/>
+                <ColumnDefinition Width="70*"/>
+                <ColumnDefinition Width="70*"/>
+                <ColumnDefinition Width="70*"/>
+                <ColumnDefinition Width="70*"/>
+                <ColumnDefinition Width="70*"/>
+            </Grid.ColumnDefinitions>
+        </Grid>
+
     </Grid>
 </Page>

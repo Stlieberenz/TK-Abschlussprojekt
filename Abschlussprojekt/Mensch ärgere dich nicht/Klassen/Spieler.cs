@@ -32,8 +32,9 @@ namespace Mensch_ärgere_dich_nicht.Klassen
             this.farbe = farbe;
             this.spieler_art = spieler_art;
             this.ip = ip;
-            if (ip.Address == 0) this.spieler_art = Statische_Variablen.SPIELER_ART.NORMALER_SPIELER;
+            if (ip.Address != 0) this.spieler_art = Statische_Variablen.SPIELER_ART.NORMALER_SPIELER;
             else this.spieler_art = Statische_Variablen.SPIELER_ART.CP_GEGNER;
+            SeitenFunktionen.Spielfeld.alle_Mitspieler.Add(this);
         }
     }
 }

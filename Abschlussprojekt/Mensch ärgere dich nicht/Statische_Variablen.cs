@@ -26,7 +26,12 @@ namespace Mensch_ärgere_dich_nicht
             NORMALER_SPIELER,
             CP_GEGNER
         }
-
+        public enum SPIELFELD_ART
+        {
+            HAUS,
+            SPIELFELD,
+            ZIEL
+        }
 
     }
 }

@@ -6,5 +6,5 @@
         xmlns:local="clr-namespace:Mensch_ärgere_dich_nicht"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
-    <Frame x:Name="rootFrame" Content="Frame" HorizontalAlignment="Left" Height="828" VerticalAlignment="Top" Width="1540" Margin="0,0,0,-19.2"/>
+    <Frame x:Name="rootFrame" Content="Frame" HorizontalAlignment="Left" Height="828" VerticalAlignment="Top" Width="1540" Margin="0,0,-1021.6,-507.2" RenderTransformOrigin="0.5,0.5"/>
 </Window>

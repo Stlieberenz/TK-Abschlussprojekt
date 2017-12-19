@@ -11,10 +11,16 @@ namespace Mensch_ärgere_dich_nicht.Klassen.SeitenFunktionen
 {
     static class S_erstellen
     {
-        private static List<Spieler> spielerliste = new List<Spieler>();
+        public delegate void Click_Event();
+
         public static int index_rot_alt, index_gelb_alt, index_grün_alt, index_blau_alt; // Dienen zum Wiederherstellen der Werte im Fehlerfall
 
         public static string Spieler_Rot, Spieler_Gelb, Spieler_Grün, Spieler_Blau;
+
+        public static Button versteckter_Button;
+
+        public static Button Start_Button;
+
 
         public static bool UDP_Threadstatus;
 
@@ -22,8 +28,28 @@ namespace Mensch_ärgere_dich_nicht.Klassen.SeitenFunktionen
         {
             while (UDP_Threadstatus)
             {
+                if (Prüfe_Startfähigkeit())
+                {
+                    UDP_Threadstatus = false;
+                    Starte_Spiel();
+                    break;
+                }
                 Netzwerkkommunikation.Start_TCP_Listener();
             }
+        }
+
+        private static bool Prüfe_Startfähigkeit()
+        {
+
+            if (Prüfe_Spielernamen(Spieler_Rot) && Prüfe_Spielernamen(Spieler_Gelb) &&
+                Prüfe_Spielernamen(Spieler_Grün) && Prüfe_Spielernamen(Spieler_Blau)) return true;
+            else return false;
+        }
+
+        private static bool Prüfe_Spielernamen(string name)
+        {
+            if (name != "Offen") return true;
+            else return false;
         }
 
         public static void Sende_UDP()
@@ -48,17 +74,16 @@ namespace Mensch_ärgere_dich_nicht.Klassen.SeitenFunktionen
         }
 
         internal static bool Prüfe_auswahl()
-        {
+        { // prüft, dass immer mindestens 2 Spieler mit einander Spielen
             int prüfsumme = 0;
             if (index_rot_alt != 1) prüfsumme += 1;
             if (index_gelb_alt != 1) prüfsumme += 1;
             if (index_grün_alt != 1) prüfsumme += 1;
             if (index_blau_alt != 1) prüfsumme += 1;
+
             if (prüfsumme > 1) return true;
-            else
-            {
-                return false;
-            }
+            else return false;
+            
         }
 
         private static int Wähle_richtigen_Wert_aus(ComboBox CB_aktuell)
@@ -93,7 +118,7 @@ namespace Mensch_ärgere_dich_nicht.Klassen.SeitenFunktionen
             {
                 case "Clientanfrage":
                     {
-                        if (Prüfe_anfrage(content)) spielerliste.Add(Erstelle_Spieler(content));
+                        if (Prüfe_anfrage(content)) Erstelle_Spieler(content);
                         break;
                     }
                 case "Clientabsage":
@@ -102,18 +127,35 @@ namespace Mensch_ärgere_dich_nicht.Klassen.SeitenFunktionen
                         break;
                     }
             }
+            Aktualisiere_GUI();
+        }
+
+        private static void Aktualisiere_GUI()
+        {
+            foreach(Spieler spieler in Spielfeld.alle_Mitspieler)
+            {
+                switch (spieler.farbe)
+                {
+                    case Statische_Variablen.FARBE.ROT: Spieler_Rot = spieler.name; break;
+                    case Statische_Variablen.FARBE.GELB: Spieler_Gelb = spieler.name; break;
+                    case Statische_Variablen.FARBE.GRÜN: Spieler_Grün = spieler.name; break;
+                    case Statische_Variablen.FARBE.BLAU: Spieler_Blau = spieler.name; break;
+                }
+            }
+            versteckter_Button.Dispatcher.Invoke(new Click_Event(() => 
+            versteckter_Button.RaiseEvent(new System.Windows.RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent))));
         }
 
         private static void Entferne_Client(string[] content)
         {
             int index_zum_Löschen = -1;
-            foreach (Spieler spieler in spielerliste) if (spieler.name == content[1]) index_zum_Löschen = spielerliste.IndexOf(spieler);
-            spielerliste.RemoveAt(index_zum_Löschen);
+            foreach (Spieler spieler in Spielfeld.alle_Mitspieler) if (spieler.name == content[1]) index_zum_Löschen = Spielfeld.alle_Mitspieler.IndexOf(spieler);
+            Spielfeld.alle_Mitspieler.RemoveAt(index_zum_Löschen);
         }
 
-        private static Spieler Erstelle_Spieler(string[] content)
+        private static void Erstelle_Spieler(string[] content)
         {
-            return new Spieler(Ermittle_Spielerfarbe(content[2]), content[1], IPAddress.Parse(content[3]));
+            new Spieler(Ermittle_Spielerfarbe(content[0]), content[1], IPAddress.Parse(content[2]));
         }
 
         private static Statische_Variablen.FARBE Ermittle_Spielerfarbe(string farbe)
@@ -166,6 +208,25 @@ namespace Mensch_ärgere_dich_nicht.Klassen.SeitenFunktionen
             }
 
             return true;
+        }
+
+        private static void Starte_Spiel()
+        {
+            // Erstellt Computergegner
+            if (Spieler_Rot == "Computergegner") Erstelle_Spieler(new string[] { "ROT", "CP Gegner Rot", "0" });
+            if (Spieler_Gelb == "Computergegner") Erstelle_Spieler(new string[] { "GELB", "CP Gegner Rot", "0" });
+            if (Spieler_Grün == "Computergegner") Erstelle_Spieler(new string[] { "GRÜN", "CP Gegner Rot", "0" });
+            if (Spieler_Blau == "Computergegner") Erstelle_Spieler(new string[] { "BLAU", "CP Gegner Rot", "0" });
+            if (Spieler_Rot == "Ich") Erstelle_Spieler(new string[] { "ROT", Statische_Variablen.lokaler_Spieler, Netzwerkkommunikation.Eigene_IP_Adresse().ToString()});
+            if (Spieler_Gelb == "Ich") Erstelle_Spieler(new string[] { "GELB", Statische_Variablen.lokaler_Spieler, Netzwerkkommunikation.Eigene_IP_Adresse().ToString() });
+            if (Spieler_Grün == "Ich") Erstelle_Spieler(new string[] { "GRÜN", Statische_Variablen.lokaler_Spieler, Netzwerkkommunikation.Eigene_IP_Adresse().ToString() });
+            if (Spieler_Blau == "Ich") Erstelle_Spieler(new string[] { "BLAU", Statische_Variablen.lokaler_Spieler, Netzwerkkommunikation.Eigene_IP_Adresse().ToString() });
+            Start_Button.Dispatcher.Invoke(new Click_Event(Start_Invoker));
+        }
+
+        private static void Start_Invoker()
+        {
+            Start_Button.RaiseEvent(new System.Windows.RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent));
         }
     }
 }

@@ -24,6 +24,22 @@ namespace Mensch_ärgere_dich_nicht.Seiten
         {
             InitializeComponent();
             Statische_Variablen.aktuelle_Seite = "Spielfeld";
+            Statische_Variablen.mainWindow.WindowState = WindowState.Maximized;
+            Klassen.SeitenFunktionen.Spielfeld.spielfeld = G_spielfeld;
+            Klassen.SeitenFunktionen.Spielfeld.Erstelle_Oberfläche();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Wollen sie wirklich aufgeben?", "Achtung!", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                Statische_Variablen.aktuelle_Seite = "Menü";
+                Statische_Variablen.mainWindow.Content = new Seiten.Menü();
+            }
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
         }
     }
 }

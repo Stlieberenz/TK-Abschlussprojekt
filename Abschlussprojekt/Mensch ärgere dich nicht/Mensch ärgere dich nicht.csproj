@@ -55,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Klassen\Feld.cs" />
     <Compile Include="Klassen\Figur.cs" />
     <Compile Include="Klassen\Netzwerkkommunikation.cs" />
     <Compile Include="Klassen\SeitenFunktionen\Spielfeld.cs" />
@@ -139,34 +140,15 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Bilder\Figur_rot.bmp" />
+    <Resource Include="Bilder\Spielbrett.gif" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Bilder\Feld_blau.bmp" />
+    <Resource Include="Bilder\Figur_gruen.gif" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Bilder\Feld_gelb.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Bilder\Feld_grau.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Bilder\Feld_gruen.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Bilder\Feld_rot.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Bilder\Feld_schwarz.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Bilder\Figur_blau.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Bilder\Figur_gelb.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Bilder\Figur_gruen.bmp" />
+    <Resource Include="Bilder\Figur_blau.gif" />
+    <Resource Include="Bilder\Figur_gelb.gif" />
+    <Resource Include="Bilder\Figur_rot.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
