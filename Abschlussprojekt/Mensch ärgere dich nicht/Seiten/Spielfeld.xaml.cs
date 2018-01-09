@@ -58,6 +58,7 @@ namespace Mensch_ärgere_dich_nicht.Seiten
             else if (Msg.Text.StartsWith("/w"))
             {
                 Msg.Foreground = Brushes.LightPink;
+                //send_whisper(/*Name des benachrichtigenden Spielers + Msg.Text.remove(0,2)*/)                ;
             }
         }
 
@@ -65,9 +66,9 @@ namespace Mensch_ärgere_dich_nicht.Seiten
         {
             Klassen.Netzwerkkommunikation.Sende_TCP_Nachricht_an_alle_Spieler(Msg.Text);
         }
-        private void send_whisper()
+        private void send_whisper(string spielername)
         {
-
+            //Klassen.Spieler;
         }
     }
 }
