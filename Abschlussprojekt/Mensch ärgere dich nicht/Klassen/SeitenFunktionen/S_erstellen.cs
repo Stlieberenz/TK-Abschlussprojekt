@@ -224,14 +224,14 @@ namespace Mensch_ärgere_dich_nicht.Klassen.SeitenFunktionen
         private static void Starte_Spiel()
         {
             // Erstellt Computergegner
-            if (Spieler_Rot == "Computergegner") Erstelle_Spieler( "ROT", "CP Gegner Rot", Netzwerkkommunikation.Eigene_IP_Adresse() );
-            if (Spieler_Gelb == "Computergegner") Erstelle_Spieler(  "GELB", "CP Gegner Gelb", Netzwerkkommunikation.Eigene_IP_Adresse() );
-            if (Spieler_Grün == "Computergegner") Erstelle_Spieler(  "GRÜN", "CP Gegner Grün", Netzwerkkommunikation.Eigene_IP_Adresse() );
-            if (Spieler_Blau == "Computergegner") Erstelle_Spieler(  "BLAU", "CP Gegner Blau", Netzwerkkommunikation.Eigene_IP_Adresse() );
-            if (Spieler_Rot == "Ich") Erstelle_Spieler(  "ROT", Statische_Variablen.lokaler_Spieler, Netzwerkkommunikation.Eigene_IP_Adresse());
-            if (Spieler_Gelb == "Ich") Erstelle_Spieler(  "GELB", Statische_Variablen.lokaler_Spieler, Netzwerkkommunikation.Eigene_IP_Adresse() );
-            if (Spieler_Grün == "Ich") Erstelle_Spieler(  "GRÜN", Statische_Variablen.lokaler_Spieler, Netzwerkkommunikation.Eigene_IP_Adresse());
-            if (Spieler_Blau == "Ich") Erstelle_Spieler(  "BLAU", Statische_Variablen.lokaler_Spieler, Netzwerkkommunikation.Eigene_IP_Adresse() );
+            if (Spieler_Rot == "Computergegner") Erstelle_Spieler( "ROT", "CP Gegner Rot", Netzwerkkommunikation.Eigene_IP_Adresse());
+            if (Spieler_Gelb == "Computergegner") Erstelle_Spieler(  "GELB", "CP Gegner Gelb", Netzwerkkommunikation.Eigene_IP_Adresse());
+            if (Spieler_Grün == "Computergegner") Erstelle_Spieler(  "GRÜN", "CP Gegner Grün", Netzwerkkommunikation.Eigene_IP_Adresse());
+            if (Spieler_Blau == "Computergegner") Erstelle_Spieler(  "BLAU", "CP Gegner Blau", Netzwerkkommunikation.Eigene_IP_Adresse());
+            if (Spieler_Rot == "Ich") Erstelle_Spieler( "ROT", Statische_Variablen.lokaler_Spieler, Netzwerkkommunikation.Eigene_IP_Adresse());
+            if (Spieler_Gelb == "Ich") Erstelle_Spieler( "GELB", Statische_Variablen.lokaler_Spieler, Netzwerkkommunikation.Eigene_IP_Adresse());
+            if (Spieler_Grün == "Ich") Erstelle_Spieler( "GRÜN", Statische_Variablen.lokaler_Spieler, Netzwerkkommunikation.Eigene_IP_Adresse());
+            if (Spieler_Blau == "Ich") Erstelle_Spieler( "BLAU", Statische_Variablen.lokaler_Spieler, Netzwerkkommunikation.Eigene_IP_Adresse());
             Start_Button.Dispatcher.Invoke(new Click_Event(Start_Invoker));
         }
 

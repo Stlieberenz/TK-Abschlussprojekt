@@ -148,7 +148,7 @@ namespace Mensch_ärgere_dich_nicht.Klassen
         {
             foreach (Spieler spieler in SeitenFunktionen.Spielfeld.alle_Mitspieler)
             {
-                if (spieler.spieler_art != Statische_Variablen.SPIELER_ART.CP_GEGNER && spieler.ip.Address != eigene_IPAddresse.Address)
+                if (spieler.spieler_art != Statische_Variablen.SPIELER_ART.CP_GEGNER /*&& spieler.ip.Address != eigene_IPAddresse.Address*/)
                 {
                     Send_TCP_Packet(nachricht, spieler.ip);
                 }
