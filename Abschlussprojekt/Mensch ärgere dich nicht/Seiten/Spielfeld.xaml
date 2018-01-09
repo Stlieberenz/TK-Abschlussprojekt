@@ -9,11 +9,11 @@
       Title="Spielfeld" Width="{DynamicResource {x:Static SystemParameters.FullPrimaryScreenWidthKey}}" Height="{DynamicResource {x:Static SystemParameters.FullPrimaryScreenHeightKey}}" Loaded="Page_Loaded">
 
     <Grid Background="#FFFFD846">
-        <Image HorizontalAlignment="Left" Height="761" Margin="562,10,0,0" VerticalAlignment="Top" Width="786" Source="/Mensch ärgere dich nicht;component/Bilder/Spielbrett.gif"/>
-        <Label Content="Mensch" HorizontalAlignment="Left" Margin="605,217,0,0" VerticalAlignment="Top" Width="215" Height="58" FontSize="36" FontFamily="Italic" FontWeight="Bold"/>
-        <Label Content="ärgere" HorizontalAlignment="Left" Margin="1107,217,0,0" VerticalAlignment="Top" Width="215" Height="58" FontSize="36" FontFamily="Italic" FontWeight="Bold"/>
-        <Label Content="dich" HorizontalAlignment="Left" Margin="605,550,0,0" VerticalAlignment="Top" Width="215" Height="58" FontSize="36" FontFamily="Italic" FontWeight="Bold"/>
-        <Label Content="nicht" HorizontalAlignment="Left" Margin="1107,550,0,0" VerticalAlignment="Top" Width="215" Height="58" FontSize="36" FontFamily="Italic" FontWeight="Bold"/>
+        <Image HorizontalAlignment="Left" Height="761" Margin="981,65,0,0" VerticalAlignment="Top" Width="786" Source="/Mensch ärgere dich nicht;component/Bilder/Spielbrett.gif"/>
+        <Label Content="Mensch" HorizontalAlignment="Left" Margin="981,217,0,0" VerticalAlignment="Top" Width="215" Height="58" FontSize="36" FontFamily="Italic" FontWeight="Bold"/>
+        <Label Content="ärgere" HorizontalAlignment="Left" Margin="1552,217,0,0" VerticalAlignment="Top" Width="215" Height="58" FontSize="36" FontFamily="Italic" FontWeight="Bold"/>
+        <Label Content="dich" HorizontalAlignment="Left" Margin="981,571,0,0" VerticalAlignment="Top" Width="215" Height="58" FontSize="36" FontFamily="Italic" FontWeight="Bold"/>
+        <Label Content="nicht" HorizontalAlignment="Left" Margin="1552,571,0,0" VerticalAlignment="Top" Width="215" Height="58" FontSize="36" FontFamily="Italic" FontWeight="Bold"/>
         <Button Content="Aufgeben" HorizontalAlignment="Left" Margin="83,172,0,0" VerticalAlignment="Top" Width="178" Height="60" FontSize="36" Click="Button_Click"/>
         <TextBox HorizontalAlignment="Left" Height="22" Margin="418,65,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" Focusable="False"/>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="418,692,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" Focusable="False"/>
@@ -48,6 +48,9 @@
             </Grid.ColumnDefinitions>
         </Grid>
         <Button x:Name="BTN_Würfel" Content="Würfel" HorizontalAlignment="Left" Margin="903,353,0,0" VerticalAlignment="Top" Width="78" Height="79" Click="BTN_Würfel_Click"/>
+        <TextBox x:Name="Verlauf_msg" HorizontalAlignment="Left" Height="200" Margin="106,447,0,0" TextWrapping="Wrap" Text="Verlauf:" VerticalAlignment="Top" Width="504"/>
+        <TextBox x:Name="Msg" HorizontalAlignment="Left" Height="46" Margin="106,652,0,0" TextWrapping="Wrap" Text="Nachricht:" VerticalAlignment="Top" Width="504"/>
+        <Button x:Name="send_msg" Content="Senden" HorizontalAlignment="Left" Margin="535,703,0,0" VerticalAlignment="Top" Width="75" Click="send_msg_Click"/>
 
     </Grid>
 </Page>

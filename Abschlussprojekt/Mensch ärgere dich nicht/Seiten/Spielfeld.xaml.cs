@@ -47,5 +47,28 @@ namespace Mensch_ärgere_dich_nicht.Seiten
         {
 
         }
+
+        private void send_msg_Click(object sender, RoutedEventArgs e)
+        {
+            if (Msg.Text.StartsWith("/p"))
+            {
+                Msg.Foreground = Brushes.Blue;
+                sende_nachricht_party(Statische_Variablen.lokaler_Spieler + Msg.Text.Remove(0,2));
+            }
+            else if (Msg.Text.StartsWith("/w"))
+            {
+                Msg.Foreground = Brushes.LightPink;
+                //send_whisper(/*Name des benachrichtigenden Spielers + Msg.Text.remove(0,2)*/)                ;
+            }
+        }
+
+        private void sende_nachricht_party(string lokaler_spieler)
+        {
+            Klassen.Netzwerkkommunikation.Sende_TCP_Nachricht_an_alle_Spieler(Msg.Text);
+        }
+        private void send_whisper(string spielername)
+        {
+            //Klassen.Spieler;
+        }
     }
 }

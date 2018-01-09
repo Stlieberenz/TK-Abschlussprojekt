@@ -14,16 +14,12 @@ namespace Mensch_ärgere_dich_nicht.Klassen.SeitenFunktionen
         public static ListBox Server_Liste = null;
         public static void Analysiere_Nachricht(string[] content)
         {
-            Servername servername_=Liste_Füllen;
-
-            if (content[0] == "client")
-            {
-                Server_Liste.Dispatcher.Invoke(new Servername(servername_), content);
-            }            
+            Servername servername_ = Liste_Füllen;
+            Server_Liste.Dispatcher.Invoke(new Servername(servername_), content);
         }
         public static void Liste_Füllen(string[] servername)
         {
-            Server_Liste.Items.Add(servername);
+            Server_Liste.Items.Add(servername[2]);
         }
     }
 }
