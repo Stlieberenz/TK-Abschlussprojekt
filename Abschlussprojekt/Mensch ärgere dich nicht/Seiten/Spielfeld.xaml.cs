@@ -40,6 +40,12 @@ namespace Mensch_ärgere_dich_nicht.Seiten
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+
+        }
+
+        private void BTN_Würfel_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

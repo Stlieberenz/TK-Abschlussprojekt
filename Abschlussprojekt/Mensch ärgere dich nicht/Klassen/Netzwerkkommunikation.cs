@@ -157,8 +157,6 @@ namespace Mensch_ärgere_dich_nicht.Klassen
 
 
         // IP-Paketanalyse ----------------------------------------------------------------------
-
-
         public static string[] Konvertiere_in_Stringarray(string nachricht)
         {
             //Teilt die nachricht in Logische einheinten, getrennt durch ein ";"
@@ -219,7 +217,5 @@ namespace Mensch_ärgere_dich_nicht.Klassen
         {
             return eigene_IPAddresse.Address.ToString();
         }
-
-         
     }
 }

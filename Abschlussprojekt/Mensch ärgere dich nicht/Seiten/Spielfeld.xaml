@@ -47,6 +47,7 @@
                 <ColumnDefinition Width="70*"/>
             </Grid.ColumnDefinitions>
         </Grid>
+        <Button x:Name="BTN_Würfel" Content="Würfel" HorizontalAlignment="Left" Margin="903,353,0,0" VerticalAlignment="Top" Width="78" Height="79" Click="BTN_Würfel_Click"/>
 
     </Grid>
 </Page>

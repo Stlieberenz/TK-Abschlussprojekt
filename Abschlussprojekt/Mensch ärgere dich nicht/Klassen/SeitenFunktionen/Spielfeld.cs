@@ -33,6 +33,7 @@ namespace Mensch_ärgere_dich_nicht.Klassen.SeitenFunktionen
         public static List<Figur> blaue_Figuren = new List<Figur>();
 
         public static Grid spielfeld;
+        public static Spieler aktiver_Spieler;
 
         //------------------------------------------------------------
         // Initialisierung verschiedener Objeckte und Werten
@@ -163,6 +164,23 @@ namespace Mensch_ärgere_dich_nicht.Klassen.SeitenFunktionen
         public static void Analysiere_Nachricht(string[] content)
         {
 
+        }
+
+        public static void Gebe_Spielrecht_weiter()
+        {
+            if (Ermittle_nächsten_Spieler().ip.Address.ToString() == Netzwerkkommunikation.Eigene_IP_Adresse())
+            {
+                Netzwerkkommunikation.Anlaysiere_IP_Paket("");
+            }
+            else
+            {
+                Netzwerkkommunikation.Sende_TCP_Nachricht_an_alle_Spieler("Spielrecht...");
+            }
+        }
+
+        private static Spieler Ermittle_nächsten_Spieler()
+        {
+            return null;
         }
     }
 }

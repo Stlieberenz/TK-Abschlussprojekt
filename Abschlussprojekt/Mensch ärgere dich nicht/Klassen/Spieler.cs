@@ -22,7 +22,6 @@ namespace Mensch_ärgere_dich_nicht.Klassen
         public Statische_Variablen.FARBE farbe { get; }
         public Statische_Variablen.SPIELER_ART spieler_art { get; }
         public string name { get; }
-        public bool status { get; set; }
         public IPAddress ip { get; }
         public List<Figur> eigene_Figuren { get; }
 
