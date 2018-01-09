@@ -220,9 +220,9 @@ namespace Mensch_ärgere_dich_nicht.Klassen.SeitenFunktionen
         {
             // Erstellt Computergegner
             if (Spieler_Rot == "Computergegner") Erstelle_Spieler(new string[] { "ROT", "CP Gegner Rot", Netzwerkkommunikation.Eigene_IP_Adresse() });
-            if (Spieler_Gelb == "Computergegner") Erstelle_Spieler(new string[] { "GELB", "CP Gegner Rot", Netzwerkkommunikation.Eigene_IP_Adresse() });
-            if (Spieler_Grün == "Computergegner") Erstelle_Spieler(new string[] { "GRÜN", "CP Gegner Rot", Netzwerkkommunikation.Eigene_IP_Adresse() });
-            if (Spieler_Blau == "Computergegner") Erstelle_Spieler(new string[] { "BLAU", "CP Gegner Rot", Netzwerkkommunikation.Eigene_IP_Adresse() });
+            if (Spieler_Gelb == "Computergegner") Erstelle_Spieler(new string[] { "GELB", "CP Gegner Gelb", Netzwerkkommunikation.Eigene_IP_Adresse() });
+            if (Spieler_Grün == "Computergegner") Erstelle_Spieler(new string[] { "GRÜN", "CP Gegner Grün", Netzwerkkommunikation.Eigene_IP_Adresse() });
+            if (Spieler_Blau == "Computergegner") Erstelle_Spieler(new string[] { "BLAU", "CP Gegner Blau", Netzwerkkommunikation.Eigene_IP_Adresse() });
             if (Spieler_Rot == "Ich") Erstelle_Spieler(new string[] { "ROT", Statische_Variablen.lokaler_Spieler, Netzwerkkommunikation.Eigene_IP_Adresse()});
             if (Spieler_Gelb == "Ich") Erstelle_Spieler(new string[] { "GELB", Statische_Variablen.lokaler_Spieler, Netzwerkkommunikation.Eigene_IP_Adresse() });
             if (Spieler_Grün == "Ich") Erstelle_Spieler(new string[] { "GRÜN", Statische_Variablen.lokaler_Spieler, Netzwerkkommunikation.Eigene_IP_Adresse()});
@@ -233,6 +233,30 @@ namespace Mensch_ärgere_dich_nicht.Klassen.SeitenFunktionen
         private static void Start_Invoker()
         {
             Start_Button.RaiseEvent(new System.Windows.RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent));
+        }
+
+        public static string Generiere_Startnachricht()
+        {
+            // Farbe,Name,IP
+            string result = "Client;" + Spielfeld.alle_Mitspieler[0].farbe + ";"
+                             + Spielfeld.alle_Mitspieler[0].name + ";"
+                             + Spielfeld.alle_Mitspieler[0].ip.Address + ";"
+                             + Spielfeld.alle_Mitspieler[1].farbe + ";"
+                             + Spielfeld.alle_Mitspieler[1].name + ";"
+                             + Spielfeld.alle_Mitspieler[1].ip.Address + ";";
+            if (Spielfeld.alle_Mitspieler.Count >= 3)
+            {
+                result += Spielfeld.alle_Mitspieler[2].farbe + ";"
+                        + Spielfeld.alle_Mitspieler[2].name + ";"
+                        + Spielfeld.alle_Mitspieler[2].ip.Address + ";";
+            }
+            if (Spielfeld.alle_Mitspieler.Count >= 4)
+            {
+                result += Spielfeld.alle_Mitspieler[3].farbe + ";"
+                       + Spielfeld.alle_Mitspieler[3].name + ";"
+                       + Spielfeld.alle_Mitspieler[3].ip.Address + ";";
+            }
+            return result;
         }
     }
 }

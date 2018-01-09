@@ -31,7 +31,10 @@ namespace Mensch_ärgere_dich_nicht.Seiten
 
         private void BTN_Starten_Click(object sender, RoutedEventArgs e)
         {
-            
+            // Sobald man Starten drückt wird die getroffene Auswahl Überprüft. Bei einer gültigen Auswahl werden zwei neue
+            // Threads gestartet. Der eine Sendet eine UDP-Nachricht für potentielle Spieler(Clients) und der Andere horcht auf die
+            // Leitung um Client-Anfragen zu verarbeiten. Dabei ist der Button disabled. Wenn das Spiel gestartet wird, wird der 
+            // Button erneut getriggert um das Spiel zu starten.
             if (BTN_Starten.IsEnabled)
             {
                 if (Klassen.SeitenFunktionen.S_erstellen.Prüfe_auswahl())
@@ -56,14 +59,17 @@ namespace Mensch_ärgere_dich_nicht.Seiten
             }
             else
             {
+                string startnachricht = Klassen.SeitenFunktionen.S_erstellen.Generiere_Startnachricht();
+                Klassen.Netzwerkkommunikation.Sende_TCP_Nachricht_an_alle_Spieler(startnachricht);
                 Statische_Variablen.aktuelle_Seite = "Spielfeld";
                 Statische_Variablen.rootFrame.Content = new Seiten.Spielfeld();
             }
         }
-
+        
         private void BTN_Zurück_Click(object sender, RoutedEventArgs e)
         {
             Klassen.SeitenFunktionen.S_erstellen.UDP_Threadstatus = false;
+            Statische_Variablen.aktuelle_Seite = "Menü";
             Statische_Variablen.rootFrame.Content = new Seiten.Menü();
         }
 
