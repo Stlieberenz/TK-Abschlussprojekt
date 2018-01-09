@@ -168,7 +168,7 @@ namespace Mensch_ärgere_dich_nicht.Klassen.SeitenFunktionen
 
         public static void Gebe_Spielrecht_weiter()
         {
-            if (Ermittle_nächsten_Spieler().ip.Address.ToString() == Netzwerkkommunikation.Eigene_IP_Adresse())
+            if (Ermittle_nächsten_Spieler().ip.Address == Netzwerkkommunikation.Eigene_IP_Adresse().Address)
             {
                 Netzwerkkommunikation.Anlaysiere_IP_Paket("");
             }
