@@ -24,6 +24,7 @@ namespace Mensch_ärgere_dich_nicht.Seiten
         {
             InitializeComponent();
             Statische_Variablen.aktuelle_Seite = "Spiel_suchen";
+            Klassen.SeitenFunktionen.S_suchen.Server_Liste = Server_Liste;
         }
     }
 }

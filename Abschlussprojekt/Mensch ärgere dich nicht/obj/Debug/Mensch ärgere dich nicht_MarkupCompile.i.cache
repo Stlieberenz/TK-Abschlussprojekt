@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\
+C:\Users\Egon\Documents\GitHub\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\
 Mensch_ärgere_dich_nicht
 none
 false
 DEBUG;TRACE
-D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\App.xaml
+C:\Users\Egon\Documents\GitHub\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\App.xaml
 6-2139689660
 
-242146704657
+24226880385
 14-35541203
 MainWindow.xaml;Seiten\Menü.xaml;Seiten\Spielfeld.xaml;Seiten\Sp_erstellen.xaml;Seiten\Sp_suchen.xaml;Seiten\Startseite.xaml;
 
-False
+True
 
