@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using System.IO;
 
 // Namenskonvention: --------------------------------------+
 //                                                         |
@@ -36,10 +37,10 @@ namespace Mensch_ärgere_dich_nicht.Klassen
             // Weist dem Image objekt sein Bild zu
             switch (farbe)
             {
-                case Statische_Variablen.FARBE.ROT: bild.Source = new BitmapImage(new Uri(@"D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\Bilder\Figur_rot.gif")); break;
-                case Statische_Variablen.FARBE.GELB: bild.Source = new BitmapImage(new Uri(@"D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\Bilder\Figur_gelb.gif")); break;
-                case Statische_Variablen.FARBE.GRÜN: bild.Source = new BitmapImage(new Uri(@"D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\Bilder\Figur_gruen.gif")); break;
-                case Statische_Variablen.FARBE.BLAU: bild.Source = new BitmapImage(new Uri(@"D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\Bilder\Figur_blau.gif")); break;
+                case Statische_Variablen.FARBE.ROT: bild.Source = new BitmapImage(new Uri(Statische_Funktionen.Aktuelles_Verzeichniss() + "\\Bilder\\Figur_rot.gif")); break;
+                case Statische_Variablen.FARBE.GELB: bild.Source = new BitmapImage(new Uri(Statische_Funktionen.Aktuelles_Verzeichniss() + "\\Bilder\\Figur_gelb.gif")); break;
+                case Statische_Variablen.FARBE.GRÜN: bild.Source = new BitmapImage(new Uri(Statische_Funktionen.Aktuelles_Verzeichniss() + "\\Bilder\\Figur_grün.gif")); break;
+                case Statische_Variablen.FARBE.BLAU: bild.Source = new BitmapImage(new Uri(Statische_Funktionen.Aktuelles_Verzeichniss() + "\\Bilder\\Figur_blau.gif")); break;
             }
 
             //Hinzufügen der Figur der jeweiligen Listen

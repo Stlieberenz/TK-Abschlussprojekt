@@ -213,9 +213,9 @@ namespace Mensch_ärgere_dich_nicht.Klassen
 
 
         // Sonstiges -------------------------------------------------------------------------------
-        public static string Eigene_IP_Adresse()
+        public static IPAddress Eigene_IP_Adresse()
         {
-            return eigene_IPAddresse.Address.ToString();
+            return eigene_IPAddresse;
         }
     }
 }

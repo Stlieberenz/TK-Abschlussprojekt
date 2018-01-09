@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Mensch_ärgere_dich_nicht.Klassen
 {
@@ -10,8 +11,9 @@ namespace Mensch_ärgere_dich_nicht.Klassen
     {
         public static string Aktuelles_Verzeichniss()
         {
-            string result = "";
-            return result;
+            string result = Directory.GetCurrentDirectory();
+            if (result.Contains("\\bin\\Debug")) return result.Replace("\\bin\\Debug", "");
+            else return result;
         }
     }
 }
