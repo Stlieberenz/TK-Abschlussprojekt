@@ -10,7 +10,7 @@ namespace Mensch_ärgere_dich_nicht
     public static class Statische_Variablen
     {
         public static MainWindow mainWindow = new MainWindow();
-        public static Frame rootFrame = new Frame();
+        public static Frame rootFrame = new Frame();        
         public static string lokaler_Spieler;
         public static string aktuelle_Seite;
         public enum FARBE
@@ -32,6 +32,5 @@ namespace Mensch_ärgere_dich_nicht
             SPIELFELD,
             ZIEL
         }
-
     }
 }

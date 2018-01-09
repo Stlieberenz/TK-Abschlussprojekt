@@ -14,6 +14,6 @@ namespace Mensch_ärgere_dich_nicht.Klassen
             string result = Directory.GetCurrentDirectory();
             if (result.Contains("\\bin\\Debug")) return result.Replace("\\bin\\Debug", "");
             else return result;
-        }
+        }        
     }
 }
