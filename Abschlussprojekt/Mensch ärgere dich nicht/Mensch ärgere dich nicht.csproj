@@ -150,5 +150,19 @@
     <Resource Include="Bilder\Figur_gelb.gif" />
     <Resource Include="Bilder\Figur_rot.gif" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Bilder\Würfel-1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Bilder\Würfel-2.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Bilder\Würfel-3.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Bilder\Würfel-4.gif" />
+    <Resource Include="Bilder\Würfel-5.gif" />
+    <Resource Include="Bilder\Würfel-6.gif" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

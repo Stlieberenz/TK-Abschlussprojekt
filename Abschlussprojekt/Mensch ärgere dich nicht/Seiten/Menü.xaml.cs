@@ -33,17 +33,17 @@ namespace Mensch_ärgere_dich_nicht.Seiten
 
         private void BTN_Zurück_Click(object sender, RoutedEventArgs e)
         {
-            Statische_Variablen.rootFrame.Content = new Seiten.Startseite();
+            Statische_Variablen.rootFrame.Content = new Startseite();
         }
 
         private void BTN_Suchen_Click(object sender, RoutedEventArgs e)
         {
-            Statische_Variablen.rootFrame.Content = new Seiten.Sp_suchen();
+            Statische_Variablen.rootFrame.Content = new Sp_suchen();
         }
 
         private void BTN_Erstellen_Click(object sender, RoutedEventArgs e)
         {
-            Statische_Variablen.rootFrame.Content = new Seiten.Sp_erstellen();
+            Statische_Variablen.rootFrame.Content = new Sp_erstellen();
         }
     }
 }
