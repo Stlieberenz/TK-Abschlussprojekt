@@ -65,12 +65,16 @@ namespace Mensch_ärgere_dich_nicht.Seiten
                 Netzwerkkommunikation.Sende_TCP_Nachricht_an_alle_Spieler(startnachricht);
                 Statische_Variablen.aktuelle_Seite = "Spielfeld";
                 Klassen.SeitenFunktionen.Spielfeld.aktiver_Spieler = Klassen.SeitenFunktionen.Spielfeld.alle_Mitspieler
-                    [new Random().Next(0,Klassen.SeitenFunktionen.Spielfeld.alle_Mitspieler.Count)];
-                Klassen.SeitenFunktionen.Spielfeld.Gebe_Spielrecht_weiter();
+                    [new Random().Next(0, Klassen.SeitenFunktionen.Spielfeld.alle_Mitspieler.Count)];
                 Statische_Variablen.rootFrame.Content = new Spielfeld();
-                if (Klassen.SeitenFunktionen.Spielfeld.aktiver_Spieler.name == Statische_Variablen.lokaler_Spieler)
+                Klassen.SeitenFunktionen.Spielfeld.Gebe_Spielrecht_weiter();
+                Klassen.SeitenFunktionen.Spielfeld.spielstatus = true;
+                foreach (Spieler spieler in Klassen.SeitenFunktionen.Spielfeld.alle_Mitspieler)
                 {
-                    Klassen.SeitenFunktionen.Spielfeld.Spielrecht_update(Statische_Variablen.lokaler_Spieler);
+                    if (spieler.spieler_art == Statische_Variablen.SPIELER_ART.CP_GEGNER)
+                    {
+                        Task.Factory.StartNew(spieler.Computergegner_Runtime);
+                    }
                 }
             }
         }

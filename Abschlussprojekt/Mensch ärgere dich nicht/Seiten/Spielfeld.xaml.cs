@@ -28,6 +28,7 @@ namespace Mensch_ärgere_dich_nicht.Seiten
             Klassen.SeitenFunktionen.Spielfeld.spielfeld = G_spielfeld;
             Klassen.SeitenFunktionen.Spielfeld.BTN_Würfel = BTN_Würfel;
             Klassen.SeitenFunktionen.Spielfeld.Erstelle_Oberfläche();
+            Klassen.SeitenFunktionen.Spielfeld.kalkulierte_Züge = L_Versuche;
 
             Klassen.SeitenFunktionen.Spielfeld.alle_Zahlen.Add(Bild_W1);
             Klassen.SeitenFunktionen.Spielfeld.alle_Zahlen.Add(Bild_W2);
@@ -41,6 +42,7 @@ namespace Mensch_ärgere_dich_nicht.Seiten
             Klassen.SeitenFunktionen.Spielfeld.Spieler_namen_Label.Insert(3, L_Spieler_Blau);
             foreach (Klassen.Spieler spieler in Klassen.SeitenFunktionen.Spielfeld.alle_Mitspieler)
             {
+                spieler.Initialisiere_Wegstrecke();
                 switch (spieler.farbe)
                 {
                     case Statische_Variablen.FARBE.ROT: L_Spieler_Rot.Content = spieler.name; break;
@@ -49,7 +51,7 @@ namespace Mensch_ärgere_dich_nicht.Seiten
                     case Statische_Variablen.FARBE.BLAU: L_Spieler_Blau.Content = spieler.name; break;
                 }
             }
-
+            Klassen.SeitenFunktionen.Spielfeld.versuche = 3;
             Task.Factory.StartNew(Klassen.SeitenFunktionen.Spielfeld.TCP_Listener);
         }
 
@@ -76,8 +78,6 @@ namespace Mensch_ärgere_dich_nicht.Seiten
         
         private void BTN_Würfel_Click(object sender, RoutedEventArgs e)
         {
-            BTN_Würfel.IsEnabled = false;
-            
             Klassen.SeitenFunktionen.Spielfeld.Würfeln();
         }
 

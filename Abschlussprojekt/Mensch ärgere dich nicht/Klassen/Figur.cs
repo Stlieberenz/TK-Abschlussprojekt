@@ -24,18 +24,21 @@ namespace Mensch_ärgere_dich_nicht.Klassen
     {
         public Statische_Variablen.FARBE farbe { get; }
         public int id { get; }
-        public List<Feld> wegstrecke { get; }
+        public int aktuelle_Wegstreckenposition { get; set; }
         public Feld aktuelle_position { get; set; }
         public Feld Haus_position { get; }
         public Image bild { get; set; }
+        public Spieler figur_eigentümer { get;}
+        public bool bewegbar { get; set; }
 
-        public Figur(Statische_Variablen.FARBE farbe, int id)
+        public Figur(Statische_Variablen.FARBE farbe, int id,Spieler figur_eigentümer)
         {
+            this.bewegbar = false;
             this.id = id;
             this.farbe = farbe;
             this.bild = new Image();
-            this.wegstrecke = new List<Feld>();
-
+            this.figur_eigentümer = figur_eigentümer;
+            figur_eigentümer.eigene_Figuren.Add(this);
             // Weist dem Image objekt sein Bild zu
             switch (farbe)
             {
@@ -80,85 +83,50 @@ namespace Mensch_ärgere_dich_nicht.Klassen
 
             //Dem Bild ein Click-Ereigniss hinzufügen
             this.bild.MouseLeftButtonDown += new System.Windows.Input.MouseButtonEventHandler(bild_Click);
-
-            //Initialisieren der Wegstrecke
-            Initialisiere_Wegstrecke();
         }
 
         private void bild_Click(object sender, MouseButtonEventArgs e)
         {
-            //bewege den angeklickten spieler (wenn erlaubt und möglich)
-            Netzwerkkommunikation.Sende_TCP_Nachricht_an_alle_Spieler("Mitspieler;Figurklick" + ";" + farbe + ";" + id);
+            if (this.figur_eigentümer == SeitenFunktionen.Spielfeld.aktiver_Spieler) Bewege_Figur();
+        }
+
+        public void Bewege_Figur()
+        {
+            if (this.bewegbar)
+            {
+                Setze_Figur(this.figur_eigentümer.wegstrecke[aktuelle_Wegstreckenposition + SeitenFunktionen.Spielfeld.würfelzahl]);
+                Netzwerkkommunikation.Sende_TCP_Nachricht_an_alle_Spieler("Mitspieler;Figurklick" + ";" + farbe + ";" + id);
+                this.bewegbar = false;
+                SeitenFunktionen.Spielfeld.Prüfe_Spielrecht();
+            }
+        }
+
+        public void Setze_Figur_ins_Haus()
+        {
+            this.figur_eigentümer.figurpositionen[aktuelle_Wegstreckenposition] = false;
+            this.aktuelle_position = Haus_position;
+            aktuelle_Wegstreckenposition = -6;
+            Grid.SetColumn(bild, Haus_position.Spalte);
+            Grid.SetRow(bild, Haus_position.Zeile);
         }
 
         //Diese Funktion Setzt die Figur auf ein belibiges Feld. Dafür nutzt sie die Zeilen und Spaltenangaben des Felds.
         public void Setze_Figur(Feld feld)
         {
+            if (aktuelle_Wegstreckenposition != -6)figur_eigentümer.figurpositionen[aktuelle_Wegstreckenposition] = false;
             aktuelle_position = feld;
+            if (aktuelle_position.spielfeld_art != Statische_Variablen.SPIELFELD_ART.HAUS)
+            {
+                aktuelle_Wegstreckenposition = figur_eigentümer.wegstrecke.IndexOf(aktuelle_position);
+                figur_eigentümer.figurpositionen[aktuelle_Wegstreckenposition] = true;
+            }
+            else aktuelle_Wegstreckenposition = -6;
+
             Grid.SetColumn(bild, feld.Spalte);
             Grid.SetRow(bild, feld.Zeile);
-        }
-
-        //Initialisieren der Wegstrecke
-        private void Initialisiere_Wegstrecke()
-        {
-            for (int i = 0; i < 44; i++)
+            foreach (Figur figur in SeitenFunktionen.Spielfeld.alle_Figuren)
             {
-                wegstrecke.Add(null);
-            }
-            switch (this.farbe)
-            {
-                case Statische_Variablen.FARBE.ROT:
-                    {
-                        for (int i = 0; i < 40; i++)
-                        {
-                            wegstrecke[i] =  SeitenFunktionen.Spielfeld.alle_Spielfelder[i];
-                        }
-                        wegstrecke[40] = SeitenFunktionen.Spielfeld.alle_Zielfelder_Rot[0];
-                        wegstrecke[41] = SeitenFunktionen.Spielfeld.alle_Zielfelder_Rot[1];
-                        wegstrecke[42] = SeitenFunktionen.Spielfeld.alle_Zielfelder_Rot[2];
-                        wegstrecke[43] = SeitenFunktionen.Spielfeld.alle_Zielfelder_Rot[3];
-                        break;
-                    }
-                case Statische_Variablen.FARBE.GELB:
-                    {
-                        for (int i = 0; i < 40; i++)
-                        {
-                            if (i<30)wegstrecke[i] =  SeitenFunktionen.Spielfeld.alle_Spielfelder[i+10];
-                            else wegstrecke[i] =  SeitenFunktionen.Spielfeld.alle_Spielfelder[i-30];
-                        }
-                        wegstrecke[40] =  SeitenFunktionen.Spielfeld.alle_Zielfelder_Gelb[0];
-                        wegstrecke[41] =  SeitenFunktionen.Spielfeld.alle_Zielfelder_Gelb[1];
-                        wegstrecke[42] =  SeitenFunktionen.Spielfeld.alle_Zielfelder_Gelb[2];
-                        wegstrecke[43] =  SeitenFunktionen.Spielfeld.alle_Zielfelder_Gelb[3];
-                        break;
-                    }
-                case Statische_Variablen.FARBE.GRÜN:
-                    {
-                        for (int i = 0; i < 40; i++)
-                        {
-                            if (i < 20) wegstrecke[i] =  SeitenFunktionen.Spielfeld.alle_Spielfelder[i+20];
-                            else wegstrecke[i] =  SeitenFunktionen.Spielfeld.alle_Spielfelder[i-20];
-                        }
-                        wegstrecke[40] =  SeitenFunktionen.Spielfeld.alle_Zielfelder_Grün[0];
-                        wegstrecke[41] =  SeitenFunktionen.Spielfeld.alle_Zielfelder_Grün[1];
-                        wegstrecke[42] =  SeitenFunktionen.Spielfeld.alle_Zielfelder_Grün[2];
-                        wegstrecke[43] =  SeitenFunktionen.Spielfeld.alle_Zielfelder_Grün[3];
-                        break;
-                    }
-                case Statische_Variablen.FARBE.BLAU:
-                    {
-                        for (int i = 0; i < 40; i++)
-                        {
-                            if (i < 10) wegstrecke[i] =  SeitenFunktionen.Spielfeld.alle_Spielfelder[i+30];
-                            else wegstrecke[i] =  SeitenFunktionen.Spielfeld.alle_Spielfelder[i-10];
-                        }
-                        wegstrecke[40] =  SeitenFunktionen.Spielfeld.alle_Zielfelder_Blau[0];
-                        wegstrecke[41] =  SeitenFunktionen.Spielfeld.alle_Zielfelder_Blau[1];
-                        wegstrecke[42] =  SeitenFunktionen.Spielfeld.alle_Zielfelder_Blau[2];
-                        wegstrecke[43] =  SeitenFunktionen.Spielfeld.alle_Zielfelder_Blau[3];
-                        break;
-                    }
+                if (figur.aktuelle_position == this.aktuelle_position && figur != this) figur.Setze_Figur_ins_Haus();
             }
         }
     }

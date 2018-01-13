@@ -41,13 +41,17 @@ namespace Mensch_ärgere_dich_nicht.Klassen.SeitenFunktionen
         public static Grid spielfeld;
         public static Button BTN_Würfel;
         public static Spieler aktiver_Spieler;
+        public static Label kalkulierte_Züge;
 
+        public delegate void void_Funtion();
+        public delegate void Bild_Funktion(Figur bild);
         public delegate void BTN_Funktion(bool value);
         public delegate void Funktion0(FARBE value);
         public delegate void Funktion(int value);
         public delegate void Funktion1(string value1, string value2, string value3);
         public static bool spielstatus = true;
         public static int würfelzahl;
+        public static int versuche;
 
         //
         // Initialisierung verschiedener Objeckte und Werten ------------------------------------------------------------
@@ -62,7 +66,7 @@ namespace Mensch_ärgere_dich_nicht.Klassen.SeitenFunktionen
         {
             foreach (Spieler spieler in alle_Mitspieler)
             {
-                for (int i = 0; i < 4; i++) new Figur(spieler.farbe, i);
+                for (int i = 0; i < 4; i++) new Figur(spieler.farbe, i,spieler);
             }
             foreach (Figur figur in alle_Figuren) spielfeld.Children.Add(figur.bild);
         }
@@ -146,7 +150,7 @@ namespace Mensch_ärgere_dich_nicht.Klassen.SeitenFunktionen
             new Feld(SPIELFELD_ART.ZIEL, 2, FARBE.BLAU, 5, 7);
             new Feld(SPIELFELD_ART.ZIEL, 3, FARBE.BLAU, 5, 6);
         }
-
+        
         private static void Referenziere_Figurlisten()
         {
             foreach(Figur figur in alle_Figuren)
@@ -192,7 +196,7 @@ namespace Mensch_ärgere_dich_nicht.Klassen.SeitenFunktionen
             }
             if (content[0].Contains("Spielende"))
             {
-
+                
             }
             if (content[0].Contains("Chatnachricht"))
             {
@@ -205,18 +209,17 @@ namespace Mensch_ärgere_dich_nicht.Klassen.SeitenFunktionen
             while (spielstatus)
             {
                 //testcode////////////////////////////////////////////////////////////////
-                Analysiere_Nachricht(new string[] { "Würfel_update", "6" });
-                Analysiere_Nachricht(new string[] { "Figur_update", "GELB", "1", "10"});
-                Analysiere_Nachricht(new string[] { "Figur_update", "ROT", "1", "20" });
-                /*
-                for (int i = 0; i < 44; i++)
-                {
-                    Analysiere_Nachricht(new string[] { "Figur_update", "GELB", "1", i.ToString() });
-                    Analysiere_Nachricht(new string[] { "Figur_update", "BLAU", "1", i.ToString() });
-                    Analysiere_Nachricht(new string[] { "Figur_update", "ROT", "1", i.ToString() });
-                    Analysiere_Nachricht(new string[] { "Figur_update", "GRÜN", "1", i.ToString() });
-                    Thread.Sleep(100);
-                }*/
+                //Analysiere_Nachricht(new string[] { "Würfel_update", "6" });
+                //Analysiere_Nachricht(new string[] { "Figur_update", "GELB", "1", "10"});
+                //Analysiere_Nachricht(new string[] { "Figur_update", "ROT", "1", "20" });
+                //for (int i = 0; i < 44; i++)
+                //{
+                //    Analysiere_Nachricht(new string[] { "Figur_update", "GELB", "1", i.ToString() });
+                //    Analysiere_Nachricht(new string[] { "Figur_update", "BLAU", "1", i.ToString() });
+                //    Analysiere_Nachricht(new string[] { "Figur_update", "ROT", "1", i.ToString() });
+                //    Analysiere_Nachricht(new string[] { "Figur_update", "GRÜN", "1", i.ToString() });
+                //    Thread.Sleep(100);
+                //}
                 //testcode///////////////////////////////////////////////////////////////
                 Netzwerkkommunikation.Start_TCP_Listener();
             }
@@ -226,20 +229,36 @@ namespace Mensch_ärgere_dich_nicht.Klassen.SeitenFunktionen
         //Spielrecht -------------------------------------------------------------------------------------------------------
         public static void Gebe_Spielrecht_weiter()
         {
-            Netzwerkkommunikation.Sende_TCP_Nachricht_an_alle_Spieler("Mitspieler;Spielrecht;" + Ermittle_nächsten_Spieler(aktiver_Spieler.farbe).name);
+            string name = Ermittle_nächsten_Spieler(aktiver_Spieler.farbe).name;
+            Netzwerkkommunikation.Sende_TCP_Nachricht_an_alle_Spieler("Mitspieler;Spielrecht;" + name);
+            if (Ermittle_nächsten_Spieler(aktiver_Spieler.farbe).ip.Address == Netzwerkkommunikation.Eigene_IP_Adresse().Address)
+            {
+                Analysiere_Nachricht(new string[] { "Spielrecht_update", name });
+            }
         }
 
         public static void Spielrecht_update(string name)
         {
             foreach(Spieler spieler in alle_Mitspieler)
             {
-                if (spieler.name == name )
+                if (spieler.name == name)
                 {
                     aktiver_Spieler = spieler;
-                    rootFrame.Dispatcher.Invoke(new Funktion0(Highlight_Spieler),spieler.farbe);
-                    if (name == lokaler_Spieler) Bekomme_Spielrecht();
+                    rootFrame.Dispatcher.Invoke(new Funktion0(Highlight_Spieler), spieler.farbe);
+                    Setze_Spielzüge();
+                    spielfeld.Dispatcher.Invoke(new void_Funtion(aktualisiere_dev_Anzeige));
+                    Thread.Sleep(500);
+                    if (name == lokaler_Spieler)
+                    {
+                        Bekomme_Spielrecht();
+                    }
                 }
             }
+        }
+
+        private static void aktualisiere_dev_Anzeige()
+        {
+            kalkulierte_Züge.Content = versuche.ToString();
         }
 
         private static void Highlight_Spieler(FARBE farbe)
@@ -264,7 +283,7 @@ namespace Mensch_ärgere_dich_nicht.Klassen.SeitenFunktionen
 
         private static void Aktiviere_Deaktiviere_Würfel(bool value)
         {
-            BTN_Würfel.IsEnabled = value;
+            if (aktiver_Spieler.spieler_art == SPIELER_ART.NORMALER_SPIELER) BTN_Würfel.IsEnabled = value;
         }
 
         private static Spieler Ermittle_nächsten_Spieler(FARBE farbe)
@@ -340,12 +359,52 @@ namespace Mensch_ärgere_dich_nicht.Klassen.SeitenFunktionen
             return null;
         }
 
+        public static void Setze_Spielzüge()
+        {
+            int checksum = 0;
+            foreach (Figur figur in aktiver_Spieler.eigene_Figuren)
+            {
+                switch (figur.aktuelle_position.spielfeld_art)
+                {
+                    case SPIELFELD_ART.SPIELFELD: checksum += 10; break;
+                    case SPIELFELD_ART.ZIEL: checksum += figur.aktuelle_position.Id + 1; break;
+                }
+            }
+            //Spieler hat drei Versuche
+            if (checksum == 0 || checksum == 4 || checksum == 7 || checksum == 9) versuche = 3;
+            //Spieler hat einen Versuch
+            if (checksum == 1 || checksum == 2|| checksum == 3 || checksum == 5 || checksum == 6 || checksum == 8 || checksum >= 10) versuche = 1;
+        }
+
+        public static void Prüfe_Spielrecht()
+        {
+            bool result = true;
+            foreach (Figur figur in aktiver_Spieler.eigene_Figuren)
+            {
+                if (figur.aktuelle_position.spielfeld_art != SPIELFELD_ART.ZIEL) result = false;
+            }
+            if (result == true) spielstatus = false;
+            if (versuche <= 0) Gebe_Spielrecht_weiter();
+            else
+            {
+                if (aktiver_Spieler.spieler_art == SPIELER_ART.NORMALER_SPIELER) Aktiviere_Deaktiviere_Würfel(true);
+            }
+        }
+
         //Würfeln ----------------------------------------------------------------------------------------------------------
         public static void Würfeln()
         {
+            Aktiviere_Deaktiviere_Würfel(false);
+            versuche--;
             würfelzahl = new Random().Next(1, 7);
             Zeige_Zahl(würfelzahl);
+            if (würfelzahl == 6) versuche = 1;
             Netzwerkkommunikation.Sende_TCP_Nachricht_an_alle_Spieler("Mitspieler;Würfel_update;" + würfelzahl);
+            if (!Prüfe_Figurbeweglichkeit() && versuche >0)
+            {
+                Aktiviere_Deaktiviere_Würfel(true);
+            }
+            else if(!Prüfe_Figurbeweglichkeit() && versuche <= 0) Gebe_Spielrecht_weiter();
         }
 
         private static void Zeige_Zahl(int value)
@@ -378,30 +437,55 @@ namespace Mensch_ärgere_dich_nicht.Klassen.SeitenFunktionen
                 case "ROT":
                     {
                         //Sorgt dafür das wenn das Feld besetzt ist, es zuerst frei gemacht wird.
-                        foreach (Figur figur in alle_Figuren) if (figur.aktuelle_position == rote_Figuren[index_figur].wegstrecke[index_feld]) figur.Setze_Figur(figur.Haus_position);
+                        foreach (Figur figur in alle_Figuren) if (figur.aktuelle_position == rote_Figuren[index_figur].figur_eigentümer.wegstrecke[index_feld]) figur.Setze_Figur(figur.Haus_position);
                         //Setzt figur auf position
-                        rote_Figuren[index_figur].Setze_Figur(rote_Figuren[index_figur].wegstrecke[index_feld]);
+                        rote_Figuren[index_figur].Setze_Figur(rote_Figuren[index_figur].figur_eigentümer.wegstrecke[index_feld]);
                         break;
                     }
                 case "GELB":
                     {
-                        foreach (Figur figur in alle_Figuren) if (figur.aktuelle_position == gelbe_Figuren[index_figur].wegstrecke[index_feld]) figur.Setze_Figur(figur.Haus_position);
-                        gelbe_Figuren[index_figur].Setze_Figur(gelbe_Figuren[index_figur].wegstrecke[index_feld]);
+                        foreach (Figur figur in alle_Figuren) if (figur.aktuelle_position == gelbe_Figuren[index_figur].figur_eigentümer.wegstrecke[index_feld]) figur.Setze_Figur(figur.Haus_position);
+                        gelbe_Figuren[index_figur].Setze_Figur(gelbe_Figuren[index_figur].figur_eigentümer.wegstrecke[index_feld]);
                         break;
                     }
                 case "GRÜN":
                     {
-                        foreach (Figur figur in alle_Figuren) if (figur.aktuelle_position == grüne_Figuren[index_figur].wegstrecke[index_feld]) figur.Setze_Figur(figur.Haus_position);
-                        grüne_Figuren[index_figur].Setze_Figur(grüne_Figuren[index_figur].wegstrecke[index_feld]);
+                        foreach (Figur figur in alle_Figuren) if (figur.aktuelle_position == grüne_Figuren[index_figur].figur_eigentümer.wegstrecke[index_feld]) figur.Setze_Figur(figur.Haus_position);
+                        grüne_Figuren[index_figur].Setze_Figur(grüne_Figuren[index_figur].figur_eigentümer.wegstrecke[index_feld]);
                         break;
                     }
                 case "BLAU":
                     {
-                        foreach (Figur figur in alle_Figuren) if (figur.aktuelle_position == blaue_Figuren[index_figur].wegstrecke[index_feld]) figur.Setze_Figur(figur.Haus_position);
-                        blaue_Figuren[index_figur].Setze_Figur(blaue_Figuren[index_figur].wegstrecke[index_feld]);
+                        foreach (Figur figur in alle_Figuren) if (figur.aktuelle_position == blaue_Figuren[index_figur].figur_eigentümer.wegstrecke[index_feld]) figur.Setze_Figur(figur.Haus_position);
+                        blaue_Figuren[index_figur].Setze_Figur(blaue_Figuren[index_figur].figur_eigentümer.wegstrecke[index_feld]);
                         break;
                     }
             }
+        }
+
+        public static bool Prüfe_Figurbeweglichkeit()
+        {
+            bool result = false;
+            foreach(Figur figur in aktiver_Spieler.eigene_Figuren)
+            {
+                figur.bewegbar = false;
+                if (figur.aktuelle_Wegstreckenposition + würfelzahl < 44 && figur.aktuelle_Wegstreckenposition+ würfelzahl >=0 )
+                {
+                    if (aktiver_Spieler.figurpositionen[figur.aktuelle_Wegstreckenposition + würfelzahl] == false)
+                    {
+                        result = true;
+                        figur.bewegbar = true;
+                    }
+                }
+            }
+            return result;
+        }
+
+        //Spielende --------------------------------------------------------------------------------------------------------
+        private static void Spielende()
+        {
+            spielstatus = false;
+            spielfeld.Dispatcher.Invoke(new BTN_Funktion(Aktiviere_Deaktiviere_Würfel),false);
         }
     }
 }

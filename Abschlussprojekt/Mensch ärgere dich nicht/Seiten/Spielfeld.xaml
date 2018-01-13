@@ -15,10 +15,6 @@
         <Label Content="dich" HorizontalAlignment="Left" Margin="739,517,0,0" VerticalAlignment="Top" Width="215" Height="58" FontSize="36" FontFamily="Italic" FontWeight="Bold"/>
         <Label Content="nicht" HorizontalAlignment="Left" Margin="1310,517,0,0" VerticalAlignment="Top" Width="215" Height="58" FontSize="36" FontFamily="Italic" FontWeight="Bold"/>
         <Button x:Name="BTN_Beenden" Content="Aufgeben" HorizontalAlignment="Left" Margin="83,172,0,0" VerticalAlignment="Top" Width="178" Height="60" FontSize="36" Click="BTN_Beenden_Click"/>
-        <TextBox HorizontalAlignment="Left" Height="22" Margin="418,65,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" Focusable="False"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="418,692,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" Focusable="False"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="1106,638,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" Focusable="False"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="1106,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" Focusable="False"/>
         <Grid x:Name="G_spielfeld" HorizontalAlignment="Left" Height="761" Margin="739,11,0,0" VerticalAlignment="Top" Width="760">
             <Grid.RowDefinitions>
                 <RowDefinition Height="70*"/>
@@ -61,6 +57,8 @@
         <Label x:Name="L_Spieler_Blau" Content="" HorizontalAlignment="Left" Margin="1362,601,0,0" VerticalAlignment="Top" Width="121" FontSize="24" Background="#00FF0000"/>
         <Label x:Name="L_Spieler_Gelb" Content="" HorizontalAlignment="Left" Margin="739,154,0,0" VerticalAlignment="Top" Width="121" FontSize="24" Background="#00FF0000"/>
         <Label x:Name="L_Spieler_Grün" Content="" HorizontalAlignment="Left" Margin="1362,154,0,0" VerticalAlignment="Top" Width="121" FontSize="24" Background="#00FF0000"/>
+        <Label Content="Versuche:" HorizontalAlignment="Left" Margin="574,337,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="L_Versuche" Content="Label" HorizontalAlignment="Left" Margin="627,337,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Page>
