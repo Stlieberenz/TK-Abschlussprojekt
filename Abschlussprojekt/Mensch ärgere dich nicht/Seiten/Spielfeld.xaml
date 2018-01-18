@@ -15,31 +15,31 @@
         <Label Content="dich" HorizontalAlignment="Left" Margin="739,517,0,0" VerticalAlignment="Top" Width="215" Height="58" FontSize="36" FontFamily="Italic" FontWeight="Bold"/>
         <Label Content="nicht" HorizontalAlignment="Left" Margin="1310,517,0,0" VerticalAlignment="Top" Width="215" Height="58" FontSize="36" FontFamily="Italic" FontWeight="Bold"/>
         <Button x:Name="BTN_Beenden" Content="Aufgeben" HorizontalAlignment="Left" Margin="83,172,0,0" VerticalAlignment="Top" Width="178" Height="60" FontSize="36" Click="BTN_Beenden_Click"/>
-        <Grid x:Name="G_spielfeld" HorizontalAlignment="Left" Height="761" Margin="739,11,0,0" VerticalAlignment="Top" Width="760">
+        <Grid x:Name="G_spielfeld" HorizontalAlignment="Left" Height="761" Margin="739,11,0,0" VerticalAlignment="Top" Width="763">
             <Grid.RowDefinitions>
+                <RowDefinition Height="69*"/>
                 <RowDefinition Height="70*"/>
                 <RowDefinition Height="70*"/>
                 <RowDefinition Height="70*"/>
+                <RowDefinition Height="68*"/>
+                <RowDefinition Height="70*"/>
+                <RowDefinition Height="69*"/>
                 <RowDefinition Height="70*"/>
                 <RowDefinition Height="70*"/>
-                <RowDefinition Height="70*"/>
-                <RowDefinition Height="70*"/>
-                <RowDefinition Height="70*"/>
-                <RowDefinition Height="70*"/>
-                <RowDefinition Height="70*"/>
-                <RowDefinition Height="70*"/>
+                <RowDefinition Height="69*"/>
+                <RowDefinition Height="67*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="68*"/>
+                <ColumnDefinition Width="70*"/>
+                <ColumnDefinition Width="69*"/>
                 <ColumnDefinition Width="70*"/>
                 <ColumnDefinition Width="70*"/>
                 <ColumnDefinition Width="70*"/>
                 <ColumnDefinition Width="70*"/>
-                <ColumnDefinition Width="70*"/>
-                <ColumnDefinition Width="70*"/>
-                <ColumnDefinition Width="70*"/>
-                <ColumnDefinition Width="70*"/>
-                <ColumnDefinition Width="70*"/>
-                <ColumnDefinition Width="70*"/>
+                <ColumnDefinition Width="71*"/>
+                <ColumnDefinition Width="69*"/>
+                <ColumnDefinition Width="68*"/>
                 <ColumnDefinition Width="70*"/>
             </Grid.ColumnDefinitions>
         </Grid>

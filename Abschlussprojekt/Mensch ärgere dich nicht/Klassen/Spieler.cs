@@ -111,11 +111,15 @@ namespace Mensch_ärgere_dich_nicht.Klassen
         {
             while (SeitenFunktionen.Spielfeld.spielstatus)
             {
-                Thread.Sleep(750);
+                Thread.Sleep(new Random().Next(700,800));
                 if (SeitenFunktionen.Spielfeld.aktiver_Spieler == this)
                 {
                     if (SeitenFunktionen.Spielfeld.versuche > 0) SeitenFunktionen.Spielfeld.spielfeld.Dispatcher.Invoke(new SeitenFunktionen.Spielfeld.void_Funtion(Künstlich_würfeln));
-                    else SeitenFunktionen.Spielfeld.Gebe_Spielrecht_weiter();
+                    else
+                    {
+                        SeitenFunktionen.Spielfeld.Gebe_Spielrecht_weiter();
+                        Thread.Sleep(500);
+                    }
                     Thread.Sleep(750);
                     if (SeitenFunktionen.Spielfeld.Prüfe_Figurbeweglichkeit() && SeitenFunktionen.Spielfeld.aktiver_Spieler.spieler_art == Statische_Variablen.SPIELER_ART.CP_GEGNER)
                     {
