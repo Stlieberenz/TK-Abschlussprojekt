@@ -26,5 +26,11 @@ namespace Mensch_ärgere_dich_nicht.Seiten
             Statische_Variablen.aktuelle_Seite = "Spiel_suchen";
             Klassen.SeitenFunktionen.S_suchen.Server_Liste = Server_Liste;
         }
+
+        private void back_Click(object sender, RoutedEventArgs e)
+        {
+            Statische_Variablen.aktuelle_Seite = "Menü";
+            Statische_Variablen.rootFrame.Content = new Seiten.Menü();
+        }
     }
 }
