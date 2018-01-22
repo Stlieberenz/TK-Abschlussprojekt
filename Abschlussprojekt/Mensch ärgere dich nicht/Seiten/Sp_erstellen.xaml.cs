@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Mensch_ärgere_dich_nicht.Klassen;
+using Mensch_ärgere_dich_nicht.Klassen.SeitenFunktionen;
 
 namespace Mensch_ärgere_dich_nicht.Seiten
 {
@@ -37,7 +39,7 @@ namespace Mensch_ärgere_dich_nicht.Seiten
             // Button erneut getriggert um das Spiel zu starten.
             if (BTN_Starten.IsEnabled)
             {
-                if (Klassen.SeitenFunktionen.S_erstellen.Prüfe_auswahl())
+                if (S_erstellen.Prüfe_auswahl())
                 {
                     BTN_Starten.IsEnabled = false;
                     CB_Blau.IsEnabled = false;
@@ -51,6 +53,13 @@ namespace Mensch_ärgere_dich_nicht.Seiten
                     Klassen.SeitenFunktionen.S_erstellen.UDP_Threadstatus = true;
                     Task.Factory.StartNew(Klassen.SeitenFunktionen.S_erstellen.Warte_auf_Spieler);
                     Task.Factory.StartNew(Klassen.SeitenFunktionen.S_erstellen.Sende_UDP);
+                    S_erstellen.Spieler_Rot = CB_Rot.Text;
+                    S_erstellen.Spieler_Gelb = CB_Gelb.Text;
+                    S_erstellen.Spieler_Grün = CB_Grün.Text;
+                    S_erstellen.Spieler_Blau = CB_Blau.Text;
+                    S_erstellen.UDP_Threadstatus = true;
+                    Task.Factory.StartNew(S_erstellen.Warte_auf_Spieler);
+                    Task.Factory.StartNew(S_erstellen.Sende_UDP);
                 }
                 else
                 {
@@ -61,21 +70,36 @@ namespace Mensch_ärgere_dich_nicht.Seiten
             {
                 string startnachricht = Klassen.SeitenFunktionen.S_erstellen.Generiere_Startnachricht();
                 Klassen.Netzwerkkommunikation.Sende_TCP_Nachricht_an_alle_Spieler(startnachricht);
+                string startnachricht = S_erstellen.Generiere_Startnachricht();
+                Netzwerkkommunikation.Sende_TCP_Nachricht_an_alle_Spieler(startnachricht);
                 Statische_Variablen.aktuelle_Seite = "Spielfeld";
                 Statische_Variablen.rootFrame.Content = new Seiten.Spielfeld();
+                Klassen.SeitenFunktionen.Spielfeld.aktiver_Spieler = Klassen.SeitenFunktionen.Spielfeld.alle_Mitspieler
+                    [new Random().Next(0, Klassen.SeitenFunktionen.Spielfeld.alle_Mitspieler.Count)];
+                Statische_Variablen.rootFrame.Content = new Spielfeld();
+                Klassen.SeitenFunktionen.Spielfeld.Gebe_Spielrecht_weiter();
+                Klassen.SeitenFunktionen.Spielfeld.spielstatus = true;
+                foreach (Spieler spieler in Klassen.SeitenFunktionen.Spielfeld.alle_Mitspieler)
+                {
+                    if (spieler.spieler_art == Statische_Variablen.SPIELER_ART.CP_GEGNER)
+                    {
+                        Task.Factory.StartNew(spieler.Computergegner_Runtime);
+                    }
+                }
             }
         }
         
         private void BTN_Zurück_Click(object sender, RoutedEventArgs e)
         {
             Klassen.SeitenFunktionen.S_erstellen.UDP_Threadstatus = false;
+            S_erstellen.UDP_Threadstatus = false;
             Statische_Variablen.aktuelle_Seite = "Menü";
             Statische_Variablen.rootFrame.Content = new Seiten.Menü();
         }
 
         private void BTN_Abbrechen_Click(object sender, RoutedEventArgs e)
         {
-            Klassen.SeitenFunktionen.S_erstellen.UDP_Threadstatus = false;
+            S_erstellen.UDP_Threadstatus = false;
             BTN_Starten.IsEnabled = true;
             CB_Blau.IsEnabled = true;
             CB_Gelb.IsEnabled = true;
@@ -86,6 +110,7 @@ namespace Mensch_ärgere_dich_nicht.Seiten
         private void CB_Rot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             bool result = Klassen.SeitenFunktionen.S_erstellen.Prüfe_auswahl(new List<int>(){CB_Rot.SelectedIndex, CB_Gelb.SelectedIndex, CB_Grün.SelectedIndex, CB_Blau.SelectedIndex},CB_Rot);
+            bool result = S_erstellen.Prüfe_auswahl(new List<int>(){CB_Rot.SelectedIndex, CB_Gelb.SelectedIndex, CB_Grün.SelectedIndex, CB_Blau.SelectedIndex},CB_Rot);
             if (result == false)
             {
                 if (CB_Gelb.SelectedIndex == 3) CB_Gelb.SelectedIndex = 1;
@@ -98,6 +123,7 @@ namespace Mensch_ärgere_dich_nicht.Seiten
         private void CB_Gelb_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             bool result = Klassen.SeitenFunktionen.S_erstellen.Prüfe_auswahl(new List<int>() { CB_Rot.SelectedIndex, CB_Gelb.SelectedIndex, CB_Grün.SelectedIndex, CB_Blau.SelectedIndex },CB_Gelb);
+            bool result = S_erstellen.Prüfe_auswahl(new List<int>() { CB_Rot.SelectedIndex, CB_Gelb.SelectedIndex, CB_Grün.SelectedIndex, CB_Blau.SelectedIndex },CB_Gelb);
             if (result == false)
             {
                 if (CB_Rot.SelectedIndex == 3) CB_Rot.SelectedIndex = 1;
@@ -111,6 +137,7 @@ namespace Mensch_ärgere_dich_nicht.Seiten
         private void CB_Grün_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             bool result = Klassen.SeitenFunktionen.S_erstellen.Prüfe_auswahl(new List<int>() { CB_Rot.SelectedIndex, CB_Gelb.SelectedIndex, CB_Grün.SelectedIndex, CB_Blau.SelectedIndex },CB_Grün);
+            bool result = S_erstellen.Prüfe_auswahl(new List<int>() { CB_Rot.SelectedIndex, CB_Gelb.SelectedIndex, CB_Grün.SelectedIndex, CB_Blau.SelectedIndex },CB_Grün);
             if (result == false)
             {
                 if (CB_Gelb.SelectedIndex == 3) CB_Gelb.SelectedIndex = 1;
@@ -124,6 +151,7 @@ namespace Mensch_ärgere_dich_nicht.Seiten
         private void CB_Blau_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             bool result = Klassen.SeitenFunktionen.S_erstellen.Prüfe_auswahl(new List<int>() { CB_Rot.SelectedIndex, CB_Gelb.SelectedIndex, CB_Grün.SelectedIndex, CB_Blau.SelectedIndex },CB_Blau);
+            bool result = S_erstellen.Prüfe_auswahl(new List<int>() { CB_Rot.SelectedIndex, CB_Gelb.SelectedIndex, CB_Grün.SelectedIndex, CB_Blau.SelectedIndex },CB_Blau);
             if (result == false)
             {
                 if (CB_Gelb.SelectedIndex == 3) CB_Gelb.SelectedIndex = 1;
@@ -150,34 +178,43 @@ namespace Mensch_ärgere_dich_nicht.Seiten
             Klassen.SeitenFunktionen.S_erstellen.Spieler_Grün = CB_Grün.Text;
             Klassen.SeitenFunktionen.S_erstellen.Spieler_Blau = CB_Blau.Text;
             Klassen.SeitenFunktionen.S_erstellen.Start_Button = BTN_Starten;
+            S_erstellen.Spieler_Rot = CB_Rot.Text;
+            S_erstellen.Spieler_Gelb = CB_Gelb.Text;
+            S_erstellen.Spieler_Grün = CB_Grün.Text;
+            S_erstellen.Spieler_Blau = CB_Blau.Text;
+            S_erstellen.Start_Button = BTN_Starten;
         }
 
         private void Update_Index_variablen()
         {
-            Klassen.SeitenFunktionen.S_erstellen.index_rot_alt = CB_Rot.SelectedIndex;
-            Klassen.SeitenFunktionen.S_erstellen.index_gelb_alt = CB_Gelb.SelectedIndex;
-            Klassen.SeitenFunktionen.S_erstellen.index_grün_alt = CB_Grün.SelectedIndex;
-            Klassen.SeitenFunktionen.S_erstellen.index_blau_alt = CB_Blau.SelectedIndex;
+            S_erstellen.index_rot_alt = CB_Rot.SelectedIndex;
+            S_erstellen.index_gelb_alt = CB_Gelb.SelectedIndex;
+            S_erstellen.index_grün_alt = CB_Grün.SelectedIndex;
+            S_erstellen.index_blau_alt = CB_Blau.SelectedIndex;
         }
 
         private void L_Rot_TextChanged(object sender, TextChangedEventArgs e)
         {
             L_Rot.Text = Klassen.SeitenFunktionen.S_erstellen.Spieler_Rot;
+            L_Rot.Text = S_erstellen.Spieler_Rot;
         }
 
         private void L_Gelb_TextChanged(object sender, TextChangedEventArgs e)
         {
             L_Gelb.Text = Klassen.SeitenFunktionen.S_erstellen.Spieler_Gelb;
+            L_Gelb.Text = S_erstellen.Spieler_Gelb;
         }
 
         private void L_Grün_TextChanged(object sender, TextChangedEventArgs e)
         {
             L_Grün.Text = Klassen.SeitenFunktionen.S_erstellen.Spieler_Grün;
+            L_Grün.Text = S_erstellen.Spieler_Grün;
         }
 
         private void L_Blau_TextChanged(object sender, TextChangedEventArgs e)
         {
             L_Blau.Text = Klassen.SeitenFunktionen.S_erstellen.Spieler_Blau;
+            L_Blau.Text = S_erstellen.Spieler_Blau;
         }
 
         private void BTN_Versteckter_Button_Click(object sender, RoutedEventArgs e)

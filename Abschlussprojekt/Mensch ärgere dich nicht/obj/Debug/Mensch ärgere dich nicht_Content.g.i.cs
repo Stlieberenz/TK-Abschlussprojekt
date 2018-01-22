@@ -11,5 +11,6 @@
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("bilder/figur_blau.gif")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("bilder/figur_gelb.gif")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("bilder/figur_rot.gif")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("bilder/win-gif.gif")]
 
 

@@ -4,12 +4,20 @@
 winexe
 C#
 .cs
+<<<<<<< HEAD
 C:\Users\Egon\Desktop\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\
+=======
+D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\
+>>>>>>> fcb991a7c4412aa758fecbc5feb4ab5a474052de
 Mensch_ärgere_dich_nicht
 none
 false
 DEBUG;TRACE
+<<<<<<< HEAD
 C:\Users\Egon\Desktop\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\App.xaml
+=======
+D:\Schule\Techniker Abschlussprojeckt\Git\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\App.xaml
+>>>>>>> fcb991a7c4412aa758fecbc5feb4ab5a474052de
 6-2139689660
 
 20-1229503514
