@@ -46,13 +46,6 @@ namespace Mensch_ärgere_dich_nicht.Seiten
                     CB_Gelb.IsEnabled = false;
                     CB_Rot.IsEnabled = false;
                     CB_Grün.IsEnabled = false;
-                    Klassen.SeitenFunktionen.S_erstellen.Spieler_Rot = CB_Rot.Text;
-                    Klassen.SeitenFunktionen.S_erstellen.Spieler_Gelb = CB_Gelb.Text;
-                    Klassen.SeitenFunktionen.S_erstellen.Spieler_Grün = CB_Grün.Text;
-                    Klassen.SeitenFunktionen.S_erstellen.Spieler_Blau = CB_Blau.Text;
-                    Klassen.SeitenFunktionen.S_erstellen.UDP_Threadstatus = true;
-                    Task.Factory.StartNew(Klassen.SeitenFunktionen.S_erstellen.Warte_auf_Spieler);
-                    Task.Factory.StartNew(Klassen.SeitenFunktionen.S_erstellen.Sende_UDP);
                     S_erstellen.Spieler_Rot = CB_Rot.Text;
                     S_erstellen.Spieler_Gelb = CB_Gelb.Text;
                     S_erstellen.Spieler_Grün = CB_Grün.Text;
@@ -68,12 +61,9 @@ namespace Mensch_ärgere_dich_nicht.Seiten
             }
             else
             {
-                string startnachricht = Klassen.SeitenFunktionen.S_erstellen.Generiere_Startnachricht();
-                Klassen.Netzwerkkommunikation.Sende_TCP_Nachricht_an_alle_Spieler(startnachricht);
                 string startnachricht = S_erstellen.Generiere_Startnachricht();
                 Netzwerkkommunikation.Sende_TCP_Nachricht_an_alle_Spieler(startnachricht);
                 Statische_Variablen.aktuelle_Seite = "Spielfeld";
-                Statische_Variablen.rootFrame.Content = new Seiten.Spielfeld();
                 Klassen.SeitenFunktionen.Spielfeld.aktiver_Spieler = Klassen.SeitenFunktionen.Spielfeld.alle_Mitspieler
                     [new Random().Next(0, Klassen.SeitenFunktionen.Spielfeld.alle_Mitspieler.Count)];
                 Statische_Variablen.rootFrame.Content = new Spielfeld();
@@ -91,10 +81,9 @@ namespace Mensch_ärgere_dich_nicht.Seiten
         
         private void BTN_Zurück_Click(object sender, RoutedEventArgs e)
         {
-            Klassen.SeitenFunktionen.S_erstellen.UDP_Threadstatus = false;
             S_erstellen.UDP_Threadstatus = false;
             Statische_Variablen.aktuelle_Seite = "Menü";
-            Statische_Variablen.rootFrame.Content = new Seiten.Menü();
+            Statische_Variablen.rootFrame.Content = new Menü();
         }
 
         private void BTN_Abbrechen_Click(object sender, RoutedEventArgs e)
@@ -109,7 +98,6 @@ namespace Mensch_ärgere_dich_nicht.Seiten
 
         private void CB_Rot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            bool result = Klassen.SeitenFunktionen.S_erstellen.Prüfe_auswahl(new List<int>(){CB_Rot.SelectedIndex, CB_Gelb.SelectedIndex, CB_Grün.SelectedIndex, CB_Blau.SelectedIndex},CB_Rot);
             bool result = S_erstellen.Prüfe_auswahl(new List<int>(){CB_Rot.SelectedIndex, CB_Gelb.SelectedIndex, CB_Grün.SelectedIndex, CB_Blau.SelectedIndex},CB_Rot);
             if (result == false)
             {
@@ -122,7 +110,6 @@ namespace Mensch_ärgere_dich_nicht.Seiten
 
         private void CB_Gelb_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            bool result = Klassen.SeitenFunktionen.S_erstellen.Prüfe_auswahl(new List<int>() { CB_Rot.SelectedIndex, CB_Gelb.SelectedIndex, CB_Grün.SelectedIndex, CB_Blau.SelectedIndex },CB_Gelb);
             bool result = S_erstellen.Prüfe_auswahl(new List<int>() { CB_Rot.SelectedIndex, CB_Gelb.SelectedIndex, CB_Grün.SelectedIndex, CB_Blau.SelectedIndex },CB_Gelb);
             if (result == false)
             {
@@ -136,7 +123,6 @@ namespace Mensch_ärgere_dich_nicht.Seiten
 
         private void CB_Grün_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            bool result = Klassen.SeitenFunktionen.S_erstellen.Prüfe_auswahl(new List<int>() { CB_Rot.SelectedIndex, CB_Gelb.SelectedIndex, CB_Grün.SelectedIndex, CB_Blau.SelectedIndex },CB_Grün);
             bool result = S_erstellen.Prüfe_auswahl(new List<int>() { CB_Rot.SelectedIndex, CB_Gelb.SelectedIndex, CB_Grün.SelectedIndex, CB_Blau.SelectedIndex },CB_Grün);
             if (result == false)
             {
@@ -150,7 +136,6 @@ namespace Mensch_ärgere_dich_nicht.Seiten
 
         private void CB_Blau_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            bool result = Klassen.SeitenFunktionen.S_erstellen.Prüfe_auswahl(new List<int>() { CB_Rot.SelectedIndex, CB_Gelb.SelectedIndex, CB_Grün.SelectedIndex, CB_Blau.SelectedIndex },CB_Blau);
             bool result = S_erstellen.Prüfe_auswahl(new List<int>() { CB_Rot.SelectedIndex, CB_Gelb.SelectedIndex, CB_Grün.SelectedIndex, CB_Blau.SelectedIndex },CB_Blau);
             if (result == false)
             {
@@ -173,11 +158,6 @@ namespace Mensch_ärgere_dich_nicht.Seiten
             L_Grün.Text = CB_Grün.Text;
             L_Blau.Text = CB_Blau.Text;
             Update_Index_variablen();
-            Klassen.SeitenFunktionen.S_erstellen.Spieler_Rot = CB_Rot.Text;
-            Klassen.SeitenFunktionen.S_erstellen.Spieler_Gelb = CB_Gelb.Text;
-            Klassen.SeitenFunktionen.S_erstellen.Spieler_Grün = CB_Grün.Text;
-            Klassen.SeitenFunktionen.S_erstellen.Spieler_Blau = CB_Blau.Text;
-            Klassen.SeitenFunktionen.S_erstellen.Start_Button = BTN_Starten;
             S_erstellen.Spieler_Rot = CB_Rot.Text;
             S_erstellen.Spieler_Gelb = CB_Gelb.Text;
             S_erstellen.Spieler_Grün = CB_Grün.Text;
@@ -195,25 +175,21 @@ namespace Mensch_ärgere_dich_nicht.Seiten
 
         private void L_Rot_TextChanged(object sender, TextChangedEventArgs e)
         {
-            L_Rot.Text = Klassen.SeitenFunktionen.S_erstellen.Spieler_Rot;
             L_Rot.Text = S_erstellen.Spieler_Rot;
         }
 
         private void L_Gelb_TextChanged(object sender, TextChangedEventArgs e)
         {
-            L_Gelb.Text = Klassen.SeitenFunktionen.S_erstellen.Spieler_Gelb;
             L_Gelb.Text = S_erstellen.Spieler_Gelb;
         }
 
         private void L_Grün_TextChanged(object sender, TextChangedEventArgs e)
         {
-            L_Grün.Text = Klassen.SeitenFunktionen.S_erstellen.Spieler_Grün;
             L_Grün.Text = S_erstellen.Spieler_Grün;
         }
 
         private void L_Blau_TextChanged(object sender, TextChangedEventArgs e)
         {
-            L_Blau.Text = Klassen.SeitenFunktionen.S_erstellen.Spieler_Blau;
             L_Blau.Text = S_erstellen.Spieler_Blau;
         }
 

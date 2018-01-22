@@ -55,7 +55,6 @@ namespace Mensch_ärgere_dich_nicht.Seiten
             Task.Factory.StartNew(Klassen.SeitenFunktionen.Spielfeld.TCP_Listener);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
         private void BTN_Beenden_Click(object sender, RoutedEventArgs e)
         {
             if (MessageBox.Show("Wollen sie wirklich aufgeben?", "Achtung!", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
@@ -76,7 +75,6 @@ namespace Mensch_ärgere_dich_nicht.Seiten
         {
 
         }
-
         
         private void BTN_Würfel_Click(object sender, RoutedEventArgs e)
         {

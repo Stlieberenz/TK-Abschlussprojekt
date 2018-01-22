@@ -70,7 +70,6 @@ namespace Mensch_ärgere_dich_nicht.Seiten {
 =======
         #line 46 "..\..\..\Seiten\Spielfeld.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
-        internal System.Windows.Controls.Button BTN_Würfel;
         internal System.Windows.Controls.Image Bild_W1;
         
         #line default
