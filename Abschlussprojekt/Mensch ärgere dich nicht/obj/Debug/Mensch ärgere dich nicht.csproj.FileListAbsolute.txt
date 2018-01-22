@@ -48,3 +48,28 @@ C:\Users\Egon\Documents\GitHub\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärge
 C:\Users\Egon\Documents\GitHub\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\Mensch ärgere dich nicht.csproj.CoreCompileInputs.cache
 C:\Users\Egon\Documents\GitHub\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\Mensch ärgere dich nicht.exe
 C:\Users\Egon\Documents\GitHub\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\Mensch ärgere dich nicht.pdb
+C:\Users\Egon\Desktop\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\bin\Debug\Mensch ärgere dich nicht.exe.config
+C:\Users\Egon\Desktop\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\bin\Debug\Mensch ärgere dich nicht.exe
+C:\Users\Egon\Desktop\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\bin\Debug\Mensch ärgere dich nicht.pdb
+C:\Users\Egon\Desktop\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\Mensch ärgere dich nicht.csprojResolveAssemblyReference.cache
+C:\Users\Egon\Desktop\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\MainWindow.g.cs
+C:\Users\Egon\Desktop\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\Seiten\Menü.g.cs
+C:\Users\Egon\Desktop\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\Seiten\Spielfeld.g.cs
+C:\Users\Egon\Desktop\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\Seiten\Sp_erstellen.g.cs
+C:\Users\Egon\Desktop\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\Seiten\Sp_suchen.g.cs
+C:\Users\Egon\Desktop\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\Seiten\Startseite.g.cs
+C:\Users\Egon\Desktop\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\App.g.cs
+C:\Users\Egon\Desktop\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\Mensch ärgere dich nicht_MarkupCompile.cache
+C:\Users\Egon\Desktop\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\Mensch ärgere dich nicht_MarkupCompile.lref
+C:\Users\Egon\Desktop\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\MainWindow.baml
+C:\Users\Egon\Desktop\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\Seiten\Menü.baml
+C:\Users\Egon\Desktop\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\Seiten\Spielfeld.baml
+C:\Users\Egon\Desktop\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\Seiten\Sp_erstellen.baml
+C:\Users\Egon\Desktop\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\Seiten\Sp_suchen.baml
+C:\Users\Egon\Desktop\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\Seiten\Startseite.baml
+C:\Users\Egon\Desktop\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\Mensch ärgere dich nicht.g.resources
+C:\Users\Egon\Desktop\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\Mensch_ärgere_dich_nicht.Properties.Resources.resources
+C:\Users\Egon\Desktop\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\Mensch ärgere dich nicht.csproj.GenerateResource.Cache
+C:\Users\Egon\Desktop\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\Mensch ärgere dich nicht.csproj.CoreCompileInputs.cache
+C:\Users\Egon\Desktop\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\Mensch ärgere dich nicht.exe
+C:\Users\Egon\Desktop\TK-Abschlussprojekt\Abschlussprojekt\Mensch ärgere dich nicht\obj\Debug\Mensch ärgere dich nicht.pdb

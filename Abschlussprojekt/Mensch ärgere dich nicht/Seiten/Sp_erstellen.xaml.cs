@@ -187,5 +187,10 @@ namespace Mensch_ärgere_dich_nicht.Seiten
             L_Grün.RaiseEvent(new System.Windows.RoutedEventArgs(System.Windows.Controls.Primitives.TextBoxBase.TextChangedEvent));
             L_Blau.RaiseEvent(new System.Windows.RoutedEventArgs(System.Windows.Controls.Primitives.TextBoxBase.TextChangedEvent));
         }
+
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
